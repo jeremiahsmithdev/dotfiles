@@ -1,5 +1,6 @@
 "nice to have
 syntax on
+let mapleader = ' '
 " for ctags to work in tagbar plugin
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags'
 
@@ -8,6 +9,9 @@ set termguicolors
 
 " keep cursor 8 lines from the top and bottom
 set scrolloff=8
+set autoread
+" set working directory to current file
+set autochdir
 
 " set number
 
@@ -36,23 +40,23 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-
-
+"clear highlights
+nmap <leader>kk :nohlsearch<CR>
 
 " toggle gundo?
 nnoremap <leader>u :GundoToggle<CR>
 
-nnoremap <leader>t :TagbarToggle<CR>
+cnoremap tt TagbarToggle<CR>
+nnoremap <leader>t :TagbarOpenAutoClose<CR>
 
 " highlight last inserted text
 nnoremap gV `[v`]
 
 " save session	?
 nnoremap <leader>s :mksession<CR>
-
 set nocompatible              " be iMproved, required
-filetype off                  " required
+" filetype off                  " required
+filetype plugin on
 
 "enter maps
 
@@ -60,142 +64,178 @@ filetype off                  " required
 " Needed for CLI VIm (Note: ^[0M was created with Ctrl+V Shift+Enter, don't type it directly)
 nnoremap ^[0M i<CR><Esc>   
 
+cnoremap df :!rm % <CR>:bd<CR>
+
 " execute pathogen#infect()
 
-" set the runtime path to include Vundle and initialize
 set nocompatible
 filetype off
 " added above...
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" begin plugin management
+call plug#begin()
 
-Plugin 'xolox/vim-misc'
+" Unix file operations in vim file context
+Plug 'tpope/vim-eunuch'
 
-Plugin 'xolox/vim-notes'
+Plug 'vimwiki/vimwiki'
 
-Plugin 'apalmer1377/factorus'
-" Plugin 'blueyed/vim-diminactive'
+" To use Markdown's wiki markup:
+let g:vimwiki_list = [{'path': '~wiki/',
+			\ 'syntax': 'markdown', 'ext': '.md'}]
 
-" Plugin 'terryma/vim-smooth-scroll'
-" Plugin 'joeytwiddle/sexy_scroller.vim'
+
+" normal mode:
+
+" <Leader>ww -- Open default wiki index file.
+" <Leader>wt -- Open default wiki index file in a new tab.
+" <Leader>ws -- Select and open wiki index file.
+" <Leader>wd -- Delete wiki file you are in.
+" <Leader>wr -- Rename wiki file you are in.
+" <Enter> -- Follow/Create wiki link
+" <Shift-Enter> -- Split and follow/create wiki link
+" <Ctrl-Enter> -- Vertical split and follow/create wiki link
+" <Backspace> -- Go back to parent(previous) wiki link
+" <Tab> -- Find next wiki link
+" <Shift-Tab> -- Find previous wiki link
+" For more keys, see :h vimwiki-mappings
+
+" Commands
+" :Vimwiki2HTML -- Convert current wiki link to HTML
+" :VimwikiAll2HTML -- Convert all your wiki links to HTML
+" :help vimwiki-commands -- list all commands
+
+"snipmate
+Plug 'MarcWeber/vim-addon-mw-utils'
+  Plug 'tomtom/tlib_vim'
+  Plug 'garbas/vim-snipmate'
+
+  " Optional:
+  Plug 'honza/vim-snippets'
+
+Plug 'LucHermitte/vim-refactor'
+
+Plug 'tpope/vim-surround'
+
+Plug 'xolox/vim-misc'
+
+Plug 'xolox/vim-notes'
+
+Plug 'apalmer1377/factorus'
+" Plug 'blueyed/vim-diminactive'
+
+" Plug 'terryma/vim-smooth-scroll'
+" Plug 'joeytwiddle/sexy_scroller.vim'
 " :let g:SexyScroller_EasingStyle = 5
 " :let g:SexyScroller_ScrollTime = 30
-Plugin 'yuttie/comfortable-motion.vim'
+Plug 'yuttie/comfortable-motion.vim'
 
 noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(30)<CR>
 noremap <silent> <ScrollWheelUp> :call comfortable_motion#flick(-30)<CR>
-" let g:comfortable_motion_friction = 50.0
-" let g:comfortable_motion_air_drag = 2.0
+let g:comfortable_motion_friction = 80.0
+let g:comfortable_motion_air_drag = 2.0
 
-Plugin 'majutsushi/tagbar'
-Plugin 'matze/vim-move' 
+Plug 'majutsushi/tagbar'
+Plug 'matze/vim-move' 
 
-Plugin 'thinca/vim-quickrun'
+" Plug 'thinca/vim-quickrun'
 
 " align comments
-" Plugin 'Align'
+" Plug 'Align'
 
 
 " a better debugger
-" Plugin 'Conque-GDB'
+" Plug 'Conque-GDB'
 
-Plugin 'gmarik/vundle'
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
+" Plug 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+" Plug 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-Plugin 'scrooloose/nerdtree'
+" Plug 'ascenator/L9', {'name': 'newL9'}
+Plug 'scrooloose/nerdtree'
 
 " format comments to be lined up neatly
-Plugin 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
 "tabs
-"Plugin 'jistr/vim-nerdtree-tabs'
+"Plug 'jistr/vim-nerdtree-tabs'
 
 " best plugin ever (when it works)
-" Plugin 'scrooloose/syntastic'
-Plugin 'w0rp/ale'
+" Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 
-" Plugin 'Buffergator'
+" Plug 'Buffergator'
 
 " move anywhere in three keystrokes
-Plugin 'justinmk/vim-sneak'
+Plug 'justinmk/vim-sneak'
 
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 
-Plugin 'easymotion/vim-easymotion'
+" Plug 'easymotion/vim-easymotion'
 
-" “Plugin 'altercation/vim-colors-solarized'
+" “Plug 'altercation/vim-colors-solarized'
 			
 " install (prerequisite for vebugger)
-Plugin 'Shougo/vimproc.vim'
+Plug 'Shougo/vimproc.vim'
 
 " install (debugger)
-Plugin 'idanarye/vim-vebugger'
+Plug 'idanarye/vim-vebugger'
 
 " install
-" Plugin 'Valloric/YouCompleteMe'
-" Plugin 'shougo/neocomplete'
-" Plugin 'prabirshrestha/asyncomplete.vim'
+" Plug 'Valloric/YouCompleteMe'
+" Plug 'shougo/neocomplete'
+" Plug 'prabirshrestha/asyncomplete.vim'
 " if has('nvim')
-" 	Plugin 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins' }
+" 	Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugs' }
 " else
-" 	Plugin 'Shougo/deoplete.nvim'
-" 	Plugin 'roxma/nvim-yarp'
-" 	Plugin 'roxma/vim-hug-neovim-rpc'
+" 	Plug 'Shougo/deoplete.nvim'
+" 	Plug 'roxma/nvim-yarp'
+" 	Plug 'roxma/vim-hug-neovim-rpc'
 " endif
 " let g:deoplete#enable_at_startup = 1
 "
 " set pyxversion=3
-" Plugin 'ajh17/vimcompletesme'
-" Plugin 'maralla/completor.vim'
+" Plug 'ajh17/vimcompletesme'
 " python semantic completion
-" let g:completor_python_binary = '/usr/local/lib/python3.6/site-packages'
+let g:completor_python_binary = '/usr/local/lib/python3.6/site-packages'
 " C/C++
-" let g:completor_clang_binary = '/usr/local/Cellar//completor_clang_binary'
+let g:completor_clang_binary = '/usr/local/Cellar//completor_clang_binary'
 " tab to select completion
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>\<cr>" : "\<cr>"
 " tab to trigger completion
-" let g:completor_auto_trigger = 0
-" inoremap <expr> <Tab> pumvisible() ? "<C-N>" : "<C-R>=completor#do('complete')<CR>"
+let g:completor_auto_trigger = 0
+Plug 'maralla/completor.vim'
 
 " tag manager?
-Plugin 'ludovicchabant/vim-gutentags'
+Plug 'ludovicchabant/vim-gutentags'
 
 " directory statusline...
-" Plugin 'ctrlpvim/ctrlp.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
 
 " distraction fre environment
-Plugin 'junegunn/goyo.vim'
+Plug 'junegunn/goyo.vim'
 
-"Plugin 'nathanaelkane/vim-indent-guides'
+"Plug 'nathanaelkane/vim-indent-guides'
 
-Plugin 'TimothyYe/vim-tips'
+Plug 'TimothyYe/vim-tips'
 
 " commenting shortuct
-Plugin 'tomtom/tcomment_vim'
+Plug 'tomtom/tcomment_vim'
 
 " use this for Goyo (theme)
-Plugin 'reedes/vim-colors-pencil'
+Plug 'reedes/vim-colors-pencil'
 
 " improved terminal/vim integration
-Plugin 'wincent/terminus'
+Plug 'wincent/terminus'
 " python IDE mode...
 
 "debugging... try comment out if python ide problem...
@@ -213,19 +253,23 @@ Plugin 'wincent/terminus'
 " for skipping to a word in a file
 
 " statusline
-Plugin 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline'
 
-" Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'junegunn/fzf.vim'
+" Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf.vim'
 " enable fzf from homebrew install
 set rtp+=/usr/local/opt/fzf
 
-
+let g:airline#extensions#show_splits = 1
+let g:airline#extensions#buffer_nr_show = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_section_c='%t'
+let g:airline#extensions#tabline#fnamemod = ':p:.'
+"
+nnoremap gb :ls<CR>:buffer<Space>
 
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 
 
@@ -240,29 +284,46 @@ set writebackup
 set incsearch           " search as characters are entered (not working?)
 set hlsearch            " highlight matches
 
-" All of your Plugins must be added before the following line
+" All of your Plugs must be added before the following line
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
 " Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+" :PlugList       - lists configured plugins
+" :PlugInstall    - installs plugins; append `!` to update or just :PlugUpdate
+" :PlugSearch foo - searches for foo; append `!` to refresh local cache
+" :PlugClean      - confirms removal of unused plugins; append `!` to auto-approve removal
 "
 " see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Put your non-Plug stuff after this line
 
 " MY REMAPPINGS
 " nnoremap - mapping for normal mode
 " inoremap - mapping for insert mode
 " vnoremap - mapping for visual mode
+
 " cnoremap - mapping for command (colon) mode
-"
+" nnoremap ; :
+" nnoremap : ;
+" vnoremap ; :
+" vnoremap : ;
+
+function! AddCommands()
+
+  for commandName in ["One", "Two", "Three"]
+    " Adds a command that, when executed, prints its own name
+    execute "command! " . commandName . " echom \"" . commandName . "\""
+  endfor
+
+endfunction
+
+" Factorus bindings
+cnoremap getset FEncapsulate
+"command! [atribute] ENC <esc>iwritethis
+" "
 " execute a cpp program
 cnoremap runc !./%<<return>
 cnoremap tree NERDTree
-nnoremap :n<CR> :NERDTreeToggle<CR>
 nnoremap <leader>n :NERDTreeToggle<CR>
 cnoremap src source %
 
@@ -272,18 +333,20 @@ cnoremap <D-j> !javac %< <return> !java %<
 
 " execute a python program
 " nnoremap <buffer><D-9> :exec '!python3' shellescape(@%, 1)<cr>
+autocmd FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<cr>
+" ?
+autocmd FileType java nnoremap <expr> write <esc>
 
 " compile / run with auto identify for file type
 " autocmd FileType java nnoremap <buffer> 9 :!javac %<.java <return> :!java %<
 " autocmd FileType java inoremap <buffer> 9 <esc>:!javac %<.java <return> :!java %<
 
-" autocmd FileType java nnoremap <buffer> - :!javac %<.java <return>
-" autocmd FileType java nnoremap <buffer> <CR> :!java %< <return>
+autocmd FileType java nnoremap <buffer> <leader>c :!javac %<.java <return>
+autocmd FileType java nnoremap <buffer> <leader>r :!java %< <return>
 
 " autocmd FileType java nnoremap <buffer> <space> :!javac %<.java <return>
 " autocmd FileType java nnoremap <buffer> - :!java %< <return>
 
-autocmd FileType python nnoremap <buffer> 9 :exec '!python3' shellescape(@%, 1)<cr>
 
 " use *cmd-beginning curly bracket* to create both brackets, move inside them
 " then indent ready to code
@@ -319,25 +382,20 @@ inoremap <Right> <C-o>:echo "No right for you!"<CR>
 imap <up> <NOP>
 imap <down> <NOP> 
 imap <left> <NOP>
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
-" " set statusline += '%F'
-"
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_check_on_open = 1
-" let g:syntastic_check_on_wq = 0
-"
-" " YCM settings
-" let g:ycm_show_diagnostics_ui = 0
 
 " sneak settings
 let g:sneak#label = 1
 map f <Plug>Sneak_s
 map F <Plug>Sneak_S
 
+" nmap f <Plug>SneakLabel_s
+" nmap F <Plug>>SneakLabel_S
+
 " disable mouse...
 set mouse=
+" enable clipboard to work with outer os
+" not yet working as I have not yet compiled vim with the keyboard
+set clipboard=unnamedplus
 
 set noswapfile
 
@@ -348,6 +406,10 @@ endif
 cnoremap Tabc Tabularize /\/\/
 
 noremap <CR> <C-W><C-W>
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
 
 " nnoremap 1 :QuickRun<return>
 
@@ -356,7 +418,9 @@ let g:move_key_modifier = 'C'
 map  :source %
 
 " noremap  :open .vimrc
-noremap ≥ :open .vimrc<return>
+" open my vimrc from normal mode
+nnoremap ≥ :e ~/.vimrc<CR>
+nnoremap <leader>. :e ~/.vimrc<CR>
 
 inoremap  System.out.println();<left><left>
 inoremap ß System.out.println();<left><left>
@@ -365,41 +429,6 @@ imap µ public<space>static<space>void<space>main(String<space>args[])<return><D
 
 noremap <C-a> :source %<return>
 
-" SMOOTHSCROLLING
-" Update: I have now pushed this code, refactored somewhat according to the guidelines at :help write-plugin, to a Github repo.
-
-" Using the Keyboard
-" Here is what I have in my .vimrc:
-" function SmoothScroll(up)
-"     if a:up
-"         let scrollaction="\<C-y>"
-"     else
-"         let scrollaction="\<C-e>"
-"     endif
-"     exec "normal " . scrollaction
-"     redraw
-"     let counter=1
-"     while counter<&scroll
-"         let counter+=1
-"         sleep 10m
-"         redraw
-"         exec "normal " . scrollaction
-"     endwhile
-" endfunction
-"
-" nnoremap <C-U> :call SmoothScroll(1)<Enter>
-" nnoremap <C-D> :call SmoothScroll(0)<Enter>
-" inoremap <C-U> <Esc>:call SmoothScroll(1)<Enter>i
-" inoremap <C-D> <Esc>:call SmoothScroll(0)<Enter>i
-"
-" noremap <silent> <c-e> :call smooth_scroll#down(&scroll/2, 0, 1)<CR>
-"
-" noremap <silent> <c-y> :call smooth_scroll#up(&scroll/2, 2, 1)<CR>
-"
-" noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
-" noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
-" noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
-" noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
 
 " toggle modes on startup to fix cursor appearance
 autocmd VimEnter * execute "normal :startinsert"
@@ -416,9 +445,43 @@ colorscheme gruvbox
 " nmap <silent> <leader>b <Plug>(ale_previous_wrap) 
 nmap <silent> <leader>e <Plug>(ale_next_wrap)
 
-"mappings for fzf
-nnoremap <C-f> :Files<return>
+
+" fzf-vim-commands 
+" -----------------+-----------------------------------------------------------------------
+" Command          | List                                                                  ~
+" -----------------+-----------------------------------------------------------------------
+"  `Files [PATH]`    | Files (similar to  `:FZF` )
 nnoremap <leader>f :Files<CR>
+"  `GFiles [OPTS]`   | Git files ( `git ls-files` )
+nnoremap <leader>G :GFiles<CR>
+"  `GFiles?`         | Git files ( `git status` )
+nnoremap <leader>gs :GFiles?<CR>
+"  `Buffers`         | Open buffers
+nnoremap <leader>b :Buffers<CR>
+"  `Colors`          | Color schemes
+"  `Ag [PATTERN]`    | {ag}{6} search result ( `ALT-A`  to select all,  `ALT-D`  to deselect all)
+"  `Lines [QUERY]`   | Lines in loaded buffers
+nnoremap <leader>l :Lines<CR>
+"  `BLines [QUERY]`  | Lines in the current buffer
+"  `Tags [QUERY]`    | Tags in the project ( `ctags -R` )
+nnoremap <leader>T :Tags<CR>
+"  `BTags [QUERY]`   | Tags in the current buffer
+"  `Marks`           | Marks
+"  `Windows`         | Windows
+"  `Locate PATTERN`  |  `locate`  command output
+"  `History`         |  `v:oldfiles`  and open buffers
+"  `History:`        | Command history
+"  `History/`        | Search history
+"  `Snippets`        | Snippets ({UltiSnips}{7})
+"  `Commits`         | Git commits (requires {fugitive.vim}{8})
+nnoremap <leader>C :Commits<CR>
+"  `BCommits`        | Git commits for the current buffer
+" nnoremap <leader>C :BCommits<CR>
+"  `Commands`        | Commands
+"  `Maps`            | Normal mode mappings
+"  `Helptags`        | Help tags [1]
+"  `Filetypes`       | File types
+" -----------------+-----------------------------------------------------------------------
 
 set showcmd
 
