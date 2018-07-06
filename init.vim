@@ -1,3 +1,4 @@
+edit
 filetype indent on      " load filetype-specific indent files
 syntax on " nice to have
 let mapleader = ' ' 
