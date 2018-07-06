@@ -42,8 +42,11 @@ call plug#begin()
 " statusline
 " Plug 'vim-airline/vim-airline' cursor shape, pasting, mouse support etc
 "something to do witn interfaecs?
+Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jacoborus/tender.vim'
 Plug 'shougo/denite.nvim'
+Plug 'shougo/echodoc.vim'
+Plug 'shougo/neomru.vim' " browse most recently used files
 Plug 'bling/vim-airline'
 " numbers tabs
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -58,7 +61,6 @@ let g:NERDTreeHighlightFoldersFullName = 1
 Plug 'tpope/vim-eunuch' " Unix file operations in vim
 Plug 'vim-scripts/Gundo' " requires python2...
 " Plug 'ervandew/supertab'
-Plug 'ryanoasis/vim-devicons'
 " adding to vim-airline's statusline
 let g:webdevicons_enable_airline_statusline = 1
 let g:webdevicons_enable_airline_tabline = 1
@@ -76,6 +78,11 @@ nnoremap <leader>d :OnlineThesaurusCurrentWord<CR>
 Plug 'junegunn/vim-pseudocl' " ?
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/vim-fnr'
+Plug 'junegunn/vim-easy-align'
+" start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 "Normal mode
 " <Leader>r<Movement> - Substitution in the range
 " <Leader>R - Substitution of the word under the cursor in the entire document
@@ -143,6 +150,7 @@ Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move' 
 " Plug 'Conque-GDB'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plug 'L9'
 " Git plugin not hosted on GitHub
@@ -203,6 +211,7 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_or_target)
 "
 "COMPLETION
+Plug 'artur-shaik/vim-javacomplete2'
 " Plug 'ervandew/supertab'
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -218,6 +227,8 @@ Plug 'zchee/deoplete-clang'
 " deoplete tab completion
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" PYTHON
+Plug 'zchee/deoplete-jedi'
 " tag manager?
 Plug 'ludovicchabant/vim-gutentags'
 
@@ -242,7 +253,7 @@ Plug 'wincent/terminus'
 
 "PYTHON
 "TODO
-Plug 'davidhalter/jedi-vim'
+" Plug 'davidhalter/jedi-vim'
 " python IDE mode...
 
 "debugging... try comment out if python ide problem...
@@ -262,6 +273,7 @@ Plug 'davidhalter/jedi-vim'
 
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf.vim'
+Plug 'ryanoasis/vim-devicons'
 " enable fzf from homebrew install
 set rtp+=/usr/local/opt/fzf
 
@@ -403,7 +415,7 @@ if has ('win32') || has('win64')
     let &shell='cmd.exe'
 endif
 
-cnoremap Tabc Tabularize /\/\/
+cnoremap align Tabularize /\/\/
 
 " Cycle between panes
 noremap <CR> <C-W><C-W>
