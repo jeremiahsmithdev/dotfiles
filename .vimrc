@@ -551,3 +551,6 @@ endif
 let g:webdevicons_enable_airline_statusline = 1
 let g:DevIconsEnableFolderExtensionPatternMatching = 1
 
+set nocursorline
+
+highlight Comment ctermbg=Green

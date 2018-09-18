@@ -1,7 +1,6 @@
-edit
 filetype indent on      " load filetype-specific indent files
 syntax on " nice to have
-let mapleader = ' ' 
+let mapleader = ' '
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags' " for tagbar
 set shell=bash
 set termguicolors
@@ -10,7 +9,7 @@ set autoread
 set autochdir " set working directory to current file
 set relativenumber number " hybrid numbering mdoe
 set showcmd             " show command in bottom bar
-set cursorline          " highlight current line
+" set cursorline          " highlight current line
 set wildmenu            " visual autocompleme for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
@@ -41,7 +40,11 @@ nnoremap <A-.> :e ~/.vimrc<cr>
 " PLUGINS
 call plug#begin()
 " statusline
+Plug 'critiqjo/lldb.nvim'
+
+" Plug 'bronson/vim-trailing-whitespace'
 " Plug 'vim-airline/vim-airline' cursor shape, pasting, mouse support etc
+Plug 'lekv/vim-clewn'
 "something to do witn interfaecs?
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jacoborus/tender.vim'
@@ -49,6 +52,32 @@ Plug 'shougo/denite.nvim'
 Plug 'shougo/echodoc.vim'
 Plug 'shougo/neomru.vim' " browse most recently used files
 Plug 'bling/vim-airline'
+
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
+Plug 'mattn/webapi-vim'
+Plug 'Wildog/airline-weather.vim'
+let g:weather#area='sydney,aus'
+let g:weather#status_map = {
+			\ "01d": "☀",
+			\ "02d": "☁",
+			\ "03d": "☁",
+			\ "04d": "☁",
+			\ "09d": "☂",
+			\ "10d": "☂",
+			\ "11d": "☈",
+			\ "13d": "❅",
+			\ "50d": "≡",
+			\ "01n": "☽",
+			\ "02n": "☁",
+			\ "03n": "☁",
+			\ "04n": "☁",
+			\ "09n": "☂",
+			\ "10n": "☂",
+			\ "11n": "☈",
+			\ "13n": "❅",
+			\ "50n": "≡",
+			\}
 " numbers tabs
 let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Plug 'teddywing/auditory.vim'
@@ -60,6 +89,7 @@ Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " colours for devicons/nerdtree
 let g:NERDTreeHighlightFolders = 1
 let g:NERDTreeHighlightFoldersFullName = 1
 Plug 'tpope/vim-eunuch' " Unix file operations in vim
+Plug 'tpope/vim-dispatch'	" testing... TPOPE!
 Plug 'vim-scripts/Gundo' " requires python2...
 " Plug 'ervandew/supertab'
 " adding to vim-airline's statusline
@@ -99,9 +129,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
 let g:vimwiki_folding = 'syntax'
 " To use Markdown's wiki markup:
-let g:vimwiki_list = [{'path': '~vimwiki/',
+let g:vimwiki_list = [{'path': '~wiki/',
 			\ 'syntax': 'markdown', 'ext': '.md'}]
-
 
 " normal mode:
 
@@ -127,7 +156,7 @@ set mouse=niv
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
-  " Optional:
+" Optional:
 Plug 'honza/vim-snippets'
 Plug 'LucHermitte/vim-refactor'
 " Plug 'tpope/vim-surround'
@@ -148,7 +177,7 @@ nnoremap <silent> <ScrollWheelUp> :call smooth_scroll#up(&scroll, 0, 1)<CR>
 " let g:comfortable_motion_friction = 200.0
 " let g:comfortable_motion_air_drag = 5.0
 Plug 'majutsushi/tagbar'
-Plug 'matze/vim-move' 
+Plug 'matze/vim-move'
 " Plug 'Conque-GDB'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
@@ -181,16 +210,19 @@ let g:ale_sign_warning = '⚠'
 Plug 'justinmk/vim-sneak'
 
 Plug 'morhetz/gruvbox'
+Plug 'javipolo/vim'
 
 " Plug 'easymotion/vim-easymotion'
 
 " “Plug 'altercation/vim-colors-solarized'
-			
+
 " install (prerequisite for vebugger)
 " Plug 'Shougo/vimproc.vim'
 
 " install (debugger)
 Plug 'idanarye/vim-vebugger'
+" set leader for vebugger
+let g:vebugger_leader='<leader>v'
 
 
 " let g:completor_python_binary = '/usr/local/lib/python3.6/site-packages'
@@ -256,21 +288,6 @@ Plug 'wincent/terminus'
 "TODO
 " Plug 'davidhalter/jedi-vim'
 " python IDE mode...
-
-"debugging... try comment out if python ide problem...
-" function! s:goyo_enter()
-" 	colorscheme pencil
-" endfunction
-"
-" function! s:goyo_leave()
-" 	colorscheme gruvbox
-" endfunction
-"
-" autocmd! User GoyoEnter nested call <SID>goyo_enter()
-" autocmd! User GoyoEnter nested call <SID>goyo_leave()
-
-" for skipping to a word in a file
-
 
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf.vim'
@@ -345,18 +362,18 @@ nnoremap <leader>u :GundoToggle<CR>
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
 nnoremap gV `[v`] " highlight last inserted text
 nnoremap <leader>s :mksession<CR>
-nnoremap ^[0M i<CR><Esc>   
-cnoremap df :!rm % <CR>:bd<CR>
+nnoremap ^[0M i<CR><Esc>
+cnoremap df<CR> :!rm % <CR>:bd<CR>
 filetype off
 nnoremap \f za
 function! AddCommands()
-  for commandName in ["One", "Two", "Three"]
-    " Adds a command that, when executed, prints its own name
-    execute "command! " . commandName . " echom \"" . commandName . "\""
-  endfor
+	for commandName in ["One", "Two", "Three"]
+		" Adds a command that, when executed, prints its own name
+		execute "command! " . commandName . " echom \"" . commandName . "\""
+	endfor
 endfunction
 " Factorus bindings
-cnoremap getset FEncapsulate 
+cnoremap getset FEncapsulate
 "command! [atribute] ENC <esc>iwritethis
 " execute a cpp program
 cnoremap runc !./%<<return>
@@ -374,8 +391,14 @@ autocmd FileType java nnoremap <expr> write <esc>
 " compile / run with auto identify for file type
 " autocmd FileType java nnoremap <buffer> 9 :!javac %<.java <return> :!java %<
 " autocmd FileType java inoremap <buffer> 9 <esc>:!javac %<.java <return> :!java %<
-autocmd FileType java nnoremap <buffer> <leader>c :!javac %<.java <return>
-autocmd FileType java nnoremap <buffer> <leader>r :!java %< <return>
+autocmd FileType java nnoremap <buffer> <leader>c :!javac % <return>
+autocmd FileType java nnoremap <buffer> <leader>r :!java %< datafile1.txt <return>
+autocmd FileType java nnoremap <buffer> <leader>d3 :!java %< datafile3.txt <return>
+
+autocmd FileType java nnoremap <buffer> <leader><leader> :!java %< datafile2.txt <return>
+" GO
+autocmd FileType go nnoremap <buffer> <leader>r :!go run % <return>
+autocmd FileType go nnoremap <buffer> <leader>c :!go build % <return>
 " autocmd FileType java nnoremap <buffer> <space> :!javac %<.java <return>
 " autocmd FileType java nnoremap <buffer> - :!java %< <return>
 " use *cmd-beginning curly bracket* to create both brackets, move inside them
@@ -398,7 +421,7 @@ nnoremap <Right> :echo "No right for you!"<CR>
 vnoremap <Right> :<C-u>echo "No right for you!"<CR>
 inoremap <Right> <C-o>:echo "No right for you!"<CR>
 imap <up> <NOP>
-imap <down> <NOP> 
+imap <down> <NOP>
 imap <left> <NOP>
 " sneak settings
 let g:sneak#label = 1
@@ -413,10 +436,13 @@ set clipboard=unnamed
 set noswapfile
 
 if has ('win32') || has('win64')
-    let &shell='cmd.exe'
+	let &shell='cmd.exe'
 endif
 
+" aligns selected comments
 cnoremap align Tabularize /\/\/
+" aligns all comments in buffer
+cmap Align <CR>ggvG:align
 
 " Cycle between panes
 noremap <CR> <C-W><C-W>
@@ -448,7 +474,7 @@ noremap <C-a> :source %<return>
 autocmd VimEnter * execute "normal :startinsert"
 
 " no change..
-" :let g:gruvbox_number_column = 
+" :let g:gruvbox_number_column =
 " :let g:gruvbox_sign_column = 'green'
 " :let g:gruvbox_color_column = 'green'
 " :let gruvbox_vert_split = 'bg3'
@@ -463,14 +489,16 @@ autocmd VimEnter * execute "normal :startinsert"
 set background=dark
 let g:gruvbox_contrast_dark = 'soft'
 colorscheme gruvbox
+
+" colorscheme javipolo
 " colorscheme tender
 
 "leader b is taken by buffergator...
-" nmap <silent> <leader>b <Plug>(ale_previous_wrap) 
+" nmap <silent> <leader>b <Plug>(ale_previous_wrap)
 nmap <silent> <leader>e <Plug>(ale_next_wrap)
 
 
-" fzf-vim-commands 
+" fzf-vim-commands
 " -----------------+-----------------------------------------------------------------------
 " Command          | List                                                                  ~
 " -----------------+-----------------------------------------------------------------------
@@ -542,53 +570,59 @@ syntax on
 "airline
 " air-line
 let g:airline_powerline_fonts = 1
-
-if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
-endif
-
-" unicode symbols
-let g:airline_left_sep = '»'
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '«'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.linenr = '␊'
-let g:airline_symbols.linenr = '␤'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = 'ρ'
-let g:airline_symbols.paste = 'Þ'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.whitespace = 'Ξ'
-
-" airline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-
+"   if !exists('g:airline_symbols')
+"     let g:airline_symbols = {}
+"   endif
+"
+"   " unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.crypt = '🔒'
+" let g:airline_symbols.linenr = '☰'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.maxlinenr = ''
+" let g:airline_symbols.maxlinenr = '㏑'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.spell = 'Ꞩ'
+" let g:airline_symbols.notexists = 'Ɇ'
+" let g:airline_symbols.whitespace = 'Ξ'
+"
+"   " powerline symbols
+" let g:airline_left_sep = ''
+" let g:airline_left_alt_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_right_alt_sep = ''
+" let g:airline_symbols.branch = ''
+" let g:airline_symbols.readonly = ''
+" let g:airline_symbols.linenr = '☰'
+" let g:airline_symbols.maxlinenr = ''
 
 if system('date +%H') > 18
 	:let astronomical = '☾'
 elseif system('date +%H') < 6
 	:let astronomical = '☾ ᶻᶻ'
 else
-    " colorscheme day
-    :let astronomical = '☀'
+	" colorscheme day
+	:let astronomical = '☀'
 endif
 :let string = 'string'
 
 " :let g:airline_section_b = '%{strftime("\"%I:%M:%S\ \%p,\ %a,\ %b,\ %d,\ %Y\:%H:%M")}'
 " my airline clock
-:let g:airline_section_c = '%t  %{strftime("✈  %a
-			\ \%I:%M%p  ")}' . astronomical . '  ☁ '
+" :let g:airline_section_c = '%t  %{strftime("✈  %a
+" 			\ \%I:%M%p  ")}' . astronomical . '  ☁ '
+
 
 " SNIPPETS
 " /**
-"  * * 
+"  * *
 "  *  * ComparePoly.cpp – Assignment1
 "  *   * @author: Jeremiah Smith
 "  *    * @student Number: c3238179
@@ -597,12 +631,12 @@ endif
 "  *       */
 
 " /**
-"  * * 
+"  * *
 "  *  * fileName - projectName
 "  *   * @author: Jeremiah Smith
 "  *    * @student Number: c3238179
 "  *     * @version: /2018
-"  *      * Description: 
+"  *      * Description:
 "  *       */
 " Plug 'reedes/vim-wheel'
 " let g:wheel#map#up   = '<c-u>'
@@ -624,3 +658,38 @@ endfunction()
 " call above function
 autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 
+" Remember folds
+" autocmd BufWinLeave *.* mkview
+" autocmd BufWinEnter *.* silent loadview
+"
+" augroup AutoSaveFolds
+"   autocmd!
+"   autocmd BufWinLeave *.* mkview
+"   autocmd BufWinEnter *.* silent loadview
+" augroup END
+
+" recommended airline/powerline replacement...
+" set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+"              | | | | |  |   |      |  |     |    |
+"              | | | | |  |   |      |  |     |    +-- current column
+"              | | | | |  |   |      |  |     +-- current line
+"              | | | | |  |   |      |  +-- current % into file
+"              | | | | |  |   |      +-- current syntax
+"              | | | | |  |   +-- current fileformat
+"              | | | | |  +-- number of lines
+"              | | | | +-- preview flag in square brackets
+"              | | | +-- help flag in square brackets
+"              | | +-- readonly flag in square brackets
+"              | +-- rodified flag in square brackets
+"              +-- full path to file in the buffer
+"
+"
+
+" anaglyph vision tranining
+highlight Comment ctermbg=Green
+highlight Comment ctermbg=DarkGrey
+" syntax enable
+set nocursorline
+
+set list          " Display unprintable characters f12 - switches
+set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mappingyntax on
