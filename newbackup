@@ -1,6 +1,7 @@
+
 filetype indent on      " load filetype-specific indent files
 syntax on " nice to have
-let mapleader = ' '
+let mapleader = ' ' 
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags' " for tagbar
 set shell=bash
 set termguicolors
@@ -9,14 +10,14 @@ set autoread
 set autochdir " set working directory to current file
 set relativenumber number " hybrid numbering mdoe
 set showcmd             " show command in bottom bar
-" set cursorline          " highlight current line
+set cursorline          " highlight current line
 set wildmenu            " visual autocompleme for command menu
 set lazyredraw          " redraw only when we need to.
 set showmatch           " highlight matching [{()}]
 set title " show file path of current file in window title
 set hidden " allow edited buffers to hide
 set foldmethod=syntax
-set foldlevelstart=999 " 0 is all closed, 1 is some closed
+set foldlevelstart=1 " 0 is all closed, 1 is some closed
 set encoding=UTF-8
 filetype plugin on
 set hlsearch " better searches
@@ -29,72 +30,53 @@ set ttyfast
 set t_8f=^[[38;2;%lu;%lu;%lum  " Needed in tmux
 set t_8b=^[[48;2;%lu;%lu;%lum  " Ditto
 
-
 " change option codes to vim alt codes for remapping
 " execute "set <A-.>=\e."
 " execute "set <A-j>=\ej"
 " execute "set <A-k>=\ek"
 nnoremap <A-.> :e ~/.vimrc<cr>
-"clear highlight./s (plugin by Junegunne Choi)
+"clear highlights
+
 
 " PLUGINS
 call plug#begin()
 " statusline
-"
-" REVIEW BEFORE INSTALLING:
-" Plug 'devjoe/vim-codequery'	'Search + Browse + Understand your code more
-" efficiently
-" Plug 'ensime/ensime-vim'	" Scale IDE features...
-"
-" REQUIRES TESTING:
-Plug 'tpope/vim-repeat'
-Plug 'wellle/targets.vim'	" provides additional text objects e.g. 'cin(' = (and) -> (for)
-Plug 'sheerun/vim-polyglot'	" A solic language pack - 'One to rule them all, one to bring them all and in the dark to bind them.
-
-Plug 'wellle/visual-split.vim'	" control splits with visual selections or text objects
-"recommended for deoplete:
-Plug 'Shougo/neopairs.vim'
-" Plug 'fsss1/pydoc.vim'
-Plug 'Raimondi/delimitMate'	" auto-completion for quotes, parens,brackets, etc.
-
-Plug 'christoomey/vim-conflicted'	" wrapper for fugitive for merging conflicts
-Plug 'critiqjo/lldb.nvim'
-Plug 'tpope/vim-rhubarb'
-
-" Plug 'bronson/vim-trailing-whitespace'
 " Plug 'vim-airline/vim-airline' cursor shape, pasting, mouse support etc
-Plug 'lekv/vim-clewn'
 "something to do witn interfaecs?
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jacoborus/tender.vim'
 Plug 'shougo/denite.nvim'
-Plug 'shougo/echodoc.vim'
-Plug 'shougo/neomru.vim' " browse most recently used files
 Plug 'bling/vim-airline'
-
-Plug 'mattn/webapi-vim'
-Plug 'Wildog/airline-weather.vim'
+" numbers tabs
+let g:airline#extensions#tabline#buffer_idx_mode = 1
 " Plug 'teddywing/auditory.vim'
 Plug 'rizzatti/dash.vim'
 Plug 'koron/minimap-vim'
 Plug 'thinca/vim-ref'
 Plug 'chriskempson/base16-vim'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " colours for devicons/nerdtree
+let g:NERDTreeHighlightFolders = 1
+let g:NERDTreeHighlightFoldersFullName = 1
 Plug 'tpope/vim-eunuch' " Unix file operations in vim
-Plug 'tpope/vim-dispatch'	" testing... TPOPE!
-Plug 'mbbill/undotree'
-
+Plug 'vim-scripts/Gundo' " requires python2...
 " Plug 'ervandew/supertab'
+Plug 'ryanoasis/vim-devicons'
 " adding to vim-airline's statusline
+let g:webdevicons_enable_airline_statusline = 1
+let g:webdevicons_enable_airline_tabline = 1
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1 " enable folder glyph flag
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:DevIconsEnableFolderExtensionPatternMatching = 1
+let g:webdevicons_conceal_nerdtree_brackets = 1
 Plug 'justinmk/vim-gtfo' " go to terminal or file manager in current directory
+let g:gtfo#terminals = { 'mac': 'iterm' }
 Plug 'Yggdroot/indentLine'
 Plug 'mhinz/vim-startify'
 Plug 'beloglazov/vim-online-thesaurus'
-Plug 'junegunn/vim-pseudocl' " required for vim-fnr (find and replace), 'a pseudo command line'
+let g:online_thesaurus_map_keys = 0
+nnoremap <leader>d :OnlineThesaurusCurrentWord<CR>
+Plug 'junegunn/vim-pseudocl' " ?
 Plug 'junegunn/limelight.vim'
-Plug 'junegunn/vim-fnr'		" visual find and replace, mapped to <leader>R
-Plug 'junegunn/vim-easy-align'
-" start interactive EasyAlign in visual mode (e.g. vipga)
+Plug 'junegunn/vim-fnr'
 "Normal mode
 " <Leader>r<Movement> - Substitution in the range
 " <Leader>R - Substitution of the word under the cursor in the entire document
@@ -103,17 +85,16 @@ Plug 'junegunn/vim-easy-align'
 " <Leader>R - Substitution of the selected string in the entire document
 " Command line
 " :<Range>FNR
-Plug 'junegunn/vim-peekaboo'		" extends '' and @ functionality with a view of register contents
-Plug 'junegunn/vim-xmark'		" live markdown preview for Vim on macOS
-
+Plug 'junegunn/vim-peekaboo'
 " lug 'junegunn/vim-github-dashboard'
 Plug 'junegunn/vim-slash' " automatically clears highligting after search++
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'	" apprarently faster than gitgutter
-
+Plug 'airblade/vim-gitgutter'
 Plug 'vimwiki/vimwiki'
+let g:vimwiki_folding = 'syntax'
 " To use Markdown's wiki markup:
+let g:vimwiki_list = [{'path': '~vimwiki/',
 			\ 'syntax': 'markdown', 'ext': '.md'}]
+
 
 " normal mode:
 
@@ -136,22 +117,33 @@ Plug 'vimwiki/vimwiki'
 "snipmate
 silent! set ttymouse=xterm2
 set mouse=niv
-Plug 'reedes/vim-wheel'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'garbas/vim-snipmate'
-" Optional:
+  " Optional:
 Plug 'honza/vim-snippets'
 Plug 'LucHermitte/vim-refactor'
-Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-surround'
 Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'apalmer1377/factorus'
+Plug 'terryma/vim-smooth-scroll'
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 0, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 0, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 0, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 0, 4)<CR>
+
+nnoremap <silent> <ScrollWheelDown> :call smooth_scroll#down(&scroll, 0, 1)<CR>
+nnoremap <silent> <ScrollWheelUp> :call smooth_scroll#up(&scroll, 0, 1)<CR>
+" Plug 'yuttie/comfortable-motion.vim' "SCROLLING
+" noremap <silent> <ScrollWheelDown> :call comfortable_motion#flick(60)<CR>
+" noremap <silent> <ScrollWheelUp> :call comfortable_motion#flick(-60)<CR>
+" let g:comfortable_motion_friction = 200.0
+" let g:comfortable_motion_air_drag = 5.0
 Plug 'majutsushi/tagbar'
-Plug 'matze/vim-move'
+Plug 'matze/vim-move' 
 " Plug 'Conque-GDB'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plug 'L9'
 " Git plugin not hosted on GitHub
@@ -172,6 +164,8 @@ Plug 'godlygeek/tabular'
 " best plugin ever (when it works)
 " Plug 'scrooloose/syntastic'
 Plug 'w0rp/ale'
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
 
 " Plug 'Buffergator'
 
@@ -179,19 +173,16 @@ Plug 'w0rp/ale'
 Plug 'justinmk/vim-sneak'
 
 Plug 'morhetz/gruvbox'
-Plug 'javipolo/vim'
 
 " Plug 'easymotion/vim-easymotion'
 
 " “Plug 'altercation/vim-colors-solarized'
-
+			
 " install (prerequisite for vebugger)
 " Plug 'Shougo/vimproc.vim'
 
 " install (debugger)
 Plug 'idanarye/vim-vebugger'
-" set leader for vebugger
-let g:vebugger_leader='<leader>v'
 
 
 " let g:completor_python_binary = '/usr/local/lib/python3.6/site-packages'
@@ -213,7 +204,6 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_or_target)
 "
 "COMPLETION
-Plug 'artur-shaik/vim-javacomplete2'
 " Plug 'ervandew/supertab'
 if has('nvim')
 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -229,8 +219,6 @@ Plug 'zchee/deoplete-clang'
 " deoplete tab completion
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" PYTHON
-Plug 'zchee/deoplete-jedi'
 " tag manager?
 Plug 'ludovicchabant/vim-gutentags'
 
@@ -252,19 +240,25 @@ Plug 'reedes/vim-colors-pencil'
 
 " improved terminal/vim integration
 Plug 'wincent/terminus'
-
-"PYTHON
-"TODO
-Plug 'davidhalter/jedi-vim'
-Plug 'starcraftman/vim-eclim' " Eclipse functionality in the Vim editor
-" Plug 'ervandew/eclim'
 " python IDE mode...
+
+"debugging... try comment out if python ide problem...
+" function! s:goyo_enter()
+" 	colorscheme pencil
+" endfunction
+"
+" function! s:goyo_leave()
+" 	colorscheme gruvbox
+" endfunction
+"
+" autocmd! User GoyoEnter nested call <SID>goyo_enter()
+" autocmd! User GoyoEnter nested call <SID>goyo_leave()
+
+" for skipping to a word in a file
+
 
 " Plug 'ctrlpvim/ctrlp.vim'
 Plug 'junegunn/fzf.vim'
-Plug 'ryanoasis/vim-devicons'
-let g:ale_sign_error = '✗'	" ale settings
-let g:ale_sign_warning = '⚠'
 " enable fzf from homebrew install
 set rtp+=/usr/local/opt/fzf
 
@@ -279,52 +273,6 @@ nnoremap gb :ls<CR>:buffer<Space>
 
 call plug#end()            " required
 filetype plugin indent on    " required
-
-" ===== ECLIM SETTINGS =====
-noremap <leader>j :JavaDocPreview<CR>
-let g:EclimFileTypeValidate = 0
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:weather#area='sydney,aus'
-let g:weather#status_map = {
-			\ "01d": "☀",
-			\ "02d": "☁",
-			\ "03d": "☁",
-			\ "04d": "☁",
-			\ "09d": "☂",
-			\ "10d": "☂",
-			\ "11d": "☈",
-			\ "13d": "❅",
-			\ "50d": "≡",
-			\ "01n": "☽",
-			\ "02n": "☁",
-			\ "03n": "☁",
-			\ "04n": "☁",
-			\ "09n": "☂",
-			\ "10n": "☂",
-			\ "11n": "☈",
-			\ "13n": "❅",
-			\ "50n": "≡",
-			\}
-" numbers tabs
-let g:airline#extensions#tabline#buffer_idx_mode = 1
-let g:NERDTreeHighlightFolders = 1
-let g:NERDTreeHighlightFoldersFullName = 1
-let g:webdevicons_enable_airline_statusline = 1
-let g:webdevicons_enable_airline_tabline = 1
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1 " enable folder glyph flag
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:DevIconsEnableFolderExtensionPatternMatching = 1
-let g:webdevicons_conceal_nerdtree_brackets = 1
-let g:gtfo#terminals = { 'mac': 'iterm' }
-let g:online_thesaurus_map_keys = 0
-nnoremap <leader>d :OnlineThesaurusCurrentWord<CR>
-xmap ga <Plug>(EasyAlign)
-" start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-let g:vimwiki_folding = 'syntax'
-let g:vimwiki_list = [{'path': '~wiki/',
-" ===== END ECLIM SETTIGNS =====
 
 
 " backup If you leave a Vim process open in which you've changed file, Vim creates a "backup" file. Then, when you open the file from a different Vim session, Vim knows to complain “at you for trying to edit a file that is already being edited. The "backup" file is created by appending a ~ to the end of the file in the current directory. This can get quite  annoying when browsing around a directory, so I applied the following settings to move backups to the /tmp folder.
@@ -376,24 +324,23 @@ nnoremap <c-h> <C-w>h
 nnoremap <c-l> <C-w>l
 nmap <leader>k :nohlsearch<CR>
 cnoremap qq q!
-" nnoremap <leader>u :GundoToggle<CR>
-nnoremap <leader>u :UndotreeToggle<CR>
+nnoremap <leader>u :GundoToggle<CR>
 " cnoremap tt TagbarToggle<CR>
 nnoremap <leader>t :TagbarOpenAutoClose<CR>
 nnoremap gV `[v`] " highlight last inserted text
 nnoremap <leader>s :mksession<CR>
-nnoremap ^[0M i<CR><Esc>
-cnoremap df<CR> :!rm % <CR>:bd<CR>
+nnoremap ^[0M i<CR><Esc>   
+cnoremap df :!rm % <CR>:bd<CR>
 filetype off
 nnoremap \f za
 function! AddCommands()
-	for commandName in ["One", "Two", "Three"]
-		" Adds a command that, when executed, prints its own name
-		execute "command! " . commandName . " echom \"" . commandName . "\""
-	endfor
+  for commandName in ["One", "Two", "Three"]
+    " Adds a command that, when executed, prints its own name
+    execute "command! " . commandName . " echom \"" . commandName . "\""
+  endfor
 endfunction
 " Factorus bindings
-cnoremap getset JavaGetSet
+cnoremap getset FEncapsulate 
 "command! [atribute] ENC <esc>iwritethis
 " execute a cpp program
 cnoremap runc !./%<<return>
@@ -411,15 +358,8 @@ autocmd FileType java nnoremap <expr> write <esc>
 " compile / run with auto identify for file type
 " autocmd FileType java nnoremap <buffer> 9 :!javac %<.java <return> :!java %<
 " autocmd FileType java inoremap <buffer> 9 <esc>:!javac %<.java <return> :!java %<
-autocmd FileType java nnoremap <buffer> <leader>c :!javac % <return>
-autocmd FileType java nnoremap <buffer> <leader>g :!rm *.class; javac % <return>
+autocmd FileType java nnoremap <buffer> <leader>c :!javac %<.java <return>
 autocmd FileType java nnoremap <buffer> <leader>r :!java %< <return>
-" autocmd FileType java nnoremap <buffer> <leader>d3 :!java %< .txt <return>
-
-autocmd FileType java nnoremap <buffer> <leader><leader> :!java %< datafile2.txt <return>
-" GO
-autocmd FileType go nnoremap <buffer> <leader>r :!go run % <return>
-autocmd FileType go nnoremap <buffer> <leader>c :!go build % <return>
 " autocmd FileType java nnoremap <buffer> <space> :!javac %<.java <return>
 " autocmd FileType java nnoremap <buffer> - :!java %< <return>
 " use *cmd-beginning curly bracket* to create both brackets, move inside them
@@ -442,7 +382,7 @@ nnoremap <Right> :echo "No right for you!"<CR>
 vnoremap <Right> :<C-u>echo "No right for you!"<CR>
 inoremap <Right> <C-o>:echo "No right for you!"<CR>
 imap <up> <NOP>
-imap <down> <NOP>
+imap <down> <NOP> 
 imap <left> <NOP>
 " sneak settings
 let g:sneak#label = 1
@@ -457,13 +397,10 @@ set clipboard=unnamed
 set noswapfile
 
 if has ('win32') || has('win64')
-	let &shell='cmd.exe'
+    let &shell='cmd.exe'
 endif
 
-" aligns selected comments
-cnoremap align Tabularize /\/\/
-" aligns all comments in buffer
-cmap Align <CR>ggvG:align
+cnoremap Tabc Tabularize /\/\/
 
 " Cycle between panes
 noremap <CR> <C-W><C-W>
@@ -495,7 +432,7 @@ noremap <C-a> :source %<return>
 autocmd VimEnter * execute "normal :startinsert"
 
 " no change..
-" :let g:gruvbox_number_column =
+" :let g:gruvbox_number_column = 
 " :let g:gruvbox_sign_column = 'green'
 " :let g:gruvbox_color_column = 'green'
 " :let gruvbox_vert_split = 'bg3'
@@ -503,23 +440,22 @@ autocmd VimEnter * execute "normal :startinsert"
 " :let g:gruvbox_invert_tabline = 1
 " :let g:gruvbox_improved_strings = 1
 " :let g:gruvbox_improved_warnings = 1
-" :let g:gruvbox_guisp_fallback = 'fg'
+"
+:let g:gruvbox_guisp_fallback = 'fg'
 :let g:gruvbox_invert_selection = 0
 :let g:gruvbox_termcolors=16
 :let g:gruvbox_italic = 1
 set background=dark
 let g:gruvbox_contrast_dark = 'soft'
 colorscheme gruvbox
-
-" colorscheme javipolo
 " colorscheme tender
 
 "leader b is taken by buffergator...
-" nmap <silent> <leader>b <Plug>(ale_previous_wrap)
+" nmap <silent> <leader>b <Plug>(ale_previous_wrap) 
 nmap <silent> <leader>e <Plug>(ale_next_wrap)
 
 
-" fzf-vim-commands
+" fzf-vim-commands 
 " -----------------+-----------------------------------------------------------------------
 " Command          | List                                                                  ~
 " -----------------+-----------------------------------------------------------------------
@@ -576,11 +512,10 @@ nmap <leader>k :nohlsearch<CR>
 
 " abbreviations
 :abbr ap Appach Web Server
-" autocmd FileType java :abbr print System.out.println();<left>
+autocmd FileType java :abbr print System.out.println();<left>
 " DOCUMENTATION ACCESS
 "PRIMARY - DASH
 nnoremap <leader>d :Dash<cr>
-nnoremap <leader>D :Dash<cr>
 " python NOTE - works in a buffer without this...
 autocmd FileType python nnoremap <buffer> K :<C-u>execute "!pydoc " . expand("<cword>")<CR>
 " CPP
@@ -591,59 +526,53 @@ syntax on
 "airline
 " air-line
 let g:airline_powerline_fonts = 1
-"   if !exists('g:airline_symbols')
-"     let g:airline_symbols = {}
-"   endif
-"
-"   " unicode symbols
-" let g:airline_left_sep = '»'
-" let g:airline_left_sep = '▶'
-" let g:airline_right_sep = '«'
-" let g:airline_right_sep = '◀'
-" let g:airline_symbols.crypt = '🔒'
-" let g:airline_symbols.linenr = '☰'
-" let g:airline_symbols.linenr = '␊'
-" let g:airline_symbols.linenr = '␤'
-" let g:airline_symbols.linenr = '¶'
-" let g:airline_symbols.maxlinenr = ''
-" let g:airline_symbols.maxlinenr = '㏑'
-" let g:airline_symbols.branch = '⎇'
-" let g:airline_symbols.paste = 'ρ'
-" let g:airline_symbols.paste = 'Þ'
-" let g:airline_symbols.paste = '∥'
-" let g:airline_symbols.spell = 'Ꞩ'
-" let g:airline_symbols.notexists = 'Ɇ'
-" let g:airline_symbols.whitespace = 'Ξ'
-"
-"   " powerline symbols
-" let g:airline_left_sep = ''
-" let g:airline_left_alt_sep = ''
-" let g:airline_right_sep = ''
-" let g:airline_right_alt_sep = ''
-" let g:airline_symbols.branch = ''
-" let g:airline_symbols.readonly = ''
-" let g:airline_symbols.linenr = '☰'
-" let g:airline_symbols.maxlinenr = ''
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+
+" unicode symbols
+let g:airline_left_sep = '»'
+let g:airline_left_sep = '▶'
+let g:airline_right_sep = '«'
+let g:airline_right_sep = '◀'
+let g:airline_symbols.linenr = '␊'
+let g:airline_symbols.linenr = '␤'
+let g:airline_symbols.linenr = '¶'
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.paste = 'Þ'
+let g:airline_symbols.paste = '∥'
+let g:airline_symbols.whitespace = 'Ξ'
+
+" airline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
 
 if system('date +%H') > 18
 	:let astronomical = '☾'
 elseif system('date +%H') < 6
 	:let astronomical = '☾ ᶻᶻ'
 else
-	" colorscheme day
-	:let astronomical = '☀'
+    " colorscheme day
+    :let astronomical = '☀'
 endif
 :let string = 'string'
 
 " :let g:airline_section_b = '%{strftime("\"%I:%M:%S\ \%p,\ %a,\ %b,\ %d,\ %Y\:%H:%M")}'
 " my airline clock
-" :let g:airline_section_c = '%t  %{strftime("✈  %a
-" 			\ \%I:%M%p  ")}' . astronomical . '  ☁ '
-
+:let g:airline_section_c = '%t  %{strftime("✈  %a
+			\ \%I:%M%p  ")}' . astronomical . '  ☁ '
 
 " SNIPPETS
 " /**
-"  * *
+"  * * 
 "  *  * ComparePoly.cpp – Assignment1
 "  *   * @author: Jeremiah Smith
 "  *    * @student Number: c3238179
@@ -652,12 +581,12 @@ endif
 "  *       */
 
 " /**
-"  * *
+"  * * 
 "  *  * fileName - projectName
 "  *   * @author: Jeremiah Smith
 "  *    * @student Number: c3238179
 "  *     * @version: /2018
-"  *      * Description:
+"  *      * Description: 
 "  *       */
 " Plug 'reedes/vim-wheel'
 " let g:wheel#map#up   = '<c-u>'
@@ -679,38 +608,3 @@ endfunction()
 " call above function
 autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 
-" Remember folds
-" autocmd BufWinLeave *.* mkview
-" autocmd BufWinEnter *.* silent loadview
-"
-" augroup AutoSaveFolds
-"   autocmd!
-"   autocmd BufWinLeave *.* mkview
-"   autocmd BufWinEnter *.* silent loadview
-" augroup END
-
-" recommended airline/powerline replacement...
-" set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
-"              | | | | |  |   |      |  |     |    |
-"              | | | | |  |   |      |  |     |    +-- current column
-"              | | | | |  |   |      |  |     +-- current line
-"              | | | | |  |   |      |  +-- current % into file
-"              | | | | |  |   |      +-- current syntax
-"              | | | | |  |   +-- current fileformat
-"              | | | | |  +-- number of lines
-"              | | | | +-- preview flag in square brackets
-"              | | | +-- help flag in square brackets
-"              | | +-- readonly flag in square brackets
-"              | +-- rodified flag in square brackets
-"              +-- full path to file in the buffer
-"
-"
-
-" anaglyph vision tranining
-highlight Comment ctermbg=Green
-highlight Comment ctermbg=DarkGrey
-" syntax enable
-set nocursorline
-
-set list          " Display unprintable characters f12 - switches
-set listchars=tab:•\ ,trail:•,extends:»,precedes:« " Unprintable chars mappingyntax onuuuuuuuuuuuuuauuuuuuuuuuu

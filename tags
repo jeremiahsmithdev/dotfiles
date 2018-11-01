@@ -1,0 +1,122 @@
+	init.vim	/^inoremap  System.out.println();<left><left>$/;"	m
+	init.vim	/^map  :source %$/;"	m
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+<A-.>	init.vim	/^nnoremap <A-.> :e ~\/.vimrc<cr>$/;"	m
+<A-.>	init.vim	/^nnoremap <A-.> ~\/.vimrc<cr>$/;"	m
+<C-a>	init.vim	/^noremap <C-a> :source %<return>$/;"	m
+<C-k>	init.vim	/^imap <C-k> <Plug>(neosnippet_expand_or_jump)$/;"	m
+<C-n>	init.vim	/^noremap <C-n> :bn <return>$/;"	m
+<C-p>	init.vim	/^noremap <C-p> :bp <return>$/;"	m
+<CR>	init.vim	/^noremap <CR> <C-W><C-W>$/;"	m
+<D-e>	init.vim	/^inoremap <D-e> <esc>$/;"	m
+<D-j>	init.vim	/^cnoremap <D-j> !javac %< <return> !java %<$/;"	m
+<Down>	init.vim	/^inoremap <Down> <C-o>:echo "No down for you!"<CR>$/;"	m
+<Down>	init.vim	/^nnoremap <Down> :echo "No down for you!"<CR>$/;"	m
+<Down>	init.vim	/^vnoremap <Down> :<C-u>echo "No down for you!"<CR>$/;"	m
+<Left>	init.vim	/^inoremap <Left> <C-o>:echo "No left for you!"<CR>$/;"	m
+<Left>	init.vim	/^nnoremap <Left> :echo "No left for you!"<CR>$/;"	m
+<Left>	init.vim	/^vnoremap <Left> :<C-u>echo "No left for you!"<CR>$/;"	m
+<Right>	init.vim	/^inoremap <Right> <C-o>:echo "No right for you!"<CR>$/;"	m
+<Right>	init.vim	/^nnoremap <Right> :echo "No right for you!"<CR>$/;"	m
+<Right>	init.vim	/^vnoremap <Right> :<C-u>echo "No right for you!"<CR>$/;"	m
+<S-Tab>	init.vim	/^inoremap <expr> <S-Tab> pumvisible() ? "\\<C-p>" : "\\<S-Tab>"$/;"	m
+<Up>	init.vim	/^inoremap <Up> <C-o>:echo "No up for you!"<CR>$/;"	m
+<Up>	init.vim	/^nnoremap <Up> :echo "No up for you!"<CR>$/;"	m
+<Up>	init.vim	/^vnoremap <Up> :<C-u>echo "No up for you!"<CR>$/;"	m
+<c-h>	init.vim	/^nnoremap <c-h> <C-w>h$/;"	m
+<c-j>	init.vim	/^nnoremap <c-j> <C-w>j$/;"	m
+<c-k>	init.vim	/^nnoremap <c-k> <C-w>k$/;"	m
+<c-l>	init.vim	/^nnoremap <c-l> <C-w>l$/;"	m
+<down>	init.vim	/^imap <down> <NOP>$/;"	m
+<leader>.	init.vim	/^nnoremap <leader>. :e ~\/.config\/nvim\/init.vim<CR>$/;"	m
+<leader>1	init.vim	/^nmap <leader>1 <Plug>AirlineSelectTab1$/;"	m
+<leader>2	init.vim	/^nmap <leader>2 <Plug>AirlineSelectTab2$/;"	m
+<leader>3	init.vim	/^nmap <leader>3 <Plug>AirlineSelectTab3$/;"	m
+<leader>4	init.vim	/^nmap <leader>4 <Plug>AirlineSelectTab4$/;"	m
+<leader>5	init.vim	/^nmap <leader>5 <Plug>AirlineSelectTab5$/;"	m
+<leader>6	init.vim	/^nmap <leader>6 <Plug>AirlineSelectTab6$/;"	m
+<leader>7	init.vim	/^nmap <leader>7 <Plug>AirlineSelectTab7$/;"	m
+<leader>8	init.vim	/^nmap <leader>8 <Plug>AirlineSelectTab8$/;"	m
+<leader>9	init.vim	/^nmap <leader>9 <Plug>AirlineSelectTab9$/;"	m
+<leader>C	init.vim	/^nnoremap <leader>C :Commits<CR>$/;"	m
+<leader>D	init.vim	/^nnoremap <leader>D :Dash<cr>$/;"	m
+<leader>G	init.vim	/^nnoremap <leader>G :GFiles<CR>$/;"	m
+<leader>T	init.vim	/^nnoremap <leader>T :Tags<CR>$/;"	m
+<leader>b	init.vim	/^nnoremap <leader>b :Buffers<CR>$/;"	m
+<leader>d	init.vim	/^nnoremap <leader>d :Dash<cr>$/;"	m
+<leader>d	init.vim	/^nnoremap <leader>d :OnlineThesaurusCurrentWord<CR>$/;"	m
+<leader>e	init.vim	/^nmap <silent> <leader>e <Plug>(ale_next_wrap)$/;"	m
+<leader>f	init.vim	/^nnoremap <leader>f :Files<CR>$/;"	m
+<leader>gs	init.vim	/^nnoremap <leader>gs :GFiles?<CR>$/;"	m
+<leader>h	init.vim	/^nnoremap <leader>h :History<CR>$/;"	m
+<leader>j	init.vim	/^noremap <leader>j :JavaDocPreview<CR>$/;"	m
+<leader>k	init.vim	/^nmap <leader>k :nohlsearch<CR>$/;"	m
+<leader>l	init.vim	/^nnoremap <leader>l :Lines<CR>$/;"	m
+<leader>n	init.vim	/^nnoremap <leader>n :NERDTreeToggle<CR>$/;"	m
+<leader>s	init.vim	/^nnoremap <leader>s :mksession<CR>$/;"	m
+<leader>t	init.vim	/^nnoremap <leader>t :TagbarOpenAutoClose<CR>$/;"	m
+<leader>u	init.vim	/^nnoremap <leader>u :UndotreeToggle<CR>$/;"	m
+<left>	init.vim	/^imap <left> <NOP>$/;"	m
+<tab>	init.vim	/^inoremap <expr><tab> pumvisible() ? "\\<c-n>" : "\\<tab>"$/;"	m
+<up>	init.vim	/^imap <up> <NOP>$/;"	m
+AddCommands	init.vim	/^function! AddCommands()$/;"	f
+Align	init.vim	/^cmap Align <CR>ggvG:align$/;"	m
+BgHighlight	init.vim	/^augroup BgHighlight$/;"	a
+F	init.vim	/^map F <Plug>Sneak_S$/;"	m
+OnTabEnter	init.vim	/^function! OnTabEnter(path)$/;"	f
+Q	init.vim	/^nnoremap Q :q!$/;"	m
+[[	init.vim	/^inoremap [[ {<return>}<up><return>$/;"	m
+\f	init.vim	/^nnoremap \\f za$/;"	m
+^[0M	init.vim	/^nnoremap ^[0M i<CR><Esc>$/;"	m
+align	init.vim	/^cnoremap align Tabularize \/\\\/\\\/$/;"	m
+df<CR>	init.vim	/^cnoremap df<CR> :!rm % <CR>:bd<CR>$/;"	m
+f	init.vim	/^map f <Plug>Sneak_s$/;"	m
+g:DevIconsEnableFolderExtensionPatternMatching	init.vim	/^let g:DevIconsEnableFolderExtensionPatternMatching = 1$/;"	v
+g:DevIconsEnableFoldersOpenClose	init.vim	/^let g:DevIconsEnableFoldersOpenClose = 1$/;"	v
+g:EclimFileTypeValidate	init.vim	/^let g:EclimFileTypeValidate = 0$/;"	v
+g:NERDTreeHighlightFolders	init.vim	/^let g:NERDTreeHighlightFolders = 1$/;"	v
+g:NERDTreeHighlightFoldersFullName	init.vim	/^let g:NERDTreeHighlightFoldersFullName = 1$/;"	v
+g:Tlist_Ctags_Cmd	init.vim	/^let g:Tlist_Ctags_Cmd='\/usr\/local\/Cellar\/ctags\/5.8_1\/bin\/ctags' " for tagbar$/;"	v
+g:WebDevIconsUnicodeDecorateFolderNodes	init.vim	/^let g:WebDevIconsUnicodeDecorateFolderNodes = 1 " enable folder glyph flag$/;"	v
+g:airline#extensions#ale#enabled	init.vim	/^let g:airline#extensions#ale#enabled = 1$/;"	v
+g:airline#extensions#buffer_nr_show	init.vim	/^let g:airline#extensions#buffer_nr_show = 1$/;"	v
+g:airline#extensions#show_splits	init.vim	/^let g:airline#extensions#show_splits = 1$/;"	v
+g:airline#extensions#tabline#buffer_idx_mode	init.vim	/^let g:airline#extensions#tabline#buffer_idx_mode = 1$/;"	v
+g:airline#extensions#tabline#enabled	init.vim	/^let g:airline#extensions#tabline#enabled = 1$/;"	v
+g:airline#extensions#tabline#fnamemod	init.vim	/^let g:airline#extensions#tabline#fnamemod = ':p:.'$/;"	v
+g:airline#extensions#whitespace#enabled	init.vim	/^let g:airline#extensions#whitespace#enabled = 0$/;"	v
+g:airline_powerline_fonts	init.vim	/^let g:airline_powerline_fonts = 1$/;"	v
+g:airline_section_c	init.vim	/^let g:airline_section_c='%t'$/;"	v
+g:ale_sign_error	init.vim	/^let g:ale_sign_error = '✗'	" ale settings$/;"	v
+g:ale_sign_warning	init.vim	/^let g:ale_sign_warning = '⚠'$/;"	v
+g:deoplete#enable_at_startup	init.vim	/^let g:deoplete#enable_at_startup = 1$/;"	v
+g:gruvbox_contrast_dark	init.vim	/^let g:gruvbox_contrast_dark = 'soft'$/;"	v
+g:gtfo#terminals	init.vim	/^let g:gtfo#terminals = { 'mac': 'iterm' }$/;"	v
+g:move_key_modifier	init.vim	/^let g:move_key_modifier = 'A'$/;"	v
+g:online_thesaurus_map_keys	init.vim	/^let g:online_thesaurus_map_keys = 0$/;"	v
+g:sneak#label	init.vim	/^let g:sneak#label = 1$/;"	v
+g:vebugger_leader	init.vim	/^let g:vebugger_leader='<leader>v'$/;"	v
+g:vimwiki_folding	init.vim	/^let g:vimwiki_folding = 'syntax'$/;"	v
+g:vimwiki_list	init.vim	/^let g:vimwiki_list = [{'path': '~wiki\/',$/;"	v
+g:weather#area	init.vim	/^let g:weather#area='sydney,aus'$/;"	v
+g:weather#status_map	init.vim	/^let g:weather#status_map = {$/;"	v
+g:webdevicons_conceal_nerdtree_brackets	init.vim	/^let g:webdevicons_conceal_nerdtree_brackets = 1$/;"	v
+g:webdevicons_enable_airline_statusline	init.vim	/^let g:webdevicons_enable_airline_statusline = 1$/;"	v
+g:webdevicons_enable_airline_tabline	init.vim	/^let g:webdevicons_enable_airline_tabline = 1$/;"	v
+gV	init.vim	/^nnoremap gV `[v`] " highlight last inserted text$/;"	m
+ga	init.vim	/^nmap ga <Plug>(EasyAlign)$/;"	m
+gb	init.vim	/^nnoremap gb :ls<CR>:buffer<Space>$/;"	m
+getset	init.vim	/^cnoremap getset JavaGetSet$/;"	m
+mapleader	init.vim	/^let mapleader = ' '$/;"	v
+q	init.vim	/^nnoremap q :q$/;"	m
+qq	init.vim	/^cnoremap qq q!$/;"	m
+runc	init.vim	/^cnoremap runc !.\/%<<return>$/;"	m
+src	init.vim	/^cnoremap src source %$/;"	m
+tree	init.vim	/^cnoremap tree NERDTree$/;"	m
+µ	init.vim	/^imap µ public<space>static<space>void<space>main(String<space>args[])<return><D-[>$/;"	m
+ß	init.vim	/^inoremap ß System.out.println();<left><left>$/;"	m
