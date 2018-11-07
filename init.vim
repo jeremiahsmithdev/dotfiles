@@ -1,5 +1,5 @@
 filetype indent on      " load filetype-specific indent files
-syntax on " nice to have
+syntax on 		" nice to have
 let mapleader = ' '
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags' " for tagbar
 set shell=bash
@@ -93,6 +93,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'starcraftman/vim-eclim' " Eclipse functionality in the Vim editor
 Plug 'junegunn/fzf.vim'		" the best plugin ever invented
 Plug 'ryanoasis/vim-devicons'
+Plug 'yuttie/comfortable-motion.vim'
 " TEMPORARILY COMMENTED OUT !!!!!!!!!! DETENTION ZONE
 " Plug 'tpope/vim-rhubarb'
 " Plug 'lekv/vim-clewn'
@@ -211,6 +212,7 @@ nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
 nnoremap q :q
 nnoremap Q :q!
+cnoremap BD bd!
 " pane navigation
 nnoremap <c-j> <C-w>j
 nnoremap <c-k> <C-w>k
@@ -239,18 +241,31 @@ endif
 " resotres operator pending mode cursor which vim-surround interferes with
 let g:surround_no_mappings = 1
 function! SurroundOp()
-    if v:operator ==# 'd'
-        return "\<plug>Dsurround"
-    elseif v:operator ==# 'c'
-        return "\<plug>Csurround"
-    elseif v:operator ==# 'y'
-        return "\<plug>Ysurround"
-    endif
-    return ''
+	if v:operator ==# 'd'
+		return "\<plug>Dsurround"
+	elseif v:operator ==# 'c'
+		return "\<plug>Csurround"
+	elseif v:operator ==# 'y'
+		return "\<plug>Ysurround"
+	endif
+	return ''
 endfunction
 omap <expr> s '<esc>'.SurroundOp()
 "command! [atribute] ENC <esc>iwritethis
 " execute a cpp program
+cnoremap align Tabularize /\/\/ 	" aligns selected comments
+cmap Align <CR>ggvG:align 		" aligns all comments in buffer
+noremap <CR> <C-W><C-W>			" cycle between panes
+noremap <C-p> :bp <return> 		" previous buffer
+noremap <C-n> :bn <return>		" next buffer
+map  :source %
+nnoremap <A-.> ~/.vimrc<cr>		" open vimrc from normal mode
+nnoremap <leader>. :e ~/.config/nvim/init.vim<CR>	" open init.vim
+inoremap  System.out.println();<left><left>
+inoremap ß System.out.println();<left><left>
+imap µ public<space>static<space>void<space>main(String<space>args[])<return><D-[>
+noremap <C-a> :source %<return>
+" autocmd VimEnter * execute "normal :startinsert"
 cnoremap runc !./%<<return>
 cnoremap tree NERDTree
 nnoremap <leader>n :NERDTreeToggle<CR>
@@ -314,7 +329,6 @@ autocmd FileType cpp nnoremap <buffer> K :<C-u>execute "!cppman " . expand("<cwo
 syntax on
 
 "airline
-" air-line
 let g:airline_powerline_fonts = 1
 
 if system('date +%H') > 18
@@ -327,19 +341,19 @@ else
 endif
 
 "sets current directory to directory of current tab
-function! OnTabEnter(path)
-	if isdirectory(a:path)
-		let dirname = a:path
-	else
-		let dirname = fnamedify(a:path, ":h")
-	endif
-	execute "tcd ". dirname
-endfunction()
+" function! OnTabEnter(path)
+" 	if isdirectory(a:path)
+" 		let dirname = a:path
+" 	else
+" 		let dirname = fnamedify(a:path, ":h")
+" 	endif
+" 	execute "tcd ". dirname
+" endfunction()
 " call above function
-autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
+" autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 " anaglyph vision tranining
 highlight Comment ctermbg=Green
 highlight Comment ctermbg=DarkGrey
-nnoremap <C-J> <C-Y> " drag down
-nnoremap <C-K> <C-E> " drag up
+" nnoremap <C-J> <C-Y> " drag down
+" nnoremap <C-K> <C-E> " drag up
 cnoremap getset JavaGetSet
