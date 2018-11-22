@@ -1,11 +1,14 @@
+set ttyfast
 set background=dark
-set t_Co=256
+                                                                " set t_Co=256
 filetype indent on                                              " load filetype-specific indent files
 syntax on                                                       " nice to have
 let mapleader = ' '
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags' " for tagbar
 set shell=bash
-set termguicolors
+let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"                            " true color inside tmux
+let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+set termguicolors                            			" true color outside tmux
 set scrolloff=8                                                 " keep cursor 8 lines from the top and bottom of the screen
 set autoread
 set autochdir                                                   " set working directory to current file
@@ -17,7 +20,7 @@ set wildmode=list:full
 set lazyredraw                                                  " redraw only when we need to.
 set showmatch                                                   " highlight matching [{()}]
 set title                                                       " show file path of current file in window title
-set hidden                                                     " allow edited buffers to hide
+set hidden                                                      " allow edited buffers to hide
 set foldmethod=syntax
 set foldlevelstart=999                                          " 0 is all closed, 1 is some closed
 set encoding=UTF-8
@@ -41,7 +44,7 @@ filetype plugin on
 
 set textwidth=80
 
-" set expandtab
+                                                                " set expandtab
 " set tabstop=4
 " set softtabstop=4
 " set shiftwidth
@@ -50,15 +53,21 @@ set textwidth=80
 " PLUGINS BEGIN
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
-Plug 'christoomey/vim-tmux-navigator'
+" suspended the following slow plugins
+Plug 'xolox/vim-easytags'			" Automated tag file generation and syntax highlighting of tags in vim (slow)
+" Plug 'beloglazov/vim-online-thesaurus'	" a bit slow
+" Plug 'vimwiki/vimwiki'			" like org mode, (slow)
+" Plug 'starcraftman/vim-eclim'                   " Eclipse functionality in the Vim editor (slow)
+"
 " Plug 'jremmen/vim-ripgrep'
 " Plug 'Shougo/deol.nvim'
+
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'shougo/denite.nvim'
-Plug 'xolox/vim-easytags'			" Automated tag file generation and syntax highlighting of tags in vim
 
 Plug 'tpope/vim-repeat'				" enable repeating supported plugin mappings with '.'
 Plug 'wellle/targets.vim'                       " provides additional text objects e.g. 'cin(' = (and) -> (for)
-Plug 'sheerun/vim-polyglot'                     " A solic language pack - 'One to rule them all, one to bring them all and in the dark to bind them.
+" Plug 'sheerun/vim-polyglot'                     " A solic language pack - 'One to rule them all, one to bring them all and in the dark to bind them.
 Plug 'takac/vim-hardtime'			" Plugin to help you stop repeating the basic movement keys
 Plug 'wellle/visual-split.vim'                  " control splits with visual selections or text objects
 Plug 'Shougo/neopairs.vim'                      " recommended for deoplete
@@ -66,7 +75,7 @@ Plug 'Raimondi/delimitMate'                     " auto-completion for quotes, pa
 Plug 'christoomey/vim-conflicted'               " wrapper for fugitive for merging conflicts
                                                 " Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jacoborus/tender.vim'                     " 24bit colorscheme for Vim, Airline and Lightline
-Plug 'shougo/neomru.vim'                        " browse most recently used files
+" Plug 'shougo/neomru.vim'                        " browse most recently used files
 Plug 'bling/vim-airline'                        " lean & mean status/tabline for vim that's light as air
 Plug 'chrisbra/Colorizer'                       " color hex codes and color names
 Plug 'rizzatti/dash.vim'
@@ -77,7 +86,6 @@ Plug 'mbbill/undotree'
 Plug 'justinmk/vim-gtfo'                        " go to terminal or file manager in current directory
 Plug 'Yggdroot/indentLine'
 Plug 'mhinz/vim-startify'
-Plug 'beloglazov/vim-online-thesaurus'
 Plug 'junegunn/vim-pseudocl'                    " required for vim-fnr (find and replace), 'a pseudo command line'
 Plug 'junegunn/vim-fnr'                         " visual find and replace, mapped to <leader>R
 Plug 'junegunn/vim-easy-align'
@@ -85,34 +93,37 @@ Plug 'junegunn/vim-peekaboo'                    " extends '' and @ functionality
 Plug 'junegunn/vim-xmark'                       " live markdown preview for Vim on macOS
 Plug 'junegunn/vim-slash'                       " automatically clears highligting after search++
 Plug 'mhinz/vim-signify'                        " apprarently faster than gitgutter
-Plug 'vimwiki/vimwiki'
 Plug 'MarcWeber/vim-addon-mw-utils'             " needed for snipmate
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
+" Plug 'garbas/vim-snipmate'
+" Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
-Plug 'matze/vim-move'
+Plug 'matze/vim-move'				" Plugin to move lines and selections up and down
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'				" a git commit browser
-Plug 'scrooloose/nerdtree'
+" Plug 'junegunn/gv.vim'				" a git commit browser
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }	" On-demand loading
 Plug 'w0rp/ale'
 Plug 'justinmk/vim-sneak'                       " move anywhere in three keystrokes
 Plug 'morhetz/gruvbox'
 Plug 'artur-shaik/vim-javacomplete2'
 Plug 'zchee/deoplete-clang'
 Plug 'zchee/deoplete-jedi'
-Plug 'junegunn/goyo.vim'
-Plug 'TimothyYe/vim-tips'
-Plug 'tomtom/tcomment_vim'                      " commenting shortcut
+" Plug 'junegunn/goyo.vim'
+" Plug 'TimothyYe/vim-tips'
+"
+" Plug 'tomtom/tcomment_vim'                      " commenting shortcut
+" test as compared to above...
+Plug 'tpope/vim-commentary'			" comment stuff out
 Plug 'reedes/vim-colors-pencil'
 Plug 'wincent/terminus'                         " improved terminal integration
 Plug 'davidhalter/jedi-vim'
-Plug 'starcraftman/vim-eclim'                   " Eclipse functionality in the Vim editor
 Plug 'junegunn/fzf.vim'                         " the best plugin ever invented
 Plug 'ryanoasis/vim-devicons'
 Plug 'yuttie/comfortable-motion.vim'
+" end
+
 " TEMPORARILY COMMENTED OUT !!!!!!!!!! DETENTION ZONE
 " Plug 'tpope/vim-rhubarb'
 " Plug 'lekv/vim-clewn'
@@ -281,6 +292,15 @@ function! OpenURL(url)
   endif
   redraw!
 endfunction
+"sets current directory to directory of current tab
+function! OnTabEnter(path)
+	if isdirectory(a:path)
+		let dirname = a:path
+	else
+		let dirname = fnamedify(a:path, ":h")
+	endif
+	execute "tcd ". dirname
+endfunction()
 " FUNCTIONS END
 "
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -360,7 +380,6 @@ inoremap  System.out.println();<left><left>
 inoremap ß System.out.println();<left><left>
 imap µ public<space>static<space>void<space>main(String<space>args[])<return><D-[>
 noremap <C-a> :source %<return>
-" autocmd VimEnter * execute "normal :startinsert"
 cnoremap runc !./%<<return>
 cnoremap tree NERDTree
 nnoremap <leader>n :NERDTreeToggle<CR>
@@ -368,23 +387,31 @@ cnoremap src source %
 " execute a java program (and compile)
 cnoremap <D-j> !javac %< <return> !java %<
 
+augroup EditVim
+	autocmd!
 
-" align comments for filetypes with vim-easy-align
-autocmd FileType vim cnoremap align EasyAlign
-autocmd FileType java cnoremap align EasyAlign////ig['String']
-" autocmd FileType java nnoremap :Align ggVG:EasyAlign////ig['String']
-autocmd FileType python cnoremap align EasyAlign/#/ig['String']
-" execute a python program
-autocmd FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<cr>
-autocmd FileType java nnoremap <expr> write <esc>
-" compile / run with auto identify for file type
-autocmd FileType java nnoremap <buffer> <leader>c :!javac % <return>
-autocmd FileType java nnoremap <buffer> <leader>g :!rm *.class; javac % <return>
-autocmd FileType java nnoremap <buffer> <leader>r :!java %< <return>
-autocmd FileType java nnoremap <buffer> <leader><leader> :!java %< datafile2.txt <return>
-" GO
-autocmd FileType go nnoremap <buffer> <leader>r :!go run % <return>
-autocmd FileType go nnoremap <buffer> <leader>c :!go build % <return>
+	" align comments for filetypes with vim-easy-align
+	autocmd FileType vim cnoremap align EasyAlign
+	autocmd FileType java cnoremap align EasyAlign////ig['String']
+	" autocmd FileType java nnoremap :Align ggVG:EasyAlign////ig['String']
+	autocmd FileType python cnoremap align EasyAlign/#/ig['String']
+	" execute a python program
+	autocmd FileType python nnoremap <buffer> <leader>r :exec '!python3' shellescape(@%, 1)<cr>
+	autocmd FileType java nnoremap <expr> write <esc>
+	" compile / run with auto identify for file type
+	autocmd FileType java nnoremap <buffer> <leader>c :!javac % <return>
+	autocmd FileType java nnoremap <buffer> <leader>g :!rm *.class; javac % <return>
+	autocmd FileType java nnoremap <buffer> <leader>r :!java %< <return>
+	autocmd FileType java nnoremap <buffer> <leader><leader> :!java %< datafile2.txt <return>
+	" GO
+	autocmd FileType go nnoremap <buffer> <leader>r :!go run % <return>
+	autocmd FileType go nnoremap <buffer> <leader>c :!go build % <return>
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+	autocmd FileType python nnoremap <buffer> K :<C-u>execute "!pydoc " . expand("<cword>")<CR>
+	" CPP
+	autocmd FileType cpp nnoremap <buffer> K :<C-u>execute "!cppman " . expand("<cword>")<CR>
+	autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
+augroup END
 
 " alternative to 'set autodir' some plugins may not work correctly if they make assumptions about the current directory
 " this command may give better results
@@ -427,12 +454,10 @@ augroup BgHighlight
 	autocmd WinLeave * set norelativenumber
 augroup END
 
-" autocmd BufWritePost init.vim source %
 nmap <leader>k :nohlsearch<CR>
 
 " abbreviations
 :abbr ap Appach Web Server
-" autocmd FileType java :abbr print System.out.println();<left>
 " DOCUMENTATION ACCESS
 "PRIMARY - DASH
 nnoremap <leader>d :Dash<cr>
@@ -441,9 +466,6 @@ nnoremap <leader>D :Dash<cr>
 " MAPPINGS END
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " python NOTE - works in a buffer without this...
-autocmd FileType python nnoremap <buffer> K :<C-u>execute "!pydoc " . expand("<cword>")<CR>
-" CPP
-autocmd FileType cpp nnoremap <buffer> K :<C-u>execute "!cppman " . expand("<cword>")<CR>
 
 syntax on
 
@@ -459,17 +481,7 @@ let g:airline_powerline_fonts = 1
 " 	:let astronomical = '☀'
 " endif
 
-"sets current directory to directory of current tab
-function! OnTabEnter(path)
-	if isdirectory(a:path)
-		let dirname = a:path
-	else
-		let dirname = fnamedify(a:path, ":h")
-	endif
-	execute "tcd ". dirname
-endfunction()
 " call above function
-autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 " anaglyph vision tranining
 highlight Comment ctermbg=Green
 highlight Comment ctermbg=DarkGrey
@@ -481,7 +493,6 @@ cnoremap getset JavaGetSet
 " STOLEN / TRIAL CONFIG CODE
 
 " remember last edit position in opened file
-autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 
 vmap <Enter> <Plug>(EasyAlign)
 

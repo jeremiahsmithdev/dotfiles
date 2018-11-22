@@ -1,8 +1,6 @@
-bindkey -M vicmd '^]' ^b-n
+# . `brew --prefix`/etc/profile.d/z.sh
 
-. `brew --prefix`/etc/profile.d/z.sh
-
-source /users/jerry/antigen.zsh
+source ~/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -18,12 +16,12 @@ antigen bundle git
 # antigen bundle autojump
 # antigen bundle common-aliases
 # antigen bundle compleat
-# antigen bundle git-extras
-# antigen bundle git-flow
+antigen bundle git-extras
+antigen bundle git-flow
 # antigen bundle npm
-# antigen bundle web-search
+antigen bundle web-search
 # antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
-# antigen bundle autosuggestions
+antigen bundle autosuggestions
 
 # jump to recently used directories by typing the first few letters in the
 # directory name
@@ -54,35 +52,6 @@ bindkey -v
 #kill the lag (switching modes)
 export KEYTIMEOUT=1
 
-# thank you emily, this took too long to find
-# function zle-keymap-select zle-line-init
-# {
-#     # change cursor shape in iTerm2
-#     case $KEYMAP in
-# 	    # viopp)		print -n -- "\E]50;CursorShape=2\C-G";;	# operator-pending mode line cursor (horizontal) <not working>
-#         vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
-#         viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
-#     esac
-#
-#     zle .reset-prompt
-#     zle -R
-# }
-# function zle-keymap-select zle-line-init
-# {
-#     # change cursor shape in iTerm2
-#     case $KEYMAP in
-# 	    # viopp)		print -n -- "\E]50;CursorShape=2\C-G";;	# operator-pending mode line cursor (horizontal) <not working>
-#         vicmd)      print -n -- "\E]50;CursorShape=0\C-G";;  # block cursor
-#         viins|main) print -n -- "\E]50;CursorShape=1\C-G";;  # line cursor
-#     esac
-#     zle .reset-prompt
-#
-#     zle -R
-# }
-#
-# zle -N zle-line-init
-# zle -N zle-line-finish
-# zle -N zle-keymap-select
 
 # tmux working dynamic cursor function
 # ZLE hooks for prompt's Vim mode status
@@ -92,6 +61,10 @@ function zle-line-init zle-keymap-select {
 		case $KEYMAP {
 			vicmd)
 				printf '\e[0 q' # Box.
+				;;
+
+			viopp)
+				printf '\e[6 q' # Vertical bar.
 				;;
 
 			viins|main)
