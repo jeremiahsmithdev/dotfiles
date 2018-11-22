@@ -24,8 +24,8 @@ set hidden                                                      " allow edited b
 set foldmethod=syntax
 set foldlevelstart=999                                          " 0 is all closed, 1 is some closed
 set encoding=UTF-8
-set hlsearch                                                    " better searches
-set incsearch
+set ignorecase
+set smartcase
 set ignorecase
 set smartcase
 set backup
@@ -111,11 +111,6 @@ Plug 'artur-shaik/vim-javacomplete2'
 Plug 'zchee/deoplete-clang'
 Plug 'zchee/deoplete-jedi'
 " Plug 'junegunn/goyo.vim'
-" Plug 'TimothyYe/vim-tips'
-"
-" Plug 'tomtom/tcomment_vim'                      " commenting shortcut
-" test as compared to above...
-Plug 'tpope/vim-commentary'			" comment stuff out
 Plug 'reedes/vim-colors-pencil'
 Plug 'wincent/terminus'                         " improved terminal integration
 Plug 'davidhalter/jedi-vim'
@@ -124,6 +119,15 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'yuttie/comfortable-motion.vim'
 " end
 
+Plug 'junegunn/goyo.vim'
+Plug 'TimothyYe/vim-tips'
+Plug 'tomtom/tcomment_vim'	" commenting shortcut
+Plug 'reedes/vim-colors-pencil'
+Plug 'wincent/terminus'		" improved terminal integration
+Plug 'davidhalter/jedi-vim'
+Plug 'starcraftman/vim-eclim' " Eclipse functionality in the Vim editor
+Plug 'junegunn/fzf.vim'		" the best plugin ever invented
+Plug 'ryanoasis/vim-devicons'
 " TEMPORARILY COMMENTED OUT !!!!!!!!!! DETENTION ZONE
 " Plug 'tpope/vim-rhubarb'
 " Plug 'lekv/vim-clewn'
@@ -205,6 +209,7 @@ let g:airline_section_c='%t'
 " directories not in current directory
 " let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#buffers_label = fnamemodify(getcwd(), ':t') " show current directory instead of 'buffer' label
+let g:airline#extensions#tabline#fnamemod = ':p:.'
 let g:EclimFileTypeValidate = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
@@ -349,6 +354,7 @@ cnoremap BD bd!
 " nnoremap <c-l> <C-w>l
 "
 
+nmap <leader>k :nohlsearch<CR>
 nmap <leader>k :nohlsearch<CR>
 " nnoremap <leader>u :GundoToggle<CR>
 nnoremap <leader>u :UndotreeToggle<CR>
