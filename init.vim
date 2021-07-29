@@ -1,11 +1,14 @@
+" type :vhelp to see my personalised help instructions on how to use this config
 set ttyfast
 set background=dark
+set inccommand=split						" live substitution
+
                                                                 " set t_Co=256
 filetype indent on                                              " load filetype-specific indent files
 syntax on                                                       " nice to have
 let mapleader = ' '
 let g:Tlist_Ctags_Cmd='/usr/local/Cellar/ctags/5.8_1/bin/ctags' " for tagbar
-set shell=bash
+set shell=zsh
 let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"                            " true color inside tmux
 let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors                            			" true color outside tmux
@@ -26,23 +29,28 @@ set foldlevelstart=999                                          " 0 is all close
 set encoding=UTF-8
 set ignorecase
 set smartcase
-set ignorecase
-set smartcase
-set backup
-set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
-set backupskip=/tmp/*,/private/tmp/*
-set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set nobackup
+set nowritebackup
+set updatetime=300 						" faster completion
+set timeoutlen=500						" default 1000
+" set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+" set backupskip=/tmp/*,/private/tmp/*
+" set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set writebackup
 set incsearch                                                   " search as characters are entered (not working?)
 set hlsearch                                                    " highlight matches
-set clipboard=unnamed
+set clipboard=unnamedplus					" copy paste between vim and system
 set noswapfile
 set showcmd
 set mousemodel=popup
 filetype plugin on
-
+au! BufWritePost $MYVIMRC source %      " auto source when writing to init.vm alternatively you can run :source $MYVIMRC
 
 set textwidth=80
+
+" SOURCE FILES
+source $HOME/.config/nvim/initSources/coc.vim			" coc default config settings
+source $HOME/.config/nvim/initSources/coc-snippets.vim		" default config settings
 
                                                                 " set expandtab
 " set tabstop=4
@@ -54,7 +62,36 @@ set textwidth=80
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 call plug#begin()
 " suspended the following slow plugins
+"
+" TELESCOPE FILE FINDER COMMENTED OUT FOR BUG
+" Navigation - new, uses lua, floating windows, previews
+" Plug 'nvim-lua/popup.nvim'	" for telescope
+" Plug 'nvim-lua/plenary.nvim'	" for telescope
+" Plug 'nvim-telescope/telescope.nvim'
+
+" telescope mappings
+" Find files with Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cd>Telescope live_grep<cr>
+nnoremap <leader>fg <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Plug 'glepnir/dashboard-nvim'
+
+Plug 'voldikss/vim-floaterm'
+" Plug 'SirVer/ultisnips'
+Plug 'cpiger/NeoDebug'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'		" the best plugin ever invented
+
+" Debugger Plugins
+" Plug 'puremourning/vimspector'			" debugging IDE
+
+Plug 'szw/vim-maximizer'			" maximise current window
+nnoremap <leader>m :MaximizerToggle<CR>
+
 Plug 'xolox/vim-easytags'			" Automated tag file generation and syntax highlighting of tags in vim (slow)
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Plug 'beloglazov/vim-online-thesaurus'	" a bit slow
 " Plug 'vimwiki/vimwiki'			" like org mode, (slow)
 " Plug 'starcraftman/vim-eclim'                   " Eclipse functionality in the Vim editor (slow)
@@ -68,7 +105,7 @@ Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-repeat'				" enable repeating supported plugin mappings with '.'
 Plug 'wellle/targets.vim'                       " provides additional text objects e.g. 'cin(' = (and) -> (for)
 " Plug 'sheerun/vim-polyglot'                     " A solic language pack - 'One to rule them all, one to bring them all and in the dark to bind them.
-Plug 'takac/vim-hardtime'			" Plugin to help you stop repeating the basic movement keys
+" Plug 'takac/vim-hardtime'			" Plugin to help you stop repeating the basic movement keys
 Plug 'wellle/visual-split.vim'                  " control splits with visual selections or text objects
 Plug 'Shougo/neopairs.vim'                      " recommended for deoplete
 Plug 'Raimondi/delimitMate'                     " auto-completion for quotes, parens,brackets, etc.
@@ -92,29 +129,37 @@ Plug 'junegunn/vim-easy-align'
 Plug 'junegunn/vim-peekaboo'                    " extends '' and @ functionality with a view of register contents
 Plug 'junegunn/vim-xmark'                       " live markdown preview for Vim on macOS
 Plug 'junegunn/vim-slash'                       " automatically clears highligting after search++
-Plug 'mhinz/vim-signify'                        " apprarently faster than gitgutter
+Plug 'jaxbot/browserlink.vim'			" live html preview etc.
+Plug 'mhinz/vim-signify'                        " shows changes to git file in gutter (apprarently faster than gitgutter)
 Plug 'MarcWeber/vim-addon-mw-utils'             " needed for snipmate
 " Plug 'garbas/vim-snipmate'
 " Plug 'honza/vim-snippets'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'				" Plugin to move lines and selections up and down
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'tpope/vim-fugitive'
 " Plug 'junegunn/gv.vim'				" a git commit browser
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }	" On-demand loading
-Plug 'w0rp/ale'
-Plug 'justinmk/vim-sneak'                       " move anywhere in three keystrokes
+" Plug 'w0rp/ale'
+
+" let g:ale_linters = {'javascript': ['eslint']}
+
+" fix files with prettier and then eslint
+let g:ale_fixers = {'javascript': [ 'prettier']}
+
+let g:ale_fixon_save = 1
+" Plug 'justinmk/vim-sneak'                       " move anywhere in three keystrokes
+Plug 'unblevable/quick-scope'
 Plug 'morhetz/gruvbox'
 Plug 'artur-shaik/vim-javacomplete2'
-Plug 'zchee/deoplete-clang'
-Plug 'zchee/deoplete-jedi'
+" Plug 'zchee/deoplete-clang'
+" Plug 'zchee/deoplete-jedi'
 " Plug 'junegunn/goyo.vim'
 Plug 'reedes/vim-colors-pencil'
 Plug 'wincent/terminus'                         " improved terminal integration
-Plug 'davidhalter/jedi-vim'
-Plug 'junegunn/fzf.vim'                         " the best plugin ever invented
+" Plug 'davidhalter/jedi-vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'yuttie/comfortable-motion.vim'
 " end
@@ -124,9 +169,7 @@ Plug 'TimothyYe/vim-tips'
 Plug 'tomtom/tcomment_vim'	" commenting shortcut
 Plug 'reedes/vim-colors-pencil'
 Plug 'wincent/terminus'		" improved terminal integration
-Plug 'davidhalter/jedi-vim'
 Plug 'starcraftman/vim-eclim' " Eclipse functionality in the Vim editor
-Plug 'junegunn/fzf.vim'		" the best plugin ever invented
 Plug 'ryanoasis/vim-devicons'
 " TEMPORARILY COMMENTED OUT !!!!!!!!!! DETENTION ZONE
 " Plug 'tpope/vim-rhubarb'
@@ -158,13 +201,13 @@ filetype plugin indent on    " required
 "
 
 
-if has('nvim')
-	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-	Plug 'Shougo/deoplete.nvim'
-	Plug 'roxma/nvim-yarp'
-	Plug 'roxma/vim-hug-neovim-rpc'
-endif
+" if has('nvim')
+" 	Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" else
+" 	Plug 'Shougo/deoplete.nvim'
+" 	Plug 'roxma/nvim-yarp'
+" 	Plug 'roxma/vim-hug-neovim-rpc'
+" endif
 call plug#end()            " required
 
 silent! set ttymouse=xterm2
@@ -173,7 +216,8 @@ set mouse=niv
 " Start 'let' settings
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
+" enable vimspector mappings
+" let g:vimspector_enable_mappings="HUMAN"
 
 let g:fzf_colors = {
 			\ 'fg':      ['fg', 'GruvboxGray'],
@@ -188,15 +232,17 @@ let g:fzf_colors = {
 			\ 'pointer': ['fg', 'Error'],
 			\ 'marker':  ['fg', 'Error'],
 			\ 'spinner': ['fg', 'Statement'],
+			\ 'border': ['fg', 'GruvboxBlue'],
 			\ }
 let g:vebugger_leader='<leader>v'
 let g:move_key_modifier = 'A'
-let g:deoplete#enable_at_startup = 1
+" let g:deoplete#enable_at_startup = 1
 
 " deoplete tab completion
 
 let g:ale_sign_error = '✗'	" ale settings
 let g:ale_sign_warning = '⚠'
+let g:ale_html_tidy_exutable = '/usr/local/bin/tidy'
 " enable fzf from homebrew install
 set rtp+=/usr/local/opt/fzf
 
@@ -316,18 +362,56 @@ endfunction()
 " tnoremap <esc> <C-\><C-n>
 
 cnoremap doc<CR> <CR>O/**<CR><CR>/<Esc>ka<space>
+cnoremap vhelp n ~/.config/nvim/nvimConfigGuide.md<CR>
+cnoremap cheat n ~/dev/MyCheatSheets/masterCheatSheet.md<CR>
+
 
 " quit files
 noremap <leader>q :q<cr>
 
+" START COC SETTINGS
+"
+" Declare CoC extensions (auto install)
+let g:coc_global_extensions = [
+			\ 'coc-tsserver',
+			\ 'coc-eslint'
+			\ ]
+
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-imap <C-k> <Plug>(neosnippet_expand_or_jump)
-smap <C-k> <Plug>(neosnippet_expand_or_jump)
-xmap <C-k> <Plug>(neosnippet_expand_or_target)
+inoremap <silent><expr> <C-space> coc#refresh()
+
+"GoTo code navigation
+nmap <leader>g <C-o>
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gt <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <leader>rn <Plug>(coc-rename)
+
+nnoremap <leader>F :FloatermNew!<CR>
+
+"show all diagnostics.
+nnoremap <silent> <space>d :<C-u>CocList diagnostics<cr>
+"manage extensions.
+nnoremap <silent> <space>e :<C-u>CocList extensions<cr>
+
+" Navigate snippet placeholders using tab
+let g:coc_snippet_next = '<Tab>'
+let g:coc_snippet_prev = '<S-Tab>'
+
+" Use enter to accept snippet expansion
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+" END COC SETTINGS
+
+" imap <C-k> <Plug>(neosnippet_expand_or_jump)
+" smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k> <Plug>(neosnippet_expand_or_target)
 cnoremap git !git
+cnoremap snippets CocCommand snippets.editSnippets
 nnoremap gb :ls<CR>:buffer<Space>
-nnoremap bg <C-z>	" background, escapes to terminal until 'fg' is entered (forground)
+" nnoremap bg <C-z>	" background, escapes to terminal until 'fg' is entered (forground)
 noremap <leader>j :JavaDocPreview<CR>
 nnoremap <leader>d :OnlineThesaurusCurrentWord<CR>
 xmap ga <Plug>(EasyAlign)
@@ -344,7 +428,7 @@ nmap <leader>6 <Plug>AirlineSelectTab6
 nmap <leader>7 <Plug>AirlineSelectTab7
 nmap <leader>8 <Plug>AirlineSelectTab8
 nmap <leader>9 <Plug>AirlineSelectTab9
-nnoremap q :q
+" nnoremap q :q
 nnoremap Q :q!
 cnoremap BD bd!
 " pane navigation
@@ -416,6 +500,11 @@ augroup EditVim
 	autocmd FileType python nnoremap <buffer> K :<C-u>execute "!pydoc " . expand("<cword>")<CR>
 	" CPP
 	autocmd FileType cpp nnoremap <buffer> K :<C-u>execute "!cppman " . expand("<cword>")<CR>
+	autocmd FileType cpp nnoremap <buffer> <leader>c :!c++ % <return>
+	" autocmd FileType cpp nnoremap <buffer> <leader>r :!./a.out <return>
+	autocmd FileType cpp nnoremap <buffer> <leader>r :FloatermNew! C++ %<CR>./a.out<return>
+	" autocmd FileType cpp nnoremap <buffer> <leader>r <C-z>expand(%)
+	" autocmd FileType cpp nnoremap <buffer> <leader>r <C-z>:hello
 	autocmd TabNewEntered * call OnTabEnter(expand("<amatch>"))
 augroup END
 
@@ -430,9 +519,9 @@ inoremap [[ {<return>}<up><return>
 inoremap <D-e> <esc>
 " sneak settings
 let g:sneak#label = 1
-map f <Plug>Sneak_s
-map F <Plug>Sneak_S
-nmap <silent> <leader>e <Plug>(ale_next_wrap)
+map <c-s> <Plug>Sneak_s
+map <c-S> <Plug>Sneak_S
+" nmap <silent> <leader>e <Plug>(ale_next_wrap)
 nnoremap <leader>f :Files<CR>
 nnoremap <leader><leader>f :Find 
 "  `GFiles [OPTS]`   | Git files ( `git ls-files` )
@@ -516,3 +605,37 @@ vmap <Enter> <Plug>(EasyAlign)
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --no-ignore --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
 
 nnoremap <leader>d :call fzf#vim#tags('^' . expand('<cword>'), {'options': '--exact --select-1 --exit-0 +i'})<CR>
+
+"  CALCULATOR
+vnoremap ;bc "ey:call CalcBC()<CR>
+function! CalcBC()
+  let has_equal = 0
+  " remove newlines and trailing spaces
+  let @e = substitute (@e, "\n", "", "g")
+  let @e = substitute (@e, '\s*$', "", "g")
+  " if we end with an equal, strip, and remember for output
+  if @e =~ "=$"
+    let @e = substitute (@e, '=$', "", "")
+    let has_equal = 1
+  endif
+  " sub common func names for bc equivalent
+  let @e = substitute (@e, '\csin\s*(', "s (", "")
+  let @e = substitute (@e, '\ccos\s*(', "c (", "")
+  let @e = substitute (@e, '\catan\s*(', "a (", "")
+  let @e = substitute (@e, "\cln\s*(", "l (", "")
+  " escape chars for shell
+  let @e = escape (@e, '*()')
+  " run bc, strip newline
+  let answer = substitute (system ("echo " . @e . " \| bc -l"), "\n", "", "")
+  " append answer or echo
+  if has_equal == 1
+    normal `>
+    exec "normal a" . answer
+  else
+    echo "answer = " . answer
+  endif
+endfunction
+
+
+nnoremap <leader>e :call CocAction('diagnosticNext')<CR>
+nnoremap <leader>E :call CocAction('diagnosticPrevious')<CR>

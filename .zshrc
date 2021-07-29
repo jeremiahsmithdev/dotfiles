@@ -1,5 +1,5 @@
 # . `brew --prefix`/etc/profile.d/z.sh
-
+#
 source ~/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -60,7 +60,7 @@ function zle-line-init zle-keymap-select {
 	if [[ "$SSH_CONNECTION" == '' ]] {
 		case $KEYMAP {
 			vicmd)
-				printf '\e[0 q' # Box.
+				printf '\e[2 q' # Box.
 				;;
 
 			viopp)
@@ -83,8 +83,18 @@ zle -N zle-keymap-select
 
 # mappings
 alias v=nvim
-bindkey -s ^F 'nvim $(fzf --preview \"cat {}\")\015'
+alias lg=lazygit
+bindkey -s ^F 'nvim "$(fzf --preview \"cat {}\")"\015'
 
 alias c=colorls
 
+eval $(thefuck --alias)
 
+export PATH=$HOME/omnetpp-5.6.1/bin:$HOME/omnetpp-5.6.1/tools/macosx/bin:$PATH
+export QT_PLUGIN_PATH=$HOME/omnetpp-5.6.1/tools/macosx/plugins
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jeremysmith/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremysmith/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jeremysmith/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremysmith/google-cloud-sdk/completion.zsh.inc'; fi
