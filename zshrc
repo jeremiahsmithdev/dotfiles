@@ -1,3 +1,4 @@
+autoload -Uz compinit && compinit
 # . `brew --prefix`/etc/profile.d/z.sh
 #
 source ~/antigen.zsh
@@ -22,12 +23,14 @@ antigen bundle git-flow
 antigen bundle web-search
 # antigen bundle zsh-users/zsh-history-substring-search ./zsh-history-substring-search.zsh
 antigen bundle autosuggestions
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+antigen bundle zsh-users/zsh-autosuggestions
 
 # jump to recently used directories by typing the first few letters in the
 # directory name
 antigen bundle z
 # fuzzy search of most recently used directories
-antigen bundle b4b4r07/enhancd
+# antigen bundle b4b4r07/enhancd
 
 # pure theme
 antigen bundle mafredri/zsh-async
@@ -48,6 +51,17 @@ antigen apply
 
 # VIM STUFF
 bindkey -v
+# bindkey '^O' 'cd -'
+
+
+ function go_previous_directory() {
+	 cd -
+   # zle reset-prompt
+ }
+
+ zle -N go_previous_directory
+ # bindkey '^o' go_previous_directory
+ bindkey '^o' push_line
 
 #kill the lag (switching modes)
 export KEYTIMEOUT=1
@@ -82,19 +96,55 @@ zle -N zle-line-finish
 zle -N zle-keymap-select
 
 # mappings
+# alias nvim '~/.nvim-macos/bin/nvim'
+alias hi="echo 'hi'"
 alias v=nvim
 alias lg=lazygit
-bindkey -s ^F 'nvim "$(fzf --preview \"cat {}\")"\015'
+bindkey '^E' autosuggest-accept
+# bindkey -s ^F 'nvim "$(fzf --preview \"cat {}\")"\015'
 
-alias c=colorls
+# fuzzy find a file
+alias f="fzf --bind 'enter:become(nvim {})' --preview 'bat --style=numbers --color=always {}'"
+
+# fuzzy find a directory
+alias c='cd $(find * -type d | fzf)'
+
+cmd="${FZF_CTRL_T_COMMAND:-"command find -L . -mindepth 1 \\( -path '*/\\.*' -o -fstype 'sysfs' -o -fstype 'devfs' -o -fstype 'devtmpfs' -o -fstype 'proc' \\) -prune \
+-o -type f -print \
+-o -type d -print \
+-o -type l -print 2> /dev/null | cut -b3-"}"
+
+source ~/.aliases.zsh
 
 eval $(thefuck --alias)
 
 export PATH=$HOME/omnetpp-5.6.1/bin:$HOME/omnetpp-5.6.1/tools/macosx/bin:$PATH
 export QT_PLUGIN_PATH=$HOME/omnetpp-5.6.1/tools/macosx/plugins
 
+export TMPDIR=~/gctmp
+
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/jeremysmith/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremysmith/google-cloud-sdk/path.zsh.inc'; fi
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/jeremysmith/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremysmith/google-cloud-sdk/completion.zsh.inc'; fi
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/jeremysmith/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/jeremysmith/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/Users/jeremysmith/anaconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/jeremysmith/anaconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# location of fzf-file-widget:
+# source "/usr/local/opt/fzf/shell/key-bindings.zsh"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
