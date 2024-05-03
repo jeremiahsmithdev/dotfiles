@@ -1,0 +1,14 @@
+# This is Git's per-user configuration file.
+[user]
+	email = jeremiah4smith@gmail.com
+# Please adapt and uncomment the following lines:
+#	name = Jeremy Smith
+#	email = jeremysmith@Jeremys-MacBook-Pro.local
+[http]
+	sslVerify = false
+[credential]
+	helper = store
+[core]
+	editor = nvim
+[alias]
+	lg = log --oneline
