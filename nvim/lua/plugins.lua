@@ -29,6 +29,7 @@ require('lazy').setup({
 
   -- new plugins
   -- lspsaga -- issue -> makes autosuggestion list blue text
+'kdheepak/lazygit.nvim',
 'famiu/nvim-reload',
   {
     'nvimdev/lspsaga.nvim',
@@ -90,7 +91,7 @@ require('lazy').setup({
     "robitx/gp.nvim",
     config = function()
       local config = {
-        api_key = os.getenv("OPENAI_API_KEY"),
+        api_key = os.getenv("OPENAI_API_KEY")",
       }
       -- Require and setup gp.nvim with the provided configuration
       require("gp").setup(config)

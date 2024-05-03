@@ -44,6 +44,7 @@ vim.api.nvim_create_user_command('Opts', 'edit ~/.config/nvim/lua/opts.lua', {})
 vim.api.nvim_create_user_command('Autocmnds', 'edit ~/.config/nvim/lua/autocmds.lua', {})
 vim.api.nvim_create_user_command('Plugins', 'edit ~/.config/nvim/lua/plugins.lua', {})
 vim.api.nvim_create_user_command('Style', 'edit ~/.config/nvim/lua/style.lua', {})
+vim.api.nvim_create_user_command('LG', 'LazyGit', {})
 
 -- plahing around
 require('functions')
