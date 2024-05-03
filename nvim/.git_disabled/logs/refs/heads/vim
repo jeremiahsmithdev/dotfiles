@@ -1,0 +1,5 @@
+0000000000000000000000000000000000000000 7af594fd319fbae6b2aaa06337f3df8acbbb7f18 Jeremy Smith <jeremiah4smith@gmail.com> 1708914791 +1100	clone: from https://github.com/nvim-lua/kickstart.nvim.git
+7af594fd319fbae6b2aaa06337f3df8acbbb7f18 c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 Jeremy Smith <jeremiah4smith@gmail.com> 1710477182 +1100	commit: Refactor Neovim configuration for plugin management and keybindings
+c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 Jeremy Smith <jeremiah4smith@gmail.com> 1714777981 +1000	Branch: renamed refs/heads/master to refs/heads/dotfiles
+c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 Jeremy Smith <jeremiah4smith@gmail.com> 1714778043 +1000	Branch: renamed refs/heads/dotfiles to refs/heads/master
+c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 c7bf20cdcc009272e3d0f9c9ba845f31f72e3b74 Jeremy Smith <jeremiah4smith@gmail.com> 1714778064 +1000	Branch: renamed refs/heads/master to refs/heads/vim

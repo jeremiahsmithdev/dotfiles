@@ -1,0 +1,40 @@
+ Refactor Neovim configuration for plugin management and keybindings
+
+ - Add new plugin requirements for 'plugs.do' and 'plugs.rest' in init.lua.
+ - Remove the configuration for 'rest-nvim' plugin from init.lua, indicating it has been moved elsewhere.
+ - Update keybindings in keys.lua to include shortcuts for opening various config files and modify the 'gp' keymap to use
+ '<leader>gp'.
+ - Comment out the 'nvim-gps' requirement and update the lualine_c section in lualine.lua to display the time and active 'do' view.
+ - Mark 'alpha.nvim' and 'Do' plugins as completed in the TODO list within init.lua.
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is behind 'origin/master' by 25 commits, and can be fast-forwarded.
+#   (use "git pull" to update your local branch)
+#
+# Changes to be committed:
+#	modified:   init.lua
+#	new file:   lazy-lock.json
+#	new file:   lua/autocmds.lua
+#	new file:   lua/binds.lua
+#	new file:   lua/keys.lua
+#	new file:   lua/language-servers.lua
+#	new file:   lua/lazy.lua
+#	new file:   lua/opts.lua
+#	new file:   lua/plugins.lua
+#	new file:   lua/plugs/cmp.lua
+#	new file:   lua/plugs/do.lua
+#	new file:   lua/plugs/gp.lua
+#	new file:   lua/plugs/gps.lua
+#	new file:   lua/plugs/lsp.lua
+#	new file:   lua/plugs/lspsaga.lua
+#	new file:   lua/plugs/lualine.lua
+#	new file:   lua/plugs/obsidian.lua
+#	new file:   lua/plugs/rest.lua
+#	new file:   lua/plugs/telescope.lua
+#	new file:   lua/plugs/treesitter.lua
+#	new file:   lua/plugs/which-key.lua
+#	new file:   lua/style.lua
+#

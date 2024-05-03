@@ -76,9 +76,13 @@ nnoremap <leader>fg <cd>Telescope live_grep<cr>
 nnoremap <leader>fg <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
+nnoremap ; :
+
 " Plug 'glepnir/dashboard-nvim'
 
+Plug 'github/copilot.vim'
 Plug 'voldikss/vim-floaterm'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) } }
 " Plug 'SirVer/ultisnips'
 Plug 'cpiger/NeoDebug'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -168,7 +172,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'TimothyYe/vim-tips'
 Plug 'tomtom/tcomment_vim'	" commenting shortcut
 Plug 'reedes/vim-colors-pencil'
-Plug 'wincent/terminus'		" improved terminal integration
 Plug 'starcraftman/vim-eclim' " Eclipse functionality in the Vim editor
 Plug 'ryanoasis/vim-devicons'
 " TEMPORARILY COMMENTED OUT !!!!!!!!!! DETENTION ZONE
@@ -359,7 +362,7 @@ endfunction()
 " """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " terminal mode mappings:
-" tnoremap <esc> <C-\><C-n>
+tnoremap  <C-e> <C-\><C-n>
 
 cnoremap doc<CR> <CR>O/**<CR><CR>/<Esc>ka<space>
 cnoremap vhelp n ~/.config/nvim/nvimConfigGuide.md<CR>
@@ -418,16 +421,16 @@ xmap ga <Plug>(EasyAlign)
 " start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 " switching buffers
-tmap <leader>1 <<C-\><C-n><Plug>AirlineSelectTab1
-nmap <leader>1 <Plug>AirlineSelectTab1
-nmap <leader>2 <Plug>AirlineSelectTab2
-nmap <leader>3 <Plug>AirlineSelectTab3
-nmap <leader>4 <Plug>AirlineSelectTab4
-nmap <leader>5 <Plug>AirlineSelectTab5
-nmap <leader>6 <Plug>AirlineSelectTab6
-nmap <leader>7 <Plug>AirlineSelectTab7
-nmap <leader>8 <Plug>AirlineSelectTab8
-nmap <leader>9 <Plug>AirlineSelectTab9
+" tmap <leader>1 <<C-\><C-n><Plug>AirlineSelectTab1
+" nmap <leader>1 <Plug>AirlineSelectTab1
+" nmap <leader>2 <Plug>AirlineSelectTab2
+" nmap <leader>3 <Plug>AirlineSelectTab3
+" nmap <leader>4 <Plug>AirlineSelectTab4
+" nmap <leader>5 <Plug>AirlineSelectTab5
+" nmap <leader>6 <Plug>AirlineSelectTab6
+" nmap <leader>7 <Plug>AirlineSelectTab7
+" nmap <leader>8 <Plug>AirlineSelectTab8
+" nmap <leader>9 <Plug>AirlineSelectTab9
 " nnoremap q :q
 nnoremap Q :q!
 cnoremap BD bd!
@@ -639,3 +642,14 @@ endfunction
 
 nnoremap <leader>e :call CocAction('diagnosticNext')<CR>
 nnoremap <leader>E :call CocAction('diagnosticPrevious')<CR>
+
+" terminal cursor shape?
+" set guicursor=n-v-c:block-Cursor-blinkon0,ve:ver35-Cursor,o:hor50-Cursor,i-ci:ver25-Cursor,r-cr:hor20-Cursor,sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+
+" set guicursor=a:ver100
+
+" show terminal cursor when in terminal normal mode
+if has('nvim')
+	highlight! link TermCursor Cursor
+	highlight! TermCursorNC guibg=red guifg=white ctermbg=1 ctermfg=15
+endif

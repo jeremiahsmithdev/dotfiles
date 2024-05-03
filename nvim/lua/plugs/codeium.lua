@@ -1,0 +1,4 @@
+-- require('codeium').setup{
+--   -- default keymap options
+--
+-- }

@@ -1,0 +1,10 @@
+# pack-refs with: peeled fully-peeled sorted 
+2eada65d5231a14765a257078b102984529a6f63 refs/remotes/origin/autoformat
+38c4421eea0b2c6ac298ba1d944b34ee423d7590 refs/remotes/origin/change-gi-and-comments
+d5d83596a401daa6f3b04e804f5c05e47dbf78d4 refs/remotes/origin/fix-bad-path
+d8784b62db6d6371b13895b2b38506ac1c1d2adc refs/remotes/origin/lazy-refresh
+7af594fd319fbae6b2aaa06337f3df8acbbb7f18 refs/remotes/origin/master
+1bcb10e1ce4ba209390130484618a87a98e81d2a refs/remotes/origin/remove_treesitter_textobjects_dep
+40fbcf82536c6f858fa5d44ef992fbfb28bc1538 refs/remotes/origin/server-config
+5775433158480966a4ace022c0cd8ca5197166dd refs/remotes/origin/teej-fixups
+fd8419e0c4ad0846faa8efe9fb8b9b3fd0867412 refs/remotes/origin/tjdevries-issue-template
