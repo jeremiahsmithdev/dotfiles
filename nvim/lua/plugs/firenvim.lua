@@ -2,6 +2,8 @@ vim.g.firenvim_config = {
     globalSettings = { alt = "all" },
     localSettings = {
         [".*"] = {
+            filename = '/tmp/Firenvim.{extension}'
+            -- filename = '/tmp/{hostname}_{pathname%10}.{extension}',
             cmdline  = "neovim",
             content  = "text",
             priority = 0,
@@ -12,24 +14,12 @@ vim.g.firenvim_config = {
 }
 
 if vim.g.started_by_firenvim == true then
-    -- remove lualine dividers in firenvim 
-    -- require('lualine').setup {
-    --   options = {
-    --     section_separators = '',
-    --     component_separators = ''
-    --   }
-    -- }
-    --
     require'lualine'.setup {
   options = {
     icons_enabled = true,
     theme = 'gruvbox',
     component_separators = '',
-    section_separators = { left = '', right = '' },
-    -- component_separators = { left = '', right = ''},
-    -- section_separators = { left = '', right = ''},
-    -- component_separators = { left = '', right = ''},
-    -- section_separators = { left = '', right = ''},
+    section_separators = { left = '', right = '' },
     disabled_filetypes = {},
     always_divide_middle = true,
   },
@@ -37,18 +27,10 @@ if vim.g.started_by_firenvim == true then
     lualine_a = {'mode'},
     lualine_b = {'branch', 'diff',
                   {'diagnostics', sources={'nvim_lsp', 'ale'}}},
-    -- lualine_c = { '%{strftime("%a %I:%M%p")}'},
-    lualine_c = {
-      -- 'filename',
-      '%{strftime("%a %I:%M%p")}' ; function()
-        return require('do').view('active')
-      end,
-    },
-
+    lualine_c = { '%{strftime("%a %I:%M%p")}'},
     lualine_x = {
       { 'diagnostics', sources = {"nvim_lsp"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '} },
-      'encoding',
-      'filetype'
+      -- 'filetype'
     },
     lualine_y = {'progress'},
     lualine_z = {'location'}
@@ -58,11 +40,8 @@ if vim.g.started_by_firenvim == true then
     lualine_x = {'location'},
   },
   tabline = {
-  lualine_a = {'Firenvim'},
-  lualine_z = {''}
+  lualine_a = {'buffers'},
 },
-  extensions = {}
-
 }
 
 end
