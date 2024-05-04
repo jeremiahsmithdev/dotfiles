@@ -11,4 +11,4 @@
 [core]
 	editor = nvim
 [alias]
-	lg = log --oneline
+	lg = log --oneline --graph --decorate
