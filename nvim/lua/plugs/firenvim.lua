@@ -2,7 +2,7 @@ vim.g.firenvim_config = {
     globalSettings = { alt = "all" },
     localSettings = {
         [".*"] = {
-            filename = '/tmp/Firenvim.{extension}'
+            filename = 'Firenvim',
             -- filename = '/tmp/{hostname}_{pathname%10}.{extension}',
             cmdline  = "neovim",
             content  = "text",
@@ -29,7 +29,7 @@ if vim.g.started_by_firenvim == true then
                   {'diagnostics', sources={'nvim_lsp', 'ale'}}},
     lualine_c = { '%{strftime("%a %I:%M%p")}'},
     lualine_x = {
-      { 'diagnostics', sources = {"nvim_lsp"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '} },
+      { 'diagnostics', sources = {"nvim_lsp"}, symbols = {error = ' ', warn = ' ', info = ' ', hint = ' '} }
       -- 'filetype'
     },
     lualine_y = {'progress'},
