@@ -25,7 +25,7 @@ require('lazy').setup({
   end,
   dependencies = { {'nvim-tree/nvim-web-devicons'}}
 },
-  'christoomey/vim-tmux-navigator',
+  -- 'christoomey/vim-tmux-navigator',
   'nocksock/do.nvim',
 
   -- Git related plugins

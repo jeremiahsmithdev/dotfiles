@@ -90,8 +90,8 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
-vim.cmd([[command! -nargs=0 Gp n ~/.config/nvim/lua/plugs/gp.lua]]) -- open gp.lua keymaps file
-vim.api.nvim_set_keymap('n', '<leader>gp', ':n ~/.config/nvim/lua/plugs/gp.lua<CR>', { noremap = true, silent = true }) -- open gp.lua keymaps file
+vim.cmd([[command! -nargs=0 Gp n ~/.config/nvim/lua/config/gp.lua]]) -- open gp.lua keymaps file
+vim.api.nvim_set_keymap('n', '<leader>gp', ':n ~/.config/nvim/lua/config/gp.lua<CR>', { noremap = true, silent = true }) -- open gp.lua keymaps file
 
 -- rest.nvim
 Bind('n', '<leader>rn', '<Plug>RestNvim')

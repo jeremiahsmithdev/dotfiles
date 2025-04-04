@@ -1,81 +1,90 @@
-# 1 of my sourcess
-# https://digitalblake.com/2021/08/27/yabai-and-skhd-configs/
-# Changing window focus
-# shift + ctrl - j : yabai -m window --focus south
-# shift + ctrl - k : yabai -m window --focus north
-# shift + ctrl - h : yabai -m window --focus west
-# shift + ctrl - l : yabai -m window --focus east
-
-
-# TODO -> 
-# [] Edit so that it works with neovim splits
-# Changing window/display focus with tmux integration
-ctrl - h [
-    *           : yabai -m window --focus west || $(yabai -m display --focus west) || $(yabai -m space --focus prev)
-    "Wezterm" : if [ $(tmux display-message -p '#{pane_at_left}') -ne 1 ]; then tmux select-pane -L; else yabai -m window --focus west || $(yabai -m display --focus west) || $(yabai -m space --focus prev) || true; fi
-]
-ctrl - j [
-    *           : yabai -m window --focus south || $(yabai -m display --focus south)
-    "Wezterm" : if [ $(tmux display-message -p '#{pane_at_bottom}') -ne 1 ]; then tmux select-pane -D; else yabai -m window --focus south || $(yabai -m display --focus south) || true; fi
-]
-ctrl - k [
-    *           : yabai -m window --focus north || $(yabai -m display --focus north)
-    "Wezterm" : if [ $(tmux display-message -p '#{pane_at_top}') -ne 1 ]; then tmux select-pane -U; else yabai -m window --focus north || $(yabai -m display --focus north) || true; fi
-]
-ctrl - l [
-    *           : yabai -m window --focus east || $(yabai -m display --focus east) || $(yabai -m space --focus next)
-    "Wezterm" : if [ $(tmux display-message -p '#{pane_at_right}') -ne 1 ]; then tmux select-pane -R; else yabai -m window --focus east || $(yabai -m display --focus east) || $(yabai -m space --focus next) || true; fi
-]
-
-# Alternative space focus
-fn + ctrl - l : yabai -m space --focus next
-fn + ctrl - h : yabai -m space --focus prev
-
-fn + shift - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-
 fn - r : yabai --stop-service && yabai --start-service && sudo yabai --load-sa
 
-# make window fill screen
-fn - f         : yabai -m window --toggle zoom-fullscreen
-# Make window native fullscreen
-shift + fn - f : yabai -m window --toggle native-fullscreen
+ctrl - h [
+  *           : yabai -m window --focus west || $(yabai -m display --focus west) || $(yabai -m space --focus prev)
+  "Wezterm" ~
+  "Kitty" ~
+  "Terminal" ~
+]
 
-# space focus
-fn - l : yabai -m space --focus next
-fn - h : yabai -m space --focus prev
+ctrl - j [
+  *           : yabai -m window --focus south || $(yabai -m display --focus south)
+  "Wezterm" ~
+  "Kitty" ~
+  "Terminal" ~
+]
 
-# fn - n : yabai -m space --focus next
-# fn - p : yabai -m space --focus prev
+ctrl - k [
+  *           : yabai -m window --focus north || $(yabai -m display --focus north)
+  "Wezterm" ~
+  "Kitty" ~
+  "Terminal" ~
+]
 
-# Moving windows
-shift + fn - k : yabai -m window --warp north || $(yabai -m window --display north; yabai -m display --focus north)
-shift + fn - h : yabai -m window --warp west || $(yabai -m window --display west; yabai -m display --focus west) || $(yabai -m window --space prev && yabai -m space --focus prev)
-shift + fn - j : yabai -m window --warp south || $(yabai -m window --display south; yabai -m display --focus south)
-shift + fn - l : yabai -m window --warp east || $(yabai -m window --display east; yabai -m display --focus east) || $(yabai -m window --space next && yabai -m space --focus next) 
+ctrl - l [
+  *           : yabai -m window --focus east || $(yabai -m display --focus east) || $(yabai -m space --focus next)
+  "Wezterm" ~
+  "Kitty" ~
+  "Terminal" ~
+]
 
-# Resize windows
-# shift + ctrl - h : yabai -m window --resize left:-50:0; \
-#                   yabai -m window --resize right:-50:0
-# shift + ctrl - j : yabai -m window --resize bottom:0:50; \
-#         yabai -m window --resize top:0:50
-# shift + ctrl - k : yabai -m window --resize top:0:-50; \
-#         yabai -m window --resize bottom:0:-50
-# shift + ctrl - l : yabai -m window --resize right:50:0; \
-#                   yabai -m window --resize left:50:0
+ # 1 of my sourcess
+ # https://digitalblake.com/2021/08/27/yabai-and-skhd-configs/
+ # Changing window focus
+ # shift + ctrl - j : yabai -m window --focus south
+ # shift + ctrl - k : yabai -m window --focus north
+ # shift + ctrl - h : yabai -m window --focus west
+ # shift + ctrl - l : yabai -m window --focus east
 
-# toggle window float
-shift + ctrl - f : yabai -m window --toggle float
+ # Alternative space focus
+ fn + ctrl - l : yabai -m space --focus next
+ fn + ctrl - h : yabai -m space --focus prev
 
-# # SPACE CONTROL
-#
-# remove the current desktop space
-fn - d : yabai -m space --destroy
+ fn + shift - r : \
+     /usr/bin/env osascript <<< \
+         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
-# create a new desktop space and move focus to it
-fn - n : yabai -m space --create && yabai -m space --focus last
+ fn - r : yabai --stop-service && yabai --start-service && sudo yabai --load-sa
 
-fn -s : open -a "Mission Control" --args -s
-ctrl - w : open -a "Mission Control" --args -s
+ # make window fill screen
+ fn - f         : yabai -m window --toggle zoom-fullscreen
+ # Make window native fullscreen
+ shift + fn - f : yabai -m window --toggle native-fullscreen
+
+ # space focus
+ fn - l : yabai -m space --focus next
+ fn - h : yabai -m space --focus prev
+
+ # fn - n : yabai -m space --focus next
+ # fn - p : yabai -m space --focus prev
+
+ # Moving windows
+ shift + fn - k : yabai -m window --warp north || $(yabai -m window --display north; yabai -m display --focus north)
+ shift + fn - h : yabai -m window --warp west || $(yabai -m window --display west; yabai -m display --focus west) || $(yabai -m window --space prev && yabai -m space --focus prev)
+ shift + fn - j : yabai -m window --warp south || $(yabai -m window --display south; yabai -m display --focus south)
+ shift + fn - l : yabai -m window --warp east || $(yabai -m window --display east; yabai -m display --focus east) || $(yabai -m window --space next && yabai -m space --focus next) 
+
+ # Resize windows
+ # shift + ctrl - h : yabai -m window --resize left:-50:0; \
+ #                   yabai -m window --resize right:-50:0
+ # shift + ctrl - j : yabai -m window --resize bottom:0:50; \
+ #         yabai -m window --resize top:0:50
+ # shift + ctrl - k : yabai -m window --resize top:0:-50; \
+ #         yabai -m window --resize bottom:0:-50
+ # shift + ctrl - l : yabai -m window --resize right:50:0; \
+ #                   yabai -m window --resize left:50:0
+
+ # toggle window float
+ shift + ctrl - f : yabai -m window --toggle float
+
+ # # SPACE CONTROL
+ #
+ # remove the current desktop space
+ fn - d : yabai -m space --destroy
+
+ # create a new desktop space and move focus to it
+ fn - n : yabai -m space --create && yabai -m space --focus last
+
+ fn -s : open -a "Mission Control" --args -s
+ ctrl - w : open -a "Mission Control" --args -s
