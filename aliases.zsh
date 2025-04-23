@@ -1,12 +1,12 @@
 # open files
-alias aliases='nvim ~/.aliases.zsh'
-alias zshrc='nvim ~/.zshrc'
+alias aliases='nvim ~/dotfiles/aliases.zsh'
+alias zshrc='nvim ~/dotfiles/zshrc'
 alias init='nvim ~/.config/nvim/init.lua'
 alias plugins='nvim ~/.config/nvim/lua/plugins.lua'
-alias tmux.conf='nvim ~/.tmux.conf'
-alias skhdrc='nvim ~/.skhdrc'
-alias yabairc='nvim ~/.yabairc'
-alias wezterm.lua='nvim ~/.wezterm.lua'
+alias tmux.conf='nvim ~/dotfiles/tmux.conf'
+alias skhdrc='nvim ~/dotfiles/skhdrc'
+alias yabairc='nvim ~/dotfiles/yabairc'
+alias wezterm.lua='nvim ~/dotfiles/wezterm.lua'
 alias karabiner.json='nvim ~/.config/karabiner/karabiner.json'
 alias zshenv='nvim ~/dotfiles/zshenv'
 
@@ -17,6 +17,7 @@ alias ta='tmux attach'
 alias config='cd ~/.config'
 alias lua='cd ~/.config/nvim/lua'
 alias dotfiles='cd ~/dotfiles'
+alias dev='cd ~/dev'
 
 # sgpt
 alias gpt='function _gpt() { sgpt "$*"; }; _gpt'

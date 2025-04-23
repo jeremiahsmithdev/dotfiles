@@ -11,8 +11,6 @@ plugins=(git zsh-autosuggestions)
 # enable vim mode
 bindkey -v
 
-alias c='cd $(find * -type d | fzf)'
-
 # Path & API keys
 export OPENAI_API_KEY=$(cat ~/.openai_api_key)
 
