@@ -1,8 +1,20 @@
 # for this to work you must configure sudo such that
 # it will be able to run the command without password
-
+ # 1 Open a terminal.                                                                                   
+ # 2 Run sudo visudo to safely edit the sudoers file.                                                   
+ # 3 Add the following line at the end of the file, replacing username with your actual username:       
+ # 4 Save and exit the editor.                                                                          
 yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
+
+# focus window after active space changes
+yabai -m signal --add event=space_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# focus window after active display changes
+yabai -m signal --add event=display_changed action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+
+# prevent focus on finder?
+# yabai -m signal --add event=space_changed action="yabai -m window --focus $(yabai -m query --windows --space | jq '.[0].id')"
 
 # .. more yabai startup stuff
 #

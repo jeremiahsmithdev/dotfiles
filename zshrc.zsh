@@ -1,7 +1,10 @@
-source ~/.omz.zsh
-source ~/.aliases.zsh
-source ~/.dynamic_cursor.zsh
-source ~/.zshenv
+source ~/dotfiles/zshenv
+source ~/dotfiles/omz.zsh
+source ~/dotfiles/aliases.zsh
+source ~/dotfiles/dynamic_cursor.zsh
+source ~/dotfiles/fzf_nvim_preview.zsh
+
+export ZSH="$HOME/.oh-my-zsh"
 
 plugins=(git zsh-autosuggestions)
 
@@ -11,20 +14,18 @@ bindkey -v
 alias c='cd $(find * -type d | fzf)'
 
 # Path & API keys
-export OPENAI_API_KEY=
+#export OPENAI_API_KEY=
 export PATH="$HOME/bin:$PATH"
-export PATH=$HOME/bin/nvim-macos/bin:$PATH
 
 # theme
-# .zshrc
 autoload -U promptinit; promptinit
 prompt pure
 
-bindkey -s ^F "fzf --bind 'enter:become(nvim {})' --preview 'bat --style=numbers --color=always {}'\015"
+bindkey '^F' fzf_nvim_preview
 
  . $(brew --prefix)/etc/profile.d/z.sh
 
  # zsh-autosuggestions
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=242'
 bindkey '^E' autosuggest-accept
