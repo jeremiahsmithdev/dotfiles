@@ -88,3 +88,15 @@ vim.keymap.set('n', '<A-H>', require('smart-splits').swap_buf_left)
 vim.keymap.set('n', '<A-J>', require('smart-splits').swap_buf_down)
 vim.keymap.set('n', '<A-K>', require('smart-splits').swap_buf_up)
 vim.keymap.set('n', '<A-L>', require('smart-splits').swap_buf_right)
+
+-- lsp symbols
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN]  = "",
+      [vim.diagnostic.severity.HINT]  = "",
+      [vim.diagnostic.severity.INFO]  = "",
+    },
+  },
+})

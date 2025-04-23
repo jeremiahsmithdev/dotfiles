@@ -1,15 +1,18 @@
 -- configure lualine --
--- local gps = require("nvim-gps")
+local gps = require("nvim-gps")
 require'lualine'.setup {
   options = {
     icons_enabled = true,
     theme = 'gruvbox',
-    component_separators = '',
-    section_separators = { left = '', right = '' },
+    -- component_separators = '',
+    -- section_separators = { left = '', right = '' },
+    -- component_separators = { left = '', right = '' },
     -- component_separators = { left = '', right = ''},
     -- section_separators = { left = '', right = ''},
-    -- component_separators = { left = '', right = ''},
-    -- section_separators = { left = '', right = ''},
+
+    -- disabling separators
+    section_separators = '', component_separators = '',
+
     disabled_filetypes = {},
     always_divide_middle = true,
   },
