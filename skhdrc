@@ -81,7 +81,8 @@ ctrl - l [
  # # SPACE CONTROL
  #
  # remove the current desktop space
- fn - d : yabai -m space --destroy
+ # fn - d : yabai -m space --destroy
+ fn - d : yabai -m space --focus recent && sleep 1 && yabai -m space recent --destroy
 
  # create a new desktop space and move focus to it
  fn - n : yabai -m space --create && yabai -m space --focus last
