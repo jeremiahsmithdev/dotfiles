@@ -1,8 +1,33 @@
 Bind = require('binds')
 Bind('n', ';', ':', 'noremap')
-Bind('v', ';', ':', 'noremap')
+Bind('n', 'q', ':q', 'noremap')
 Bind('n', 'Q', ':q!', 'noremap')
 
+-- Telescope
+local builtin = require('telescope.builtin')
+Bind('n', '<leader>rg', ':Telescope live_grep<CR>', 'noremap')
+Bind('n', '<leader>lg', ':Telescope live_grep<CR>', 'noremap')
+Bind('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })
+-- Bind('n', '<leader>rg', builtin.live_grep, { desc = 'Telescope live_grep' })
+Bind('n', '<leader>fb', builtin.buffers, { desc = 'Telescope buffers' })
+Bind('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
+
+-- CodeCompanion
+-- vim.api.nvim_create_user_command('CC', ':CodeCompanion', {})
+Bind('n', '<leader>cc', ':CodeCompanion<CR>', 'noremap')
+-- Bind('c', '<leader>cc', 'CodeCompanion', 'noremap')
+Bind('n', '<leader>e', ':CodeCompanionEdit<CR>', 'noremap')
+Bind('c', 'chat', 'CodeCompanionChat<CR>', 'noremap')
+Bind('c', 'cc ', 'CodeCompanion ', 'noremap')
+-- Bind('c', ':', 'CodeCompanion ', 'noremap')
+Bind('n', '<leader>t', ':CodeCompanionChat Toggle<CR>', 'noremap')
+
+vim.keymap.set('v', '<leader>cc', ':CodeCompanion<CR>', { 
+  desc = 'Run CodeCompanion on selection',
+  noremap = true,
+  silent = true
+})
+-- General
 Bind('n', '<leader>ai', ':r!sgpt --code ""<left>', 'noremap')
 Bind('n', '<leader>n', ':NvimTreeToggle<CR>', 'noremap')
 
@@ -45,11 +70,30 @@ vim.api.nvim_create_user_command('Autocmnds', 'edit ~/.config/nvim/lua/autocmds.
 vim.api.nvim_create_user_command('Plugins', 'edit ~/.config/nvim/lua/plugins.lua', {})
 vim.api.nvim_create_user_command('Style', 'edit ~/.config/nvim/lua/style.lua', {})
 vim.api.nvim_create_user_command('LG', 'LazyGit', {})
+-- vim.api.nvim_create_user_command('Diff', ':vert new diff | read # | 1delete | diffthis | wincmd p | diffthis', {})
+vim.api.nvim_create_user_command('Diff', function()
+  local file = vim.fn.expand('%:t')
+  local ext = vim.fn.expand('%:e')
+  local fname = 'diff'
+  if ext ~= '' then
+    fname = fname .. '.' .. ext
+  end
+  vim.cmd('vert new ' .. fname .. ' | read # | 1delete')
+  vim.api.nvim_win_set_option(0, 'winbar', '│ SAVED FILE')
+  vim.cmd('diffthis | wincmd p | diffthis')
+end, {})
+
+
+-- Directories
+vim.api.nvim_create_user_command('Config', 'edit ~/.config/nvim', {})
+vim.api.nvim_create_user_command('Dotfiles', 'edit ~/dotfiles', {})
 
 -- plahing around
 require('functions')
 -- create_command('hii', 'echo "Hi"')
 
+--Lazy Lazy 
+vim.cmd("cabbrev lg LazyGit")
 
 -- source current file
 vim.cmd("cabbrev <expr> sof getcmdtype() == ':' ? 'source %' : 'sof'")
@@ -60,6 +104,14 @@ vim.cmd("cabbrev Expand set lines=10 | set columns=100")
 vim.cmd("cabbrev Ex set lines=10 | set columns=100")
 vim.cmd("cabbrev EXPAND set lines=20 | set columns=200")
 vim.cmd("cabbrev EX set lines=20 | set columns=200")
+
+-- local file = vim.api.nvim_buf_get_name(0)
+-- local file = vim.api.nvim_get_current_buf(0)
+-- local file = expand('%')
+vim.api.nvim_create_user_command('Open', function()
+  local file = vim.api.nvim_buf_get_name(0)
+  os.execute('open "' .. file .. '" &')
+end, {})
 
 -- MarkdownPreview
 vim.cmd("cabbrev preview MarkdownPreview")
@@ -134,3 +186,97 @@ vim.keymap.set('n', '<leader>c', ':Cheatsheet<CR>')
 -- map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
 -- map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
 -- map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
+
+
+-- [[ Close diff buffer ]]
+vim.keymap.set("n", "q", function()
+  for _, win in ipairs(vim.api.nvim_list_wins()) do
+    local buf = vim.api.nvim_win_get_buf(win)
+    local name = vim.api.nvim_buf_get_name(buf)
+
+    -- Handle both normal paths and special buffer names like [CodeCompanion]
+    local fname = name
+    if name ~= "" then
+      fname = vim.fn.fnamemodify(name, ":t")  -- get the filename from full path
+    end
+
+    if fname:match("^diff.*") or fname:match("^%[CodeCompanion%].*") then
+      vim.cmd("bd! " .. buf)
+      return
+    end
+  end
+
+  -- Fallback: try to quit window
+  local ok, err = pcall(function()
+    vim.api.nvim_feedkeys(':q', 'n', false)
+  end)
+
+  if not ok then
+    vim.notify("Unsaved changes — use :q! to force quit", vim.log.levels.WARN)
+  end
+end, { desc = "Close diff or CodeCompanion buffer, else quit" })
+
+-- Show vertical Git diff vs HEAD
+vim.api.nvim_create_user_command('Gdiff', function()
+  local abs_path = vim.api.nvim_buf_get_name(0)
+  if abs_path == '' then
+    vim.notify("No file loaded in buffer", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Get Git root
+  local git_root = vim.fn.systemlist('git rev-parse --show-toplevel')[1]
+  if not git_root or git_root == '' then
+    vim.notify("Not inside a Git repository", vim.log.levels.ERROR)
+    return
+  end
+
+  -- Get path relative to Git root
+  -- local rel_path = vim.fn.fnamemodify(abs_path, ':.' .. git_root)
+  local rel_path = abs_path:sub(#git_root + 2)
+
+  -- Get file contents at HEAD using Lua
+  local handle = io.popen('git show HEAD:' .. rel_path)
+  if not handle then
+    vim.notify("Failed to run git show", vim.log.levels.ERROR)
+    return
+  end
+
+  local content = handle:read("*a")
+  handle:close()
+
+  if not content or content == '' then
+    vim.notify("Empty or invalid file content from HEAD", vim.log.levels.WARN)
+    return
+  end
+
+  local file = vim.fn.expand('%:t')
+  local ext = vim.fn.expand('%:e')
+  local fname = 'diff'
+  if ext ~= '' then
+    fname = fname .. '.' .. ext
+  end
+
+  -- Open vertical split and load diff buffer
+  vim.cmd('vnew ' .. fname)
+
+  -- Split the content cleanly and insert it
+  local lines = vim.split(content, '\n', { plain = true })
+  if lines[#lines] == '' then table.remove(lines) end  -- remove trailing empty line
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, lines)
+
+  -- Set winbar for visual alignment (optional)
+  vim.api.nvim_win_set_option(0, 'winbar', '│ GIT HEAD')
+
+  -- Enable diff mode
+  vim.cmd('diffthis')
+
+  -- Go back and diff original
+  vim.cmd('wincmd p')
+  vim.cmd('diffthis')
+end, { desc = 'Clean side-by-side diff with HEAD using Lua + Git' })
+
+-- --- terminal diff cmd
+-- vim.api.nvim_create_user_command("DiffAll", function()
+--   require("custom.gitdiff").open_git_diffs()
+-- end, {})
