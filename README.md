@@ -1,3 +1,6 @@
+# TODO
+add ~/.config/karabiner/karabiner.json
+
 ## List symlinks
 
 ❯ ls -a -l | grep "dotfiles"

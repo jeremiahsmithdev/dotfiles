@@ -1,7 +1,14 @@
+--
+--
+--
+-- NOT ACTIVE - USE DOING.NVIM --
+--
+--
+--
 -- setup wherever you do that in you config (eg init.lua)
 require("do").setup({
   -- default options
-  winbar = false,
+  winbar = true,
   message_timeout = 2000, -- how long notifications are shown
   kaomoji_mode = 0, -- 0 kaomoji everywhere, 1 skip kaomoji in doing
   doing_prefix = "Doing: ",

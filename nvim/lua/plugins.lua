@@ -32,6 +32,17 @@ Plugin List and Configuration
 
 require('lazy').setup({
   -- Plugin to live preview markdown and other files
+  'sindrets/diffview.nvim',
+  { 'echasnovski/mini.diff', version = false },
+-- Inside your plugin spec or config
+{
+  "nvim-lua/plenary.nvim",
+  config = function()
+    vim.api.nvim_create_user_command("DiffAll", function()
+      require("custom.gitdiff").open_git_diffs()
+    end, {})
+  end,
+},
   {
     'brianhuster/live-preview.nvim',
     dependencies = {
@@ -146,7 +157,7 @@ require('lazy').setup({
   'luisiacc/gruvbox-baby',      -- Color scheme variant
 
   -- AI/Code completion tools
-  'Exafunction/codeium.vim',
+  'Exafunction/windsurf.vim',
 
   -- ChatGPT and OpenAI plugin
   {
@@ -173,6 +184,16 @@ require('lazy').setup({
       require'alpha'.setup(require'alpha.themes.startify'.config)
     end,
   },
+--   {
+--   'nvimdev/dashboard-nvim',
+--   event = 'VimEnter',
+--   config = function()
+--     require('dashboard').setup {
+--       -- config
+--     }
+--   end,
+--   dependencies = { {'nvim-tree/nvim-web-devicons'}}
+-- },
 
   -- Smart splits across windows and tmux/yabai, with macOS integration
   {
@@ -213,7 +234,10 @@ require('lazy').setup({
         },
         winbar = { enabled = false, },
         store = {
-          file_name = ".tasks",
+          sync_tasks = true,
+        --   use_global_store = true, -- use a global tasks file instead of per-project
+        --   global_file_path = "~/.doing_tasks"  -- or any preferred patIh
+        --   -- file_name = ".doing_tasks",
         },
       }
       vim.api.nvim_set_hl(0, "WinBar", { link = "Search" })
@@ -327,6 +351,7 @@ require('lazy').setup({
   'onsails/lspkind.nvim',
   'rcarriga/nvim-notify',
   'glacambre/firenvim',
+  'vuciv/vim-bujo',
 
   -- Highly customisable notifications, messages and command UI
   {
@@ -375,6 +400,46 @@ require('lazy').setup({
     "MeanderingProgrammer/render-markdown.nvim",
     ft = { "markdown", "codecompanion" },
   },
+{
+    "GeorgesAlkhouri/nvim-aider",
+    cmd = "Aider",
+    -- Example key mappings for common actions:
+    keys = {
+      { "<leader>a/", "<cmd>Aider toggle<cr>", desc = "Toggle Aider" },
+      { "<leader>as", "<cmd>Aider send<cr>", desc = "Send to Aider", mode = { "n", "v" } },
+      { "<leader>ac", "<cmd>Aider command<cr>", desc = "Aider Commands" },
+      { "<leader>ab", "<cmd>Aider buffer<cr>", desc = "Send Buffer" },
+      { "<leader>a+", "<cmd>Aider add<cr>", desc = "Add File" },
+      { "<leader>a-", "<cmd>Aider drop<cr>", desc = "Drop File" },
+      { "<leader>ar", "<cmd>Aider add readonly<cr>", desc = "Add Read-Only" },
+      { "<leader>aR", "<cmd>Aider reset<cr>", desc = "Reset Session" },
+      -- Example nvim-tree.lua integration if needed
+      { "<leader>a+", "<cmd>AiderTreeAddFile<cr>", desc = "Add File from Tree to Aider", ft = "NvimTree" },
+      { "<leader>a-", "<cmd>AiderTreeDropFile<cr>", desc = "Drop File from Tree from Aider", ft = "NvimTree" },
+    },
+    dependencies = {
+      "folke/snacks.nvim",
+      --- The below dependencies are optional
+      "catppuccin/nvim",
+      "nvim-tree/nvim-tree.lua",
+      --- Neo-tree integration
+      {
+        "nvim-neo-tree/neo-tree.nvim",
+        opts = function(_, opts)
+          -- Example mapping configuration (already set by default)
+          -- opts.window = {
+          --   mappings = {
+          --     ["+"] = { "nvim_aider_add", desc = "add to aider" },
+          --     ["-"] = { "nvim_aider_drop", desc = "drop from aider" }
+          --     ["="] = { "nvim_aider_add_read_only", desc = "add read-only to aider" }
+          --   }
+          -- }
+          require("nvim_aider.neo_tree").setup(opts)
+        end,
+      },
+    },
+    config = true,
+  }
 
 }, {})
 
