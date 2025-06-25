@@ -4,6 +4,7 @@
 local lspsaga = require 'lspsaga'
 lspsaga.setup { -- defaults ...
   debug = false,
+  code_action_prompt = { enable = false, },
   symbol_in_winbar = true,
   use_saga_diagnostic_sign = true,
   -- diagnostic sign

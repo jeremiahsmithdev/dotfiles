@@ -81,11 +81,25 @@ ctrl - l [
  # # SPACE CONTROL
  #
  # remove the current desktop space
- # fn - d : yabai -m space --destroy
- fn - d : yabai -m space --focus recent && sleep 1 && yabai -m space recent --destroy
+ fn - d : yabai -m space --destroy
+ # fn - d : yabai -m space --focus recent && sleep 1 && yabai -m space recent --destroy
 
  # create a new desktop space and move focus to it
  fn - n : yabai -m space --create && yabai -m space --focus last
 
  fn -s : open -a "Mission Control" --args -s
  ctrl - w : open -a "Mission Control" --args -s
+ 
+ # layout restoration
+ #
+ # Save layout to file
+fn + shift - s : ~/.config/yabai/save_layout.sh
+
+# Restore layout from file
+fn + shift - r : ~/.config/yabai/restore_layout.sh
+
+# open apps
+fn - t : open -a "WezTerm"
+fn - b : open -a "LibreWolf"
+fn - g : open -a "ChatGPT"
+fn - m : open -a "Mail"

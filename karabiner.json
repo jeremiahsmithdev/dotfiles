@@ -52,6 +52,65 @@
                 ]
               }
             ]
+          },
+          {
+            "description": "Ctrl+N/P to switch tabs in browsers",
+            "manipulators": [
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "n",
+                  "modifiers": {
+                    "mandatory": ["control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "right_arrow",
+                    "modifiers": ["command", "option"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^org\\.mozilla\\.firefox$",
+                      "^com\\.google\\.Chrome$",
+                      "^com\\.apple\\.Safari$",
+                      "^org\\.chromium\\.Chromium$",
+                      "^com\\.brave\\.Browser$"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "basic",
+                "from": {
+                  "key_code": "p",
+                  "modifiers": {
+                    "mandatory": ["control"]
+                  }
+                },
+                "to": [
+                  {
+                    "key_code": "left_arrow",
+                    "modifiers": ["command", "option"]
+                  }
+                ],
+                "conditions": [
+                  {
+                    "type": "frontmost_application_if",
+                    "bundle_identifiers": [
+                      "^org\\.mozilla\\.firefox$",
+                      "^com\\.google\\.Chrome$",
+                      "^com\\.apple\\.Safari$",
+                      "^org\\.chromium\\.Chromium$",
+                      "^com\\.brave\\.Browser$"
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       },

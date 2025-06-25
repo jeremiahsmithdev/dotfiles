@@ -32,7 +32,7 @@ Bind('n', '<leader>ai', ':r!sgpt --code ""<left>', 'noremap')
 Bind('n', '<leader>n', ':NvimTreeToggle<CR>', 'noremap')
 
 
-Bind('n', '<CR>', ':ObsidianFollowLink<CR>', 'noremap')
+-- Bind('n', '<CR>', ':ObsidianFollowLink<CR>', 'noremap')
 
 -- firenvim
 Bind('n' , '<C-e>', ':q', 'noremap')
@@ -79,6 +79,7 @@ vim.api.nvim_create_user_command('Diff', function()
   end
   vim.cmd('vert new ' .. fname .. ' | read # | 1delete')
   vim.api.nvim_win_set_option(0, 'winbar', '│ SAVED FILE')
+  vim.bo.buflisted = false -- Hide from buffer list
   vim.cmd('diffthis | wincmd p | diffthis')
 end, {})
 
@@ -174,21 +175,8 @@ vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
 -- cheatsheet
 vim.keymap.set('n', '<leader>c', ':Cheatsheet<CR>')
 
---- In lsp attach function
--- local map = vim.api.nvim_buf_set_keymap
--- map(0, "n", "gr", "<cmd>Lspsaga rename<cr>", {silent = true, noremap = true})
--- map(0, "n", "gx", "<cmd>Lspsaga code_action<cr>", {silent = true, noremap = true})
--- map(0, "x", "gx", ":<c-u>Lspsaga range_code_action<cr>", {silent = true, noremap = true})
--- map(0, "n", "K",  "<cmd>Lspsaga hover_doc<cr>", {silent = true, noremap = true})
--- map(0, "n", "go", "<cmd>Lspsaga show_line_diagnostics<cr>", {silent = true, noremap = true})
--- map(0, "n", "gj", "<cmd>Lspsaga diagnostic_jump_next<cr>", {silent = true, noremap = true})
--- map(0, "n", "gk", "<cmd>Lspsaga diagnostic_jump_prev<cr>", {silent = true, noremap = true})
--- map(0, "n", "<C-u>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1, '<c-u>')<cr>", {})
--- map(0, "n", "<C-d>", "<cmd>lua require('lspsaga.action').smart_scroll_with_saga(1, '<c-d>')<cr>", {})
-
-
--- [[ Close diff buffer ]]
-vim.keymap.set("n", "q", function()
+-- Define the function
+local function close_special_buffers()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     local buf = vim.api.nvim_win_get_buf(win)
     local name = vim.api.nvim_buf_get_name(buf)
@@ -199,9 +187,16 @@ vim.keymap.set("n", "q", function()
       fname = vim.fn.fnamemodify(name, ":t")  -- get the filename from full path
     end
 
-    if fname:match("^diff.*") or fname:match("^%[CodeCompanion%].*") then
-      vim.cmd("bd! " .. buf)
-      return
+    local matches = {
+      "^diff.*",
+      "^%[CodeCompanion%].*",
+      "DiffviewFilePanel",
+    }
+    for _, pat in ipairs(matches) do
+      if fname:match(pat) then
+        vim.cmd("bd! " .. buf)
+        return
+      end
     end
   end
 
@@ -213,7 +208,36 @@ vim.keymap.set("n", "q", function()
   if not ok then
     vim.notify("Unsaved changes — use :q! to force quit", vim.log.levels.WARN)
   end
-end, { desc = "Close diff or CodeCompanion buffer, else quit" })
+end
+
+-- end
+
+-- Create :Close command
+vim.api.nvim_create_user_command("Close", close_special_buffers, {
+  desc = "Close diff or CodeCompanion buffer, else try to quit",
+})
+
+-- Map `q` to the same logic
+vim.keymap.set("n", "q", close_special_buffers, {
+  desc = "Close diff/CodeCompanion buffer or fallback to quit",
+})
+
+-- Create :Close command
+vim.api.nvim_create_user_command("Close", close_special_buffers, {})
+
+-- Map `q` to that same fn
+vim.keymap.set("n", "q", close_special_buffers)
+
+
+--   -- Fallback: try to quit window
+--   local ok, err = pcall(function()
+--     vim.api.nvim_feedkeys(':q', 'n', false)
+--   end)
+--
+--   if not ok then
+--     vim.notify("Unsaved changes — use :q! to force quit", vim.log.levels.WARN)
+--   end
+-- end, { desc = "Close diff or CodeCompanion buffer, else quit" })
 
 -- Show vertical Git diff vs HEAD
 vim.api.nvim_create_user_command('Gdiff', function()
@@ -266,6 +290,8 @@ vim.api.nvim_create_user_command('Gdiff', function()
 
   -- Set winbar for visual alignment (optional)
   vim.api.nvim_win_set_option(0, 'winbar', '│ GIT HEAD')
+  vim.bo.buflisted = false -- Hide from buffer list
+
 
   -- Enable diff mode
   vim.cmd('diffthis')
@@ -275,7 +301,32 @@ vim.api.nvim_create_user_command('Gdiff', function()
   vim.cmd('diffthis')
 end, { desc = 'Clean side-by-side diff with HEAD using Lua + Git' })
 
--- --- terminal diff cmd
--- vim.api.nvim_create_user_command("DiffAll", function()
---   require("custom.gitdiff").open_git_diffs()
--- end, {})
+-- vim.api.nvim_set_keymap('n', '<C-n>', ':Close<CR> | :bn<CR> | :Gdiff<CR>', { noremap = false, silent = true })
+
+local function smart_ctrl_n()
+  -- Check if we are in diff mode
+  if vim.wo.diff then
+    vim.cmd([[
+    Close
+    bnext
+    Gdiff
+]])
+  else
+    vim.cmd('bnext')
+  end
+end
+
+local function smart_ctrl_p()
+  -- Check if we are in diff mode
+  if vim.wo.diff then
+    vim.cmd([[
+    Close
+    bprev
+    Gdiff
+]])
+  else
+    vim.cmd('bprev')
+  end
+end
+
+vim.keymap.set('n', '<C-n>', smart_ctrl_n, { noremap = false, silent = true })

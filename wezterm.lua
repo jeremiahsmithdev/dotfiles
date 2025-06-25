@@ -1,7 +1,11 @@
 return {
 
   -- Open with tmux
-  default_prog = { "/opt/homebrew/bin/zsh", "--login",  "-c", "tmux attach || tmux" },
+  default_prog = {
+    "/opt/homebrew/bin/zsh",
+    "--login",  "-c",
+    "tmux attach || tmux",
+  },
 
   hide_tab_bar_if_only_one_tab = true,
 

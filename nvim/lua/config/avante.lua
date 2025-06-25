@@ -57,3 +57,12 @@
     },
   },
 }
+-- require('avante').setup {
+--     -- Other configurations ...
+--
+--     -- Customize key mappings
+--     mappings = {
+--         submit = "<NewKeyBinding>",  -- Replace with your desired keybinding
+--         -- Add any other keybindings you wish to customize
+--     },
+-- }

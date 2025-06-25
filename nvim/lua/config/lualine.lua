@@ -23,7 +23,7 @@ require'lualine'.setup {
     -- lualine_c = { '%{strftime("%a %I:%M%p")}'},
     lualine_c = {
       '%{strftime("%a %I:%M%p")}' ; function()
-        return require('do').view('active')
+        return require('doing').status
       end,
     },
 
@@ -36,7 +36,11 @@ require'lualine'.setup {
     lualine_z = {'location'}
   },
   inactive_sections = {
-    lualine_a = {},
+
+    lualine_a = {
+            require('doing').status, -- Doing.nvim section for winbar
+        },
+    -- lualine_a = {},
     lualine_b = {},
     lualine_c = {'filename'},
     lualine_x = {'location'},
@@ -46,10 +50,9 @@ require'lualine'.setup {
   tabline = {
   lualine_a = {'buffers'},
   lualine_b = {},
-  lualine_c = {},
   lualine_x = {},
-  lualine_y = {},
-  lualine_z = {}
+  lualine_y = { require("doing").status },
+  lualine_z = {},
 },
   extensions = {}
 
