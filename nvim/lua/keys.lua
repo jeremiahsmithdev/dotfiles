@@ -70,7 +70,6 @@ vim.api.nvim_create_user_command('Autocmnds', 'edit ~/.config/nvim/lua/autocmds.
 vim.api.nvim_create_user_command('Plugins', 'edit ~/.config/nvim/lua/plugins.lua', {})
 vim.api.nvim_create_user_command('Style', 'edit ~/.config/nvim/lua/style.lua', {})
 vim.api.nvim_create_user_command('LG', 'LazyGit', {})
--- vim.api.nvim_create_user_command('Diff', ':vert new diff | read # | 1delete | diffthis | wincmd p | diffthis', {})
 vim.api.nvim_create_user_command('Diff', function()
   local file = vim.fn.expand('%:t')
   local ext = vim.fn.expand('%:e')
