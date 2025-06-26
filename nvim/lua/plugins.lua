@@ -151,10 +151,9 @@ require('lazy').setup({
   'xiyaowong/transparent.nvim', -- Toggle transparency
   'karb94/neoscroll.nvim',      -- Smooth scrolling
   'ggandor/leap.nvim',          -- Motion plugin (jump anywhere)
-  'morhetz/gruvbox',            -- Color scheme
-  'eddyekofo94/gruvbox-flat.nvim',
+  -- 'morhetz/gruvbox',            -- Color scheme
+  { "ellisonleao/gruvbox.nvim", priority = 1000 , config = true, opts = ...},
   'nvim-tree/nvim-tree.lua',    -- File explorer
-  'luisiacc/gruvbox-baby',      -- Color scheme variant
 
   -- AI/Code completion tools
   'Exafunction/windsurf.vim',
@@ -265,14 +264,25 @@ require('lazy').setup({
 
   -- LSP configuration and dependencies
   {
-    'neovim/nvim-lspconfig',
+    "mason-org/mason-lspconfig.nvim",
+    ensure_installed = {'intelephense'},
+    opts = {},
     dependencies = {
-      { 'williamboman/mason.nvim', config = true },
-      'williamboman/mason-lspconfig.nvim',
-      { 'j-hui/fidget.nvim', opts = {} },
-      'folke/neodev.nvim',
+        { "mason-org/mason.nvim", opts = {} },
+        "neovim/nvim-lspconfig",
+        { 'j-hui/fidget.nvim', opts = {} }, --?
+        'folke/neodev.nvim', --?
     },
   },
+  -- {
+  --   'neovim/nvim-lspconfig',
+  --   dependencies = {
+  --     { 'williamboman/mason.nvim', config = true },
+  --     'williamboman/mason-lspconfig.nvim',
+  --     { 'j-hui/fidget.nvim', opts = {} },
+  --     'folke/neodev.nvim',
+  --   },
+  -- },
 
   -- Autocompletion plugins (nvim-cmp suite)
   {
@@ -295,7 +305,7 @@ require('lazy').setup({
   },
 
   -- Show keybindings in a popup
-  { 'folke/which-key.nvim', opts = {} },
+  -- { 'folke/which-key.nvim', opts = {} },
 
   -- GitSigns: show modifcations in sign column
   {

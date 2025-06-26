@@ -7,6 +7,7 @@
 --  If you want to override the default filetypes that your language server will attach to you can
 --  define the property 'filetypes' to the map in question.
 local servers = {
+  -- intelephense = {},
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
@@ -16,6 +17,9 @@ local servers = {
 
   lua_ls = {
     Lua = {
+      diagnostics = {
+        globals = { "vim", "describe", "it", "before_each", "after_each", "packer_plugins", "MiniTest" },
+      },
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
       -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
@@ -38,13 +42,13 @@ mason_lspconfig.setup {
   ensure_installed = vim.tbl_keys(servers),
 }
 
-mason_lspconfig.setup_handlers {
-  function(server_name)
-    require('lspconfig')[server_name].setup {
-      capabilities = capabilities,
-      on_attach = on_attach,
-      settings = servers[server_name],
-      filetypes = (servers[server_name] or {}).filetypes,
-    }
-  end,
-}
+-- mason_lspconfig.setup_handlers({
+--   function(server_name)
+--     require('lspconfig')[server_name].setup {
+--       capabilities = capabilities,
+--       on_attach = on_attach, -- make sure this exists
+--       settings = servers[server_name] or {},
+--       filetypes = servers[server_name] and servers[server_name].filetypes,
+--     }
+--   end,
+-- })

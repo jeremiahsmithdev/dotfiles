@@ -1,5 +1,5 @@
 # open files
-alias aliases='nvim ~/dotfiles/aliases.zsh'
+alias aliases='nvim ~/dotfiles/aliases.sh'
 alias zshrc='nvim ~/dotfiles/zshrc'
 alias init='nvim ~/.config/nvim/init.lua'
 alias plugins='nvim ~/.config/nvim/lua/plugins.lua'

@@ -68,6 +68,9 @@ local servers = {
 
   lua_ls = {
     Lua = {
+       diagnostics = {
+        globals = { "vim", "describe", "it", "before_each", "after_each", "packer_plugins", "MiniTest" },
+      },
       workspace = { checkThirdParty = false },
       telemetry = { enable = false },
       -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings

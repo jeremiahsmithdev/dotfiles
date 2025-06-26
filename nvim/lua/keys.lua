@@ -3,6 +3,23 @@ Bind('n', ';', ':', 'noremap')
 Bind('n', 'q', ':q', 'noremap')
 Bind('n', 'Q', ':q!', 'noremap')
 
+-- Treesitter
+-- inside on_attach(client, bufnr)
+-- local opts = { buffer = bufnr, desc = 'Go to definition' }
+vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+
+-- GitSigns
+
+-- Map <space>s to stage hunk
+vim.keymap.set('n', '<space>s', function()
+  require('gitsigns').stage_hunk()
+end, { desc = 'Gitsigns: Stage Hunk' })
+
+-- Map <space>S to stage entire file
+vim.keymap.set('n', '<space>S', function()
+  require('gitsigns').stage_buffer()
+end, { desc = 'Gitsigns: Stage Buffer' })
+
 -- Telescope
 local builtin = require('telescope.builtin')
 Bind('n', '<leader>rg', ':Telescope live_grep<CR>', 'noremap')
