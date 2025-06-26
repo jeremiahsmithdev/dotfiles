@@ -30,6 +30,9 @@ zle -N fzf-cd-widget # Tell Zsh this is a widget
 # │                BINDINGS                   │
 # ╰───────────────────────────────────────────╯
 
+# Set vi mode BEFORE defining any keybindings
+bindkey -v
+
 # Find directories mapping
 bindkey '^G' fzf-cd-widget
 

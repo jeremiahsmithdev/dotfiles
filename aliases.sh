@@ -62,3 +62,6 @@ alias diff='nvim $(git diff --name-only HEAD) -c "DiffviewOpen"'
 alias update-c2c='~/dev/PrivSecure/mirotalk/update-c2c.sh'
 alias update-p2p='~/dev/PrivSecure/mirotalk/update-p2p.sh'
 alias update-sfu='~/dev/PrivSecure/mirotalk/update-sfu.sh'
+
+# AI
+alias rovo='acli rovodev run'
