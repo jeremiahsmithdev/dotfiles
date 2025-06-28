@@ -17,6 +17,16 @@ fzf_nvim_preview() {
 }
 zle -N fzf_nvim_preview
 
+fzf_nvim_preview() {
+  local file
+  file=$(_fzf_git_files)
+  if [[ -n "$file" ]]; then
+    nvim "$file"
+  fi
+  zle reset-prompt
+}
+zle -N fzf_nvim_preview
+
 # Find directories in the current directory
 fzf-cd-widget() {
   local dir

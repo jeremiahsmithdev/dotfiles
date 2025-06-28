@@ -65,3 +65,7 @@ alias update-sfu='~/dev/PrivSecure/mirotalk/update-sfu.sh'
 
 # AI
 alias rovo='acli rovodev run'
+alias cost='npx ccusage@latest'
+
+# TEMP
+alias database='cd /Users/admin/dev/Quoting/SolidInvoiceClone/config/env/db'

@@ -55,6 +55,8 @@ require('gitsigns').setup({
     map('n', '<leader>hu', gs.undo_stage_hunk, { desc = 'undo stage hunk' })
     map('n', '<leader>hR', gs.reset_buffer, { desc = 'git Reset buffer' })
     map('n', '<leader>hp', gs.preview_hunk, { desc = 'preview git hunk' })
+    -- shorter versions
+    map('n', '<leader>r', gs.reset_hunk, { desc = 'git reset hunk' })
     map('n', '<leader>hb', function()
       gs.blame_line { full = false }
     end, { desc = 'git blame line' })

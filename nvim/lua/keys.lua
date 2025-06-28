@@ -1,3 +1,36 @@
+-- Telescope integration (most common way to use it)
+vim.keymap.set("n", "<leader>xt", "<cmd>TodoTelescope<CR>", { desc = "Todo (Telescope)" })
+vim.keymap.set("n", "<leader>xT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", { desc = "Todo/Fix/Fixme" })
+
+-- Keybindings for dap-ui actions
+vim.keymap.set('n', '<leader>du', function() require('dapui').open() end, { desc = 'DAP UI Open' })
+vim.keymap.set('n', '<leader>dc', function() require('dapui').close() end, { desc = 'DAP UI Close' })
+vim.keymap.set('n', '<leader>dt', function() require('dapui').toggle() end, { desc = 'DAP UI Toggle' })
+-- DAP
+    vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
+    vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
+    vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
+    vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
+    vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
+    vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
+    vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
+    vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
+    vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
+    vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+      require('dap.ui.widgets').hover()
+    end)
+    vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+      require('dap.ui.widgets').preview()
+    end)
+    vim.keymap.set('n', '<Leader>df', function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.frames)
+    end)
+    vim.keymap.set('n', '<Leader>ds', function()
+      local widgets = require('dap.ui.widgets')
+      widgets.centered_float(widgets.scopes)
+    end)
+
 Bind = require('binds')
 Bind('n', ';', ':', 'noremap')
 Bind('n', 'q', ':q', 'noremap')
@@ -83,7 +116,7 @@ vim.api.nvim_create_user_command('Init', 'edit ~/.config/nvim/init.lua', {})
 vim.api.nvim_create_user_command('Plugs', 'edit ~/.config/nvim/lua/plugins.lua', {})
 vim.api.nvim_create_user_command('Keys', 'edit ~/.config/nvim/lua/keys.lua', {})
 vim.api.nvim_create_user_command('Opts', 'edit ~/.config/nvim/lua/opts.lua', {})
-vim.api.nvim_create_user_command('Autocmnds', 'edit ~/.config/nvim/lua/autocmds.lua', {})
+vim.api.nvim_create_user_command('Auto', 'edit ~/.config/nvim/lua/autocmds.lua', {})
 vim.api.nvim_create_user_command('Plugins', 'edit ~/.config/nvim/lua/plugins.lua', {})
 vim.api.nvim_create_user_command('Style', 'edit ~/.config/nvim/lua/style.lua', {})
 vim.api.nvim_create_user_command('LG', 'LazyGit', {})
@@ -99,6 +132,9 @@ vim.api.nvim_create_user_command('Diff', function()
   vim.bo.buflisted = false -- Hide from buffer list
   vim.cmd('diffthis | wincmd p | diffthis')
 end, {})
+
+
+
 
 
 -- Directories
@@ -208,6 +244,7 @@ local function close_special_buffers()
       "^diff.*",
       "^%[CodeCompanion%].*",
       "DiffviewFilePanel",
+      "DAP.*",
     }
     for _, pat in ipairs(matches) do
       if fname:match(pat) then
@@ -347,3 +384,59 @@ local function smart_ctrl_p()
 end
 
 vim.keymap.set('n', '<C-n>', smart_ctrl_n, { noremap = false, silent = true })
+
+vim.api.nvim_create_user_command('Reload', function()
+  -- Get list of loaded buffers with file paths
+  local buffers = {}
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, 'buflisted') then
+      local name = vim.api.nvim_buf_get_name(buf)
+      if name ~= '' and vim.fn.filereadable(name) == 1 then
+        table.insert(buffers, name)
+      end
+    end
+  end
+  
+  -- Save all buffers first
+  vim.cmd('silent! wa')
+  
+  -- Get current Neovim process PID
+  local current_pid = vim.fn.getpid()
+  
+  -- Create unique buffer file using PID to avoid conflicts
+  local buffer_file = '/tmp/nvim_buffers_' .. current_pid
+  local file = io.open(buffer_file, 'w')
+  if file then
+    for _, buffer_path in ipairs(buffers) do
+      file:write(buffer_path .. '\n')
+    end
+    file:close()
+    
+    -- Try using vim's job control for better process management
+    local nvim_args = {}
+    for _, buffer_path in ipairs(buffers) do
+      table.insert(nvim_args, buffer_path)
+    end
+    
+    -- Use vim.fn.jobstart with proper terminal attachment
+    local job_id = vim.fn.jobstart({'nvim', unpack(nvim_args)}, {
+      detach = true,
+      stdin = 'null',
+      stdout = 'inherit',
+      stderr = 'inherit',
+    })
+    
+    if job_id > 0 then
+      -- Job started successfully, now exit
+      vim.defer_fn(function()
+        vim.cmd('qa!')
+      end, 100)
+    else
+      vim.notify('Failed to start reload job', vim.log.levels.ERROR)
+    end
+  else
+    vim.notify('Failed to create buffer file for reload', vim.log.levels.ERROR)
+  end
+end, { desc = 'Exit and reopen Neovim with same buffers using external script' })
+
+

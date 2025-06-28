@@ -52,7 +52,14 @@ require('lazy').setup({
       'echasnovski/mini.pick',
     },
   },
-
+  'mfussenegger/nvim-dap',
+  {
+  "rcarriga/nvim-dap-ui",
+  dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"},
+  config = function()
+    require("dapui").setup()
+  end
+},
   -- Plugin to interface and work with remote servers/hosts
   {
     "amitds1997/remote-nvim.nvim",
@@ -76,23 +83,49 @@ require('lazy').setup({
   },
 
   -- MCP Server (Model Context Protocol)
-  {
+{
     "ravitemer/mcphub.nvim",
-    build = "npm install -g mcp-hub@latest",
-    config = function()
-      require("mcphub").setup()
-    end,
-  },
-
-  -- Highlight and search TODO, FIX, WARNING, etc. comments
-  {
-    "folke/todo-comments.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-    opts = {
-      -- Custom configuration goes here
-      -- Leave empty for defaults
+    dependencies = {
+        "nvim-lua/plenary.nvim",
     },
+    build = "npm install -g mcp-hub@latest",  -- Installs `mcp-hub` node binary globally
+    config = function()
+        require("mcphub").setup()
+    end
+},
+  -- Highlight and search TODO, FIX, WARNING, etc. comments
+  -- PERF: Fully optimized
+  -- HACK: Temporary workaround
+  -- TODO: Fix crash on null pointer
+  -- NOTE: This is important
+  -- FIX: This needs fixing
+  -- BUG: bug
+  -- ISSUE: issue
+  -- WARNING: Warning message
+  -- TEST: Test message
+  -- TESTING: 
+  -- PASSED: 
+  -- FAILED:
+
+  {
+  "folke/todo-comments.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  opts = {
+  keywords = {
+    FIX = {
+      icon = " ",
+      color = "#FF2222", -- red for FIX
+      alt = { "FIXME", "BUG", "FIXIT", "ISSUE" },
+    },
+    TODO = { icon = " ", color = "#2AA9F9" }, -- blue for TODO
+    HACK = { icon = " ", color = "#FF8800" }, -- orange for HACK
+    WARN = { icon = " ", color = "#FFFF00", alt = { "WARNING", "XXX" } }, -- yellow for WARN
+    PERF = { icon = " ", color = "#7C3AED", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } }, -- purple for PERF
+    NOTE = { icon = " ", color = "#00FFAA", alt = { "INFO" } }, -- teal for NOTE
+    TEST = { icon = "⏲ ", color = "#5EEA37", alt = { "TESTING", "PASSED", "FAILED" } }, -- green for TEST
   },
+  }
+},
 
   -- Easy image pasting for markdown and chat buffers
   {
@@ -121,7 +154,6 @@ require('lazy').setup({
     },
     config = true,
   },
-  'famiu/nvim-reload',
 
   -- LSP UI features (code actions, diagnostics, etc.)
   {

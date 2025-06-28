@@ -3,6 +3,7 @@
 export OPENAI_API_BASE="https://openrouter.ai/api/v1"
 export OPENROUTER_AIDER=$(cat ~/.openrouter_aider)
 export OPENROUTER_API_KEY="$OPENROUTER_AIDER"
+export GEMINI_API_KEY=$(cat ~/.gemini_api_key)
 # export OPENAI_API_KEY="$OPENROUTER_AIDER"
 
 # export OPENROUTER_CHATBOX=$(cat ~/.openrouter-chatbox)

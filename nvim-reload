@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Get the current tmux pane ID
+PANE_ID=$(tmux display-message -p '#{pane_id}')
+
+# Send keys to Neovim to save session and quit
+tmux send-keys -t "$PANE_ID" C-c  # Cancel any current operation
+tmux send-keys -t "$PANE_ID" ':mksession! /tmp/nvim_reload_session.vim' Enter
+tmux send-keys -t "$PANE_ID" ':qa!' Enter
+
+# Wait a moment for Neovim to close
+sleep 0.5
+
+# Restart Neovim with the saved session
+tmux send-keys -t "$PANE_ID" 'nvim -S /tmp/nvim_reload_session.vim' Enter

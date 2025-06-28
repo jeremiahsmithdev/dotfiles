@@ -27,6 +27,7 @@ require('config.avante')
 -- [ ] move require configs to plugins file (see gitsigns)
 
 -- Plugin configurations
+require('config.dap')
 require('config.lspkind')
 require('config.telescope') -- search and navigation tool for Neovim
 require('config.treesitter') -- language parsing for syntax highlighting, code analysis, and more
