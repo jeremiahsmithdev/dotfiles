@@ -12,7 +12,7 @@ require('telescope').setup {
 }
 -- Telescope
 if vim.fn.isdirectory('.git') == 1 or vim.fn.system 'git rev-parse --git-dir 2> /dev/null' ~= '' then
-  Bind('n', '<C-f>', ':Telescope git_files<CR>', 'noremap')
+  Bind('n', '<C-f>', ":Telescope git_files show_untracked=true<CR>", 'noremap')
 else
   Bind('n', '<C-f>', ':Telescope find_files<CR>', 'noremap')
 end

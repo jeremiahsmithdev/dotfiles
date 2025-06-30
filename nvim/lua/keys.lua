@@ -1,35 +1,22 @@
--- Telescope integration (most common way to use it)
-vim.keymap.set("n", "<leader>xt", "<cmd>TodoTelescope<CR>", { desc = "Todo (Telescope)" })
-vim.keymap.set("n", "<leader>xT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", { desc = "Todo/Fix/Fixme" })
-
--- Keybindings for dap-ui actions
-vim.keymap.set('n', '<leader>du', function() require('dapui').open() end, { desc = 'DAP UI Open' })
-vim.keymap.set('n', '<leader>dc', function() require('dapui').close() end, { desc = 'DAP UI Close' })
-vim.keymap.set('n', '<leader>dt', function() require('dapui').toggle() end, { desc = 'DAP UI Toggle' })
--- DAP
-    vim.keymap.set('n', '<F5>', function() require('dap').continue() end)
-    vim.keymap.set('n', '<F10>', function() require('dap').step_over() end)
-    vim.keymap.set('n', '<F11>', function() require('dap').step_into() end)
-    vim.keymap.set('n', '<F12>', function() require('dap').step_out() end)
-    vim.keymap.set('n', '<Leader>b', function() require('dap').toggle_breakpoint() end)
-    vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end)
-    vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end)
-    vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end)
-    vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end)
-    vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
-      require('dap.ui.widgets').hover()
-    end)
-    vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
-      require('dap.ui.widgets').preview()
-    end)
-    vim.keymap.set('n', '<Leader>df', function()
-      local widgets = require('dap.ui.widgets')
-      widgets.centered_float(widgets.frames)
-    end)
-    vim.keymap.set('n', '<Leader>ds', function()
-      local widgets = require('dap.ui.widgets')
-      widgets.centered_float(widgets.scopes)
-    end)
+-- Additional DAP keybindings (main ones are in plugin specs)
+vim.keymap.set('n', '<Leader>B', function() require('dap').set_breakpoint() end, { desc = 'DAP Set Breakpoint' })
+vim.keymap.set('n', '<Leader>lp', function() require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: ')) end, { desc = 'DAP Log Point' })
+vim.keymap.set('n', '<Leader>dr', function() require('dap').repl.open() end, { desc = 'DAP REPL' })
+vim.keymap.set('n', '<Leader>dl', function() require('dap').run_last() end, { desc = 'DAP Run Last' })
+vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+  require('dap.ui.widgets').hover()
+end, { desc = 'DAP Hover' })
+vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+  require('dap.ui.widgets').preview()
+end, { desc = 'DAP Preview' })
+vim.keymap.set('n', '<Leader>df', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.frames)
+end, { desc = 'DAP Frames' })
+vim.keymap.set('n', '<Leader>ds', function()
+  local widgets = require('dap.ui.widgets')
+  widgets.centered_float(widgets.scopes)
+end, { desc = 'DAP Scopes' })
 
 Bind = require('binds')
 Bind('n', ';', ':', 'noremap')
@@ -67,10 +54,10 @@ Bind('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 Bind('n', '<leader>cc', ':CodeCompanion<CR>', 'noremap')
 -- Bind('c', '<leader>cc', 'CodeCompanion', 'noremap')
 Bind('n', '<leader>e', ':CodeCompanionEdit<CR>', 'noremap')
-Bind('c', 'chat', 'CodeCompanionChat<CR>', 'noremap')
+Bind('c', 'chat', 'CodeCompanion Chat<CR>', 'noremap')
 Bind('c', 'cc ', 'CodeCompanion ', 'noremap')
 -- Bind('c', ':', 'CodeCompanion ', 'noremap')
-Bind('n', '<leader>t', ':CodeCompanionChat Toggle<CR>', 'noremap')
+Bind('n', '<leader>c', ':CodeCompanion Chat<CR>', 'noremap')
 
 vim.keymap.set('v', '<leader>cc', ':CodeCompanion<CR>', { 
   desc = 'Run CodeCompanion on selection',
@@ -224,9 +211,6 @@ vim.keymap.set('v', '<leader>p', '"_dP') -- not working?
 
 -- lspsaga
 vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
-
--- cheatsheet
-vim.keymap.set('n', '<leader>c', ':Cheatsheet<CR>')
 
 -- Define the function
 local function close_special_buffers()

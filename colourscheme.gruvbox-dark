@@ -1,0 +1,18 @@
+# COLORSCHEME: gruvbox dark
+set -g status-style "bg=colour237,fg=colour223"
+setw -g window-status-style "bg=colour214,fg=colour237"
+setw -g window-status-activity-style "bg=colour237,fg=colour248"
+setw -g window-status-current-style "bg=default,fg=colour237"
+set -g pane-active-border-style "fg=colour250"
+set -g pane-border-style "fg=colour237"
+set -g message-style "bg=colour239,fg=colour223"
+set -g message-command-style "bg=colour239,fg=colour223"
+set -g display-panes-active-colour "colour250"
+set -g display-panes-colour "colour237"
+setw -g clock-mode-colour "colour109"
+setw -g window-status-bell-style "fg=colour235,bg=colour167"
+
+set -g status-left "#[fg=colour248, bg=colour241] #S #[fg=colour241, bg=colour237, nobold, noitalics, nounderscore]"
+set -g status-right "#[fg=colour239, bg=colour237, nobold, nounderscore, noitalics]#[fg=colour246,bg=colour239] %Y-%m-%d  %H:%M #[fg=colour248, bg=colour239, nobold, noitalics, nounderscore]#[fg=colour237, bg=colour248] #h "
+setw -g window-status-current-format "#[fg=colour239, bg=colour248, :nobold, noitalics, nounderscore]#[fg=colour239, bg=colour214] #I #[fg=colour239, bg=colour214, bold] #W #[fg=colour214, bg=colour237, nobold, noitalics, nounderscore]"
+setw -g window-status-format "#[fg=colour237,bg=colour239,noitalics]#[fg=colour223,bg=colour239] #I #[fg=colour223, bg=colour239] #W #[fg=colour239, bg=colour237, noitalics]"

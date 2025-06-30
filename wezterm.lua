@@ -27,6 +27,9 @@ return {
         "#eddeb5", "#ea6962", "#a9b665", "#d8a657",
         "#7daea3", "#d3869b", "#89b482", "#d4be98"
       },
+      -- Set transparency: background Opacity (0.0 is fully transparent, 1.0 is opaque)
+      background_opacity = 0.85,
     },
   },
 }
+

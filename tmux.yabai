@@ -1,0 +1,54 @@
+not_tmux="ps -o state= -o comm= -t '#{pane_tty}' | \
+  grep -iqE '^[^TXZ ]+ +(\\S+\\/)?(g?(view|n?vim?x?)(diff)?|fzf)$'"
+
+bind-key -n C-h if "$not_tmux" { send-keys C-h } {
+  if -F '#{==:#{pane_at_left},1}' {
+    run 'sh -c "yabai -m window --focus west || yabai -m display --focus west || yabai -m space --focus prev" 2>/dev/null || true'
+  } {
+    select-pane -L
+  }
+}
+
+bind-key -n C-j if "$not_tmux" { send-keys C-j } {
+  if -F '#{==:#{pane_at_bottom},1}' {
+    run 'yabai -m window --focus south'
+  } {
+    select-pane -D
+  }
+}
+
+bind-key -n C-k if "$not_tmux" { send-keys C-k } {
+  if -F '#{==:#{pane_at_top},1}' {
+    run 'yabai -m window --focus north'
+  } {
+    select-pane -U
+  }
+}
+bind-key -n C-l if "$not_tmux" { send-keys C-l } {
+  if -F '#{==:#{pane_at_right},1}' {
+    run 'sh -c "yabai -m window --focus east || yabai -m display --focus east || yabai -m space --focus next" 2>/dev/null || true'
+  } {
+    select-pane -L
+  }
+}
+
+bind-key -n M-h if "$not_tmux" 'send-keys M-h' 'resize-pane -L 3'
+bind-key -n M-j if "$not_tmux" 'send-keys M-j' 'resize-pane -D 3'
+bind-key -n M-k if "$not_tmux" 'send-keys M-k' 'resize-pane -U 3'
+bind-key -n M-l if "$not_tmux" 'send-keys M-l' 'resize-pane -R 3'
+
+bind-key -n M-H if "$not_tmux" { send-keys M-H } {
+  swap-pane -t '{left-of}'; select-pane -t '!'
+}
+
+bind-key -n M-J if "$not_tmux" { send-keys M-J } {
+  swap-pane -t '{down-of}'; select-pane -t '!'
+}
+
+bind-key -n M-K if "$not_tmux" { send-keys M-K } {
+  swap-pane -t '{up-of}'; select-pane -t '!'
+}
+
+bind-key -n M-L if "$not_tmux" { send-keys M-L } {
+  swap-pane -t '{right-of}'; select-pane -t '!'
+}

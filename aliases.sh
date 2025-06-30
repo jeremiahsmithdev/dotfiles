@@ -63,9 +63,30 @@ alias update-c2c='~/dev/PrivSecure/mirotalk/update-c2c.sh'
 alias update-p2p='~/dev/PrivSecure/mirotalk/update-p2p.sh'
 alias update-sfu='~/dev/PrivSecure/mirotalk/update-sfu.sh'
 
-# AI
+# AI Workflow
 alias rovo='acli rovodev run'
 alias cost='npx ccusage@latest'
+
+# AI-powered development aliases
+alias aic='ai_commit'                    # AI git commit
+alias aie='ai_edit'                      # AI file editing
+alias aip='analyze_project'              # AI project analysis
+alias aif='ai_files'                     # AI file analysis
+alias aib='ai_branches'                  # AI branch analysis
+alias ais='ai_smart'                     # Smart AI suggestions
+alias air='ai_review'                    # AI code review
+alias ait='ai_test'                      # AI test generation
+alias aid='ai_docs'                      # AI documentation
+alias airf='ai_refactor'                 # AI refactoring
+alias ach='ai_chat'                      # AI chat
+
+# Quick AI explanations
+alias exp='explain'                      # Explain last command
+alias dbg='debug_error'                  # Debug last error
+
+# AI-powered git workflow
+alias gaic='git add . && ai_commit'      # Stage all and AI commit
+alias gair='git add . && ai_review'      # Stage all and AI review
 
 # TEMP
 alias database='cd /Users/admin/dev/Quoting/SolidInvoiceClone/config/env/db'
