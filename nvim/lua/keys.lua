@@ -1,3 +1,23 @@
+-- ╭───────────────────────────────────────────╮
+-- │                NAVIGATION                 │
+-- ╰───────────────────────────────────────────╯
+
+-- navigation
+vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
+vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
+vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
+vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
+-- resizing
+vim.keymap.set('n', '<A-h>', require('smart-splits').resize_left)
+vim.keymap.set('n', '<A-j>', require('smart-splits').resize_down)
+vim.keymap.set('n', '<A-k>', require('smart-splits').resize_up)
+vim.keymap.set('n', '<A-l>', require('smart-splits').resize_right)
+-- swapping
+vim.keymap.set('n', '<A-H>', require('smart-splits').swap_buf_left)
+vim.keymap.set('n', '<A-J>', require('smart-splits').swap_buf_down)
+vim.keymap.set('n', '<A-K>', require('smart-splits').swap_buf_up)
+vim.keymap.set('n', '<A-L>', require('smart-splits').swap_buf_right)
+
 -- Telescope integration (most common way to use it)
 vim.keymap.set("n", "<leader>xt", "<cmd>TodoTelescope<CR>", { desc = "Todo (Telescope)" })
 vim.keymap.set("n", "<leader>xT", "<cmd>TodoTelescope keywords=TODO,FIX,FIXME<CR>", { desc = "Todo/Fix/Fixme" })
@@ -34,7 +54,7 @@ vim.keymap.set('n', '<leader>dt', function() require('dapui').toggle() end, { de
 Bind = require('binds')
 Bind('n', ';', ':', 'noremap')
 Bind('n', 'q', ':q', 'noremap')
-Bind('n', 'Q', ':q!', 'noremap')
+Bind('n', 'Q', ':qa!', 'noremap')
 
 -- Treesitter
 -- inside on_attach(client, bufnr)

@@ -50,22 +50,67 @@ local function get_plugin_files()
   return plugin_files
 end
 
+-- Load plugin manager configuration
+local plugin_manager = require('plugin-manager')
+
 local plugins = {}
 local plugin_files = get_plugin_files()
+
+-- Create a temporary table to store plugins with their metadata
+local plugin_entries = {}
 
 for _, plugin_file in ipairs(plugin_files) do
   local ok, plugin_spec = pcall(require, plugin_file)
   if ok and type(plugin_spec) == "table" then
+    -- Extract filename for matching
+    local filename = plugin_file:match("plugins%.(.+)$")
+    
+    local function process_spec(spec)
+      if type(spec) ~= "table" then
+        return
+      end
+      
+      -- Get plugin name (first element is usually the plugin name)
+      local plugin_name = spec[1]
+      
+      -- Check if this plugin should be disabled
+      if plugin_manager.is_disabled(plugin_name, filename) then
+        local display_name = (type(plugin_name) == "string" and plugin_name ~= "") and plugin_name or filename
+        vim.notify("Disabled plugin: " .. display_name, vim.log.levels.INFO)
+        return
+      end
+      
+      -- Get priority for ordering
+      local priority = plugin_manager.get_priority(plugin_name, filename)
+      
+      table.insert(plugin_entries, {
+        spec = spec,
+        priority = priority,
+        name = plugin_name,
+        filename = filename
+      })
+    end
+    
     if plugin_spec[1] then -- Single plugin spec
-      table.insert(plugins, plugin_spec)
+      process_spec(plugin_spec)
     else -- Multiple plugin specs
       for _, spec in ipairs(plugin_spec) do
-        table.insert(plugins, spec)
+        process_spec(spec)
       end
     end
   elseif not ok then
     vim.notify("Failed to load plugin: " .. plugin_file .. " - " .. plugin_spec, vim.log.levels.WARN)
   end
+end
+
+-- Sort plugins by priority
+table.sort(plugin_entries, function(a, b)
+  return a.priority < b.priority
+end)
+
+-- Extract the sorted specs
+for _, entry in ipairs(plugin_entries) do
+  table.insert(plugins, entry.spec)
 end
 
 require('lazy').setup(plugins)

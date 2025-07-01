@@ -5,7 +5,6 @@ if DISABLED then return {} end
 return {
   "neovim/nvim-lspconfig",
   config = function()
-    -- [[ Configure LSP ]]
     --  This function gets run when an LSP connects to a particular buffer.
     local on_attach = function(_, bufnr)
       -- NOTE: Remember that lua is a real programming language, and as such it is possible
@@ -52,11 +51,6 @@ return {
       end, { desc = 'Format current buffer with LSP' })
     end
 
-    -- mason-lspconfig requires that these setup functions are called in this order
-    -- before setting up the servers.
-    require('mason').setup()
-    require('mason-lspconfig').setup()
-
     -- Enable the following language servers
     --  Feel free to add/remove any LSPs that you want here. They will automatically be installed.
     --
@@ -73,11 +67,44 @@ return {
       -- tsserver = {},
       -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
-      vim.lsp.config("lua_ls", {
+      lua_ls = {
         settings = {
-            Lua = {
-                diagnostics = {
-                    globals = { "vim" }}}}}),
+          Lua = {
+            diagnostics = {
+              globals = { "vim" }
+            }
+          }
+        }
+      },
     }
+
+    -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+    -- Setup each server manually since mason-lspconfig is set up elsewhere
+    local lspconfig = require('lspconfig')
+    
+    for server_name, server_config in pairs(servers) do
+      lspconfig[server_name].setup {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        settings = server_config.settings,
+        filetypes = server_config.filetypes,
+      }
+    end
   end,
+
+-- lsp symbols
+vim.diagnostic.config({
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = "",
+      [vim.diagnostic.severity.WARN]  = "",
+      [vim.diagnostic.severity.HINT]  = "",
+      [vim.diagnostic.severity.INFO]  = "",
+    },
+  },
+})
+
 }

@@ -4,8 +4,6 @@ if DISABLED then return {} end
 
 return {
   "mason-org/mason-lspconfig.nvim",
-  ensure_installed = {"intelephense"},
-  opts = {},
   dependencies = {
     { "mason-org/mason.nvim", opts = {} },
     "neovim/nvim-lspconfig",
@@ -14,6 +12,11 @@ return {
   },
   config = function()
     require('mason').setup()
-    require('mason-lspconfig').setup()
+    require('mason-lspconfig').setup({
+      -- Add any language servers you want to ensure are installed
+      ensure_installed = { "lua_ls", "intelephense" },
+      -- Automatically install LSPs to stdpath for neovim
+      automatic_installation = true,
+    })
   end,
 }

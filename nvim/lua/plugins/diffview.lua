@@ -4,4 +4,10 @@ if DISABLED then return {} end
 
 return {
   "sindrets/diffview.nvim",
+  dependencies = { "ellisonleao/gruvbox.nvim" },
+  config = function()
+    require("diffview").setup({
+    })
+    
+  end
 }
