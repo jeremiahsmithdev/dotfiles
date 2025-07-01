@@ -1,3 +1,7 @@
+-- Set to true to disable this plugin
+local DISABLED = false
+if DISABLED then return {} end
+
 return {
   "Exafunction/codeium.nvim",
   dependencies = {
@@ -5,6 +9,9 @@ return {
     "hrsh7th/nvim-cmp",
   },
   config = function()
-    require('config.codeium')
+    -- require('codeium').setup{
+    --   -- default keymap options
+    --
+    -- }
   end,
 }

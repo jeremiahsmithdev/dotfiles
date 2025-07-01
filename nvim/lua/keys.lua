@@ -64,19 +64,14 @@ Bind('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help tags' })
 
 -- CodeCompanion
 -- vim.api.nvim_create_user_command('CC', ':CodeCompanion', {})
-Bind('n', '<leader>cc', ':CodeCompanion<CR>', 'noremap')
--- Bind('c', '<leader>cc', 'CodeCompanion', 'noremap')
+Bind('n', '<leader>c', ':CodeCompanion<CR>', 'noremap')
+Bind('v', '<leader>c', ':CodeCompanion<CR>', 'noremap')
 Bind('n', '<leader>e', ':CodeCompanionEdit<CR>', 'noremap')
 Bind('c', 'chat', 'CodeCompanionChat<CR>', 'noremap')
 Bind('c', 'cc ', 'CodeCompanion ', 'noremap')
 -- Bind('c', ':', 'CodeCompanion ', 'noremap')
 Bind('n', '<leader>t', ':CodeCompanionChat Toggle<CR>', 'noremap')
 
-vim.keymap.set('v', '<leader>cc', ':CodeCompanion<CR>', { 
-  desc = 'Run CodeCompanion on selection',
-  noremap = true,
-  silent = true
-})
 -- General
 Bind('n', '<leader>ai', ':r!sgpt --code ""<left>', 'noremap')
 Bind('n', '<leader>n', ':NvimTreeToggle<CR>', 'noremap')
@@ -225,9 +220,6 @@ vim.keymap.set('v', '<leader>p', '"_dP') -- not working?
 -- lspsaga
 vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>')
 
--- cheatsheet
-vim.keymap.set('n', '<leader>c', ':Cheatsheet<CR>')
-
 -- Define the function
 local function close_special_buffers()
   for _, win in ipairs(vim.api.nvim_list_wins()) do
@@ -238,6 +230,12 @@ local function close_special_buffers()
     local fname = name
     if name ~= "" then
       fname = vim.fn.fnamemodify(name, ":t")  -- get the filename from full path
+    end
+
+    -- If the buffer is named 'Claude', send <leader>ac
+    if fname == 'Claude' then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<leader>ac', true, false, true), 'n', true)
+      return
     end
 
     local matches = {
@@ -252,7 +250,7 @@ local function close_special_buffers()
         return
       end
     end
-  end
+end
 
   -- Fallback: try to quit window
   local ok, err = pcall(function()

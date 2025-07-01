@@ -2,6 +2,29 @@
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 vim.api.nvim_create_autocmd('TextYankPost', {
+  group = highlight_group,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  pattern = '*',
+})
+
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = vim.fn.expand("~/TODO.md"),
+  callback = function()
+    vim.keymap.set('n', 'q', ':q<CR>', { buffer = true, silent = true })
+  end,
+})
+
+
+
+-- Autocmd group for TODO.md
+local todo_group = vim.api.nvim_create_augroup("TodoMd", { clear = true })
+
+-- 1. Auto-insert '- [ ] ' on new lines in insert mode
+vim.api.nvim_create_autocmd("FileType", {
+  group = todo_group,
+  pattern = "markdown",
   callback = function()
     if vim.fn.expand("%:t") == "TODO.md" then
       vim.keymap.set("i", "<CR>", function()
@@ -66,8 +89,8 @@ vim.api.nvim_create_autocmd("BufReadPost", {
         local row = vim.api.nvim_win_get_cursor(0)[1]
         vim.schedule(function()
           vim.api.nvim_buf_set_lines(0, row - 1, row - 1, false, { "- [ ] " })
-          vim.api.nvim_win_set_cursor(0, { row, 7 })
-          vim.cmd("startinsert")
+          vim.api.nvim_win_set_cursor(0, { row, 1 }) -- move to start of new line
+          vim.api.nvim_feedkeys('A', 'n', false)
         end)
         return ""
       else
@@ -75,31 +98,4 @@ vim.api.nvim_create_autocmd("BufReadPost", {
       end
     end, { buffer = args.buf, expr = true })
   end,
-  group = highlight_group,
-  pattern = '*',
 })
-
-
-function ClaudeSendVisual()
-  -- Get visual selection
-  local start_pos = vim.fn.getpos("'<")
-  local end_pos = vim.fn.getpos("'>")
-  local lines = vim.fn.getline(start_pos[2], end_pos[2])
-  local prompt = table.concat(lines, "\n")
-
-  -- Write to temp file
-  local tmpfile = os.tmpname()
-  local f = io.open(tmpfile, "w")
-  f:write(prompt)
-  f:close()
-
-  -- Run Claude and capture output
-  local output = vim.fn.system('claude code < ' .. tmpfile)
-  os.remove(tmpfile)
-
-  -- Open new buffer and insert output
-  vim.cmd('new')
-  vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(output, '\n'))
-end
-
-vim.api.nvim_set_keymap('v', '<leader>s', ':lua ClaudeSendVisual()<CR>', { noremap = true, silent = true })

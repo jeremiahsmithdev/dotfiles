@@ -6,6 +6,7 @@ export EDITOR=nvim
 export AIDER_EDITOR=nvim
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export TODO_FILE="${HOME}/TODO.md"
 
 # ╭───────────────────────────────────────────╮
 # │              SOURCING FILES               │
@@ -18,6 +19,7 @@ source "$HOME/dotfiles/dynamic_cursor.zsh"
 source "$HOME/dotfiles/keybindings.sh"
 source "$HOME/dotfiles/api_keys.sh"
 source "$HOME/dotfiles/fzf-git.sh/fzf-git.sh"
+source "$HOME/dotfiles/todoist_functions_fzf.sh"
 
 # ╭───────────────────────────────────────────╮
 # │                 SHELL THEME               │

@@ -21,47 +21,8 @@ require('opts') -- options
 require('autocmds') -- autocommands
 require('functions') -- personal functions
 
-require('config.avante')
-
--- TODO --
--- [ ] move require configs to plugins file (see gitsigns)
-
--- Plugin configurations
-require('config.dap')
-require('config.lspkind')
-require('config.telescope') -- search and navigation tool for Neovim
-require('config.treesitter') -- language parsing for syntax highlighting, code analysis, and more
-require('config.cmp') -- fast and powerful completion engine -> before codeium setup
-require('config.codeium')
-require('config.lualine') -- statusline and bufferline integrated with Lua
--- require('config.which-key') -- visualizes keybindings and available commands
-require('config.lsp') -- support for Language Server Protocol in Neovim
--- require('config.gp') -- ChatGPT code assistant -> keymaps
-require('config.gps')
--- require('config.dashboard')
--- require('config.obsidian')
--- require('config.rest')
-require('config.noice')
-require("config.firenvim")
--- require('config.*')
--- require('config.lspsaga') -- untested
-
-require("nvim-tree").setup()
-
--- Mason-lspconfig setup
-require('mason').setup() -- lsp server package manager
-require('mason-lspconfig').setup()
-
 -- Language server configurations
 require('language-servers') -- language server setup and settings
-require('transparent').setup()
-require('notify').setup()
-require('config.neoscroll')
-require('config.codecompanion')
-
-require("notify").setup({
-background_colour = "#1a1b26",
-})
 
 -- TODO -> plugins to add
 -- [] harpoon

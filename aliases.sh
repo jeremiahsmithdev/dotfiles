@@ -12,6 +12,8 @@ alias zshenv='nvim ~/dotfiles/zshenv'
 alias keys='nvim ~/.config/nvim/lua/keys.lua'
 alias api-keys='nvim ~/dotfiles/api_keys.sh'
 alias dev.md='nvim ~/dev/dev.md'
+alias gitignore='nvim .gitignore'
+alias TODO='nvim ~/TODO.md'
 
 # directory navigation
 alias c='cd $(find * -type d | fzf)'
