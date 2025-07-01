@@ -38,7 +38,9 @@ setw -g window-status-separator ""
 
 # status line
 set -g status-left "#[fg=colour248, bg=colour241] #S #[fg=colour241, bg=colour237, nobold, noitalics, nounderscore]"
-set -g status-right ' #[fg=red, bold]⎇ #[fg=red, nobold]#(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) #[fg=colour239, bg=colour237, nobold, nounderscore, noitalics]#[fg=colour246,bg=colour239] %Y-%m-%d  %H:%M #[fg=colour248, bg=colour239, nobold, noitalics, nounderscore]#[fg=colour237, bg=colour248] #h '
+
+# Show TODO preview on the right
+set -g status-right '#[fg=yellow, bold]Tasks: #[default]#(bash ~/.tmux/plugins/tmux-todo/tmux-todo.sh) #[fg=red, bold]⎇ #[fg=red, nobold]#(cd #{pane_current_path}; git rev-parse --abbrev-ref HEAD) #[fg=colour239, bg=colour237, nobold, nounderscore, noitalics]#[fg=colour246,bg=colour239] %Y-%m-%d  %H:%M #[fg=colour248, bg=colour239, nobold, noitalics, nounderscore]#[fg=colour237, bg=colour248] #h '
 
 setw -g window-status-current-format "#[fg=colour239, bg=colour248, :nobold, noitalics, nounderscore]#[fg=colour239, bg=colour214] #I #[fg=colour239, bg=colour214, bold] #W #[fg=colour214, bg=colour237, nobold, noitalics, nounderscore]"
 setw -g window-status-format "#[fg=colour237,bg=colour239,noitalics]#[fg=colour223,bg=colour239] #I #[fg=colour223, bg=colour239] #W #[fg=colour239, bg=colour237, noitalics]"

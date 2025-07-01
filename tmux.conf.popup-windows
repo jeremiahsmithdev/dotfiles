@@ -13,7 +13,7 @@ bind g run-shell '\
     tmux detach-client; \
   else \
     tmux display-popup -d "#{pane_current_path}" -xC -yC -w 80% -h 75% \
-      -E "tmux attach-session -t $POPUP_NAME || tmux new-session -s $POPUP_NAME; \
+      -E "tmux attach-session -t $POPUP_NAME || tmux new-session -s $POPUP_NAME \; set-option status off; \
           tmux set-option -g detach-on-destroy $OLD_VAL" \
   ; \
   fi \
@@ -27,8 +27,37 @@ bind G run-shell '\
     tmux detach-client; \
   else \
     tmux display-popup -xC -yC -w 80% -h 75% \
-      -E "tmux attach-session -t $POPUP_NAME || tmux new-session -s $POPUP_NAME; \
+      -E "tmux attach-session -t $POPUP_NAME || (tmux new-session -s $POPUP_NAME \; set-option status off); \
           tmux set-option -g detach-on-destroy $OLD_VAL" \
   ; \
   fi \
 '
+
+
+bind t run-shell '\
+  OLD_VAL=$(tmux show -gqv detach-on-destroy); \
+  tmux set-option -g detach-on-destroy on; \
+  POPUP_NAME="popup-todo"; \
+  if [ "#{session_name}" = "$POPUP_NAME" ]; then \
+    tmux detach-client; \
+  else \
+    tmux display-popup -xC -yC -B \
+      -E "tmux attach-session -t $POPUP_NAME || tmux new-session -s $POPUP_NAME \; set-option status off \; send-keys \"nvim ~/TODO.md\" Enter; \
+          tmux set-option -g detach-on-destroy $OLD_VAL" \
+  ; \
+  fi \
+'
+# with outline version
+# bind t run-shell '\
+#   OLD_VAL=$(tmux show -gqv detach-on-destroy); \
+#   tmux set-option -g detach-on-destroy on; \
+#   POPUP_NAME="popup-todo"; \
+#   if [ "#{session_name}" = "$POPUP_NAME" ]; then \
+#     tmux detach-client; \
+#   else \
+#     tmux display-popup -xC -yC \
+#       -E "tmux attach-session -t $POPUP_NAME || tmux new-session -s $POPUP_NAME nvim ~/TODO.md; \
+#           tmux set-option -g detach-on-destroy $OLD_VAL" \
+#   ; \
+#   fi \
+# '
