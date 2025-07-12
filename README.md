@@ -26,12 +26,20 @@ Symlink the configuration files to your home directory:
 ```bash
 # Core configs
 ln -sf ~/dotfiles/zshrc ~/.zshrc
+ln -sf ~/dotfiles/zshenv ~/.zshenv
 ln -sf ~/dotfiles/gitconfig ~/.gitconfig
 ln -sf ~/dotfiles/tmux.conf ~/.tmux.conf
+ln -sf ~/dotfiles/.vimrc ~/.vimrc
+
+# Window management
+ln -sf ~/dotfiles/skhdrc ~/.skhdrc
+ln -sf ~/dotfiles/yabairc ~/.yabairc
 
 # ~/.config directory
 ln -sf ~/dotfiles/nvim ~/.config/nvim
-ln -sf ~/dotfiles/karabiner ~/.config/karabiner
-ln -sf ~/dotfiles/yabairc ~/.config/yabai/yabairc
-ln -sf ~/dotfiles/skhdrc ~/.config/skhd/skhdrc
+mkdir -p ~/.config/wezterm && ln -sf ~/dotfiles/wezterm.lua ~/.config/wezterm/wezterm.lua
+mkdir -p ~/.config/karabiner && ln -sf ~/dotfiles/karabiner.json ~/.config/karabiner/karabiner.json
+
+# Optional: Fix any broken symlinks
+rm -f ~/.zshenv.zsh ~/.aliases.zsh
 ```

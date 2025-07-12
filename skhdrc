@@ -58,14 +58,24 @@ ctrl - l [
  fn - l : yabai -m space --focus next
  fn - h : yabai -m space --focus prev
 
- # fn - n : yabai -m space --focus next
- # fn - p : yabai -m space --focus prev
 
  # Moving windows
- shift + fn - k : yabai -m window --warp north || $(yabai -m window --display north; yabai -m display --focus north)
- shift + fn - h : yabai -m window --warp west || $(yabai -m window --display west; yabai -m display --focus west) || $(yabai -m window --space prev && yabai -m space --focus prev)
- shift + fn - j : yabai -m window --warp south || $(yabai -m window --display south; yabai -m display --focus south)
- shift + fn - l : yabai -m window --warp east || $(yabai -m window --display east; yabai -m display --focus east) || $(yabai -m window --space next && yabai -m space --focus next) 
+shift + fn - k : \
+    current_win=$(yabai -m query --windows --window | jq -r '.id') && \
+    (yabai -m window --warp north || (yabai -m window --display north; yabai -m display --focus north)); \
+    yabai -m window --focus $current_win
+shift + fn - h : \
+    current_win=$(yabai -m query --windows --window | jq -r '.id') && \
+    (yabai -m window --warp west || (yabai -m window --display west; yabai -m display --focus west) || (yabai -m window --space prev && yabai -m space --focus prev)); \
+    yabai -m window --focus $current_win
+shift + fn - j : \
+    current_win=$(yabai -m query --windows --window | jq -r '.id') && \
+    (yabai -m window --warp south || (yabai -m window --display south; yabai -m display --focus south)); \
+    yabai -m window --focus $current_win
+shift + fn - l : \
+    current_win=$(yabai -m query --windows --window | jq -r '.id') && \
+    (yabai -m window --warp east || (yabai -m window --display east; yabai -m display --focus east) || (yabai -m window --space next && yabai -m space --focus next)); \
+    yabai -m window --focus $current_win
 
  # Resize windows
  # shift + ctrl - h : yabai -m window --resize left:-50:0; \
