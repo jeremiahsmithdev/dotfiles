@@ -38,10 +38,6 @@ ctrl - l [
  # shift + ctrl - h : yabai -m window --focus west
  # shift + ctrl - l : yabai -m window --focus east
 
- # Alternative space focus
- fn + ctrl - l : yabai -m space --focus next
- fn + ctrl - h : yabai -m space --focus prev
-
  fn + shift - r : \
      /usr/bin/env osascript <<< \
          "display notification \"Restarting Yabai\" with title \"Yabai\""; \
@@ -55,8 +51,8 @@ ctrl - l [
  shift + fn - f : yabai -m window --toggle native-fullscreen
 
  # space focus
- fn - l : yabai -m space --focus next
- fn - h : yabai -m space --focus prev
+ fn + ctrl - l : yabai -m space --focus next
+ fn + ctrl - h : yabai -m space --focus prev
 
 
  # Moving windows
@@ -76,6 +72,10 @@ shift + fn - l : \
     current_win=$(yabai -m query --windows --window | jq -r '.id') && \
     (yabai -m window --warp east || (yabai -m window --display east; yabai -m display --focus east) || (yabai -m window --space next && yabai -m space --focus next)); \
     yabai -m window --focus $current_win
+
+# Swapping windows in different spaces
+fn - l : ~/dotfiles/yabai/swap_right.sh
+fn - h : ~/dotfiles/yabai/swap_left.sh
 
  # Resize windows
  # shift + ctrl - h : yabai -m window --resize left:-50:0; \
